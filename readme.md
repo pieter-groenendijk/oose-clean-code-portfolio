@@ -7,9 +7,9 @@ om zo mijn kennis vergaart uit het boek "Clean Code: A Handbook of Agile Softwar
 op de test te zetten.
 
 Dit portfolio omvangt drie hoofdstukken namelijk:
-- **Analyse van smells**: Geïdentificeerde smells; niet zelf geschreven code.
-- **Analyse van clean code**: Geïdentificeerde clean code, niet zelf geschreven.
-- **Toepassing clean code**
+- [**Analyse van smells**](https://github.com/pieter-groenendijk/clean-code-portfolio/blob/main/hoofdstukken/analyse-smells/index.md): Geïdentificeerde smells; niet zelf geschreven code.
+- [**Analyse van clean code**](https://github.com/pieter-groenendijk/clean-code-portfolio/blob/main/hoofdstukken/analyse-clean-code/index.md): Geïdentificeerde clean code, niet zelf geschreven.
+- [**Toepassing clean code**](https://github.com/pieter-groenendijk/clean-code-portfolio/blob/main/hoofdstukken/toepassing-clean-code/index.md)
 
 ### Termen
 
