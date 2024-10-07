@@ -60,7 +60,7 @@ De niet deugende code te verwijderen.
 
 
 ### Processing: ThinkDifferent
-Locatie: [ThinkDiffernt.java](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)
+Locatie: [ThinkDifferent.java](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)
 Omvang: 55 t/m 72
 Smell Code: C3 Redundant Comment
 
@@ -95,18 +95,22 @@ Het gaat hier om de comments:
 - `// just force it this time`
 
 #### Waarom deugt het niet?
-Alle comments binnen deze `init` methode zijn redundant of kunnen dat zijn. Daarmee bedoel ik te zeggen dat als deze code goed geschreven was al deze comments weggelaten zouden kunnen worden. De daadwerkelijke code lezen levert betere informatie dan de comments. 
+Alle comments binnen deze `init` methode zijn redundant of kunnen dat zijn. Daarmee bedoel ik te zeggen dat als deze 
+code goed geschreven was al deze comments weggelaten zouden kunnen worden. De daadwerkelijke code lezen levert betere 
+informatie dan de comments. 
 
-Neem de regel `!attemptedQuit) { // haven't tried yet`. De variable `attemptedQuit` geeft al duidelijk aan dat er geprobeerd is om af te sluiten[^1]. De comment `// haven't tried yet`. verteld, in het beste geval, dezelfde informatie. 
+Neem de regel `!attemptedQuit) { // haven't tried yet`. De variable `attemptedQuit` geeft al duidelijk aan dat er 
+geprobeerd is om af te sluiten[^1]. De comment `// haven't tried yet` vertelt, in het beste geval, dezelfde 
+informatie. 
 
 [^1]: `userAttemptedToQuit` zou nog veel duidelijker zijn.
 
 #### Oplossing
-Alle benoemde comments zullen verwijderd moeten worden. 
+Alle benoemde comments zouden verwijderd moeten worden. 
 
-Vervolgens zou de code ook leesbaarder kunnen gemaakt worden. 
+De code kan ook leesbaarder gemaakt worden.
 Mogelijk zou het statement `PApplet.uncaughtThrowable == null` 
-kunnen worden _geextract_ naar zijn eigen methode: 
+kunnen worden geabstraheerd naar zijn eigen methode: 
 `PApplet.hasNoUncaughtExceptions()`.
 
 
