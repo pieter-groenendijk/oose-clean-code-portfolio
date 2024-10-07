@@ -119,5 +119,95 @@ kunnen worden geabstraheerd naar zijn eigen methode:
 
 ### ThinkDifferent
 
+## Functions
 
+### Processing: PImage.java
+Locatie: [PImage.java]()  
+Omvang: 482 t/m 504  
+Smell Code: F1 Too Many Arguments  
 
+```java
+public void updatePixels(int x, int y, int w, int h) {  // ignore
+    int x2 = x + w;
+    int y2 = y + h;
+
+    if (!modified) {
+        mx1 = PApplet.max(0, x);
+        mx2 = PApplet.min(pixelWidth, x2);
+        my1 = PApplet.max(0, y);
+        my2 = PApplet.min(pixelHeight, y2);
+        modified = true;
+      
+    } else {
+        if (x < mx1) mx1 = PApplet.max(0, x);
+        if (x > mx2) mx2 = PApplet.min(pixelWidth, x);
+        if (y < my1) my1 = PApplet.max(0, y);
+        if (y > my2) my2 = PApplet.min(pixelHeight, y);
+
+        if (x2 < mx1) mx1 = PApplet.max(0, x2);
+        if (x2 > mx2) mx2 = PApplet.min(pixelWidth, x2);
+        if (y2 < my1) my1 = PApplet.max(0, y2);
+        if (y2 > my2) my2 = PApplet.min(pixelHeight, y2);
+    }
+}
+```
+
+_Figuur 3: Processing PImage.java_
+
+#### Wat deugt niet?
+Het gaat hier om de arguments in de definitie van deze functie, namelijk: `int x, int y, int w, int h`. Specifieker, 
+het aantal arguments.
+
+#### Waarom deugt het niet?
+Het is moeilijk om te begrijpen. Men moet goed opletten welke waardes op welke positie moeten geplaatst worden. Zelfs na
+uitgebreid gebruik kan dit nog steeds verwarring veroorzaken. In het slechtste geval ziet een functie call eruit als:
+```java
+image.updatePixels(20, 30, 100, 200);
+```
+
+En in een iets betere wereld misschien:
+
+```java
+image.updatePixels(width, height, x, y);
+```
+
+Als u goed heeft opgelet erkende u dat ik sommige arguments in het laatste voorbeeld heb omgedraaid. Een hogere 
+hoeveelheid arguments kan er gemakkelijk voor zorgen daar arguments worden omgedraaid. In dit geval zou de compiler
+er zelfs niks van zeggen, het zijn allen `int`'s.
+
+Dan zijn er de mensen die bij twijfeling de functie definitie zullen raadplegen. Echter is dat ook een probleem.
+Dat is aandacht en tijd gestoken in iets triviaals, verspilde tijd dus.
+
+#### Oplossing
+```java
+public void updatePixels(Point upperLeftCorner, Size size) {
+    ...
+}
+```
+
+_Figuur N: PImage.java updatePixels() verbeterde definitie
+
+Er hoeven maar twee concepten gegeven worden aan de functie. Deze concepten verdienen hun eigen naam! In bovenstaand
+voorbeeld gaat het eigenlijk over:
+- `Point`: de `upperLeftCorner` die bestaat uit een `x` en `y`.
+- `Size`: de `size` die bestaat uit een `width` en `height`.
+
+Het zal nu veel duidelijker zijn om de functie aan te roepen:
+```java
+image.updatePixels(
+    new Point(20, 30),
+    new Size(100, 200)
+);
+```
+
+of wat realistischer:
+
+```java
+image.updatePixels(
+    upperLeftCorner,
+    size
+);
+```
+
+In het geval dat de arguments alsnog worden omgedraaid zal de compiler dit tegenhouden. Een `Size` object kan namelijk
+niet in dezelfde plek gebruikt worden als een `Point`.
