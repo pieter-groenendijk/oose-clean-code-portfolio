@@ -211,3 +211,110 @@ image.updatePixels(
 
 In het geval dat de arguments alsnog worden omgedraaid zal de compiler dit tegenhouden. Een `Size` object kan namelijk
 niet in dezelfde plek gebruikt worden als een `Point`.
+
+### Processing: PApplet.java
+Locatie: [PApplet.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PApplet.java)
+Omvang: 2242 t/m 2340
+Smell Code: Flag Arguments
+
+```java
+  protected PGraphics makeGraphics(int w, int h,
+                                   String renderer, String path,
+                                   boolean primary) {
+    if (!primary && !g.isGL()) {
+      if (renderer.equals(P2D)) {
+        throw new RuntimeException("createGraphics() with P2D requires size() to use P2D or P3D");
+      } else if (renderer.equals(P3D)) {
+        throw new RuntimeException("createGraphics() with P3D or OPENGL requires size() to use P2D or P3D");
+      }
+    }
+
+    try {
+      Class<?> rendererClass =
+        Thread.currentThread().getContextClassLoader().loadClass(renderer);
+
+      Constructor<?> constructor = rendererClass.getConstructor(new Class[] { });
+      PGraphics pg = (PGraphics) constructor.newInstance();
+
+      pg.setParent(this);
+      pg.setPrimary(primary);
+      if (path != null) {
+        pg.setPath(savePath(path));
+      }
+      pg.setSize(w, h);
+
+      // everything worked, return it
+      return pg;
+
+    } catch (InvocationTargetException ite) {
+      String msg = ite.getTargetException().getMessage();
+      if ((msg != null) &&
+          (msg.indexOf("no jogl in java.library.path") != -1)) {
+        // Is this true anymore, since the JARs contain the native libs?
+        throw new RuntimeException("The jogl library folder needs to be " +
+          "specified with -Djava.library.path=/path/to/jogl");
+
+      } else {
+        printStackTrace(ite.getTargetException());
+        Throwable target = ite.getTargetException();
+        throw new RuntimeException(target.getMessage());
+      }
+
+    } catch (ClassNotFoundException cnfe) {
+      if (external) {
+        throw new RuntimeException("You need to use \"Import Library\" " +
+                                   "to add " + renderer + " to your sketch.");
+      } else {
+        throw new RuntimeException("The " + renderer +
+                                   " renderer is not in the class path.");
+      }
+
+    } catch (Exception e) {
+      if ((e instanceof IllegalArgumentException) ||
+          (e instanceof NoSuchMethodException) ||
+          (e instanceof IllegalAccessException)) {
+        if (e.getMessage().contains("cannot be <= 0")) {
+          throw new RuntimeException(e);
+        } else {
+          printStackTrace(e);
+          String msg = renderer + " needs to be updated " +
+            "for the current release of Processing.";
+          throw new RuntimeException(msg);
+        }
+      } else {
+        printStackTrace(e);
+        throw new RuntimeException(e.getMessage());
+      }
+    }
+  }
+```
+
+_Figuur N: Processing PApplet.java (Commented code al weggelaten)_
+
+### Wat deugt niet?
+De boolean argument `boolean primary`.
+
+### Waarom deugt het niet? 
+Een functie hoort 1 ding te doen. Een flag argument geeft al automatisch aan dat dit in dit geval niet zo is.
+
+Daarnaast maakt het een functie onnodig complex. Het vraagt om vijf argumenten! (Daar gaat het een ander keer over)
+
+## General
+
+### Processing: KeyEvent.java
+Locatie: [KeyEvent.java](https://github.com/processing/processing/blob/master/core/src/processing/event/KeyEvent.java)  
+Omvang: 1 t/m 1  
+Smell Code: G1 Multiple Languages in One Source File
+
+```java
+/* -*- mode: java; c-basic-offset: 2; indent-tabs-mode: nil -*- */
+```
+
+_Figuur N: Processing KeyEvent.java_
+
+#### Wat deugt niet?
+Het gehele snippet. 
+
+#### Waarom deugt het niet?
+
+
