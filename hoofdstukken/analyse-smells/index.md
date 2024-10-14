@@ -115,9 +115,30 @@ kunnen worden geabstraheerd naar zijn eigen methode:
 
 
 
-## Naamgeving
+## Names
 
 ### ThinkDifferent
+Locatie: [ThinkDifferent](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)  
+Omvang: 1 t/m 69  
+Smell Code: N1 Choose Descriptive Names  
+
+```java
+public class ThinkDifferent {
+```
+
+_Figuur N: Processing ThinkDifferent.java_
+
+#### Wat deugt er niet?
+De naamgeving van de _class_ `ThinkDifferent`. 
+
+#### Waarom deugt het niet?
+Deze naam is zo vaag als het maar kan. Ik kan enkel een idee vormen, hoewel beperkt, wat de klasse doet door de _JSDoc_ erbij te lezen. 
+
+#### Oplossing
+De naam zal veranderd moeten worden naar iets wat de daadwerkelijke implementatie representeert. Op basis van de huidige implementatie
+zou men uitkomen op de naam `OSXIntegrationHelper`. De klasse bezit namelijk methodes die helpen met de integratie specifiek voor het 
+_OS X_ platform.
+
 
 ## Functions
 
@@ -299,6 +320,8 @@ Een functie hoort 1 ding te doen. Een flag argument geeft al automatisch aan dat
 
 Daarnaast maakt het een functie onnodig complex. Het vraagt om vijf argumenten! (Daar gaat het een ander keer over)
 
+
+
 ## General
 
 ### Processing: KeyEvent.java
@@ -316,5 +339,9 @@ _Figuur N: Processing KeyEvent.java_
 Het gehele snippet. 
 
 #### Waarom deugt het niet?
+Dezelfde reden waarom boeken niet geschreven worden in meerdere talen. Het is simpelweg verwarrend om telkens je
+anders moeten instellen om te begrijpen wat er staat. 
 
+#### Oplossing
+Weghalen. Volgens ChatGPT zou deze _emacs_ configuratie ook in een extern bestand gezet kunnen worden.
 
