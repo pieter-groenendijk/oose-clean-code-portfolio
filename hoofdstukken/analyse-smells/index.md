@@ -345,3 +345,72 @@ anders moeten instellen om te begrijpen wat er staat.
 #### Oplossing
 Weghalen. Volgens ChatGPT zou deze _emacs_ configuratie ook in een extern bestand gezet kunnen worden.
 
+
+### Processing: PVector.java
+Locatie: [PVector.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PVector.java)  
+Omvang: 343 t/m 356  
+Smell Code: G5 Duplication
+
+```java
+  /**
+   * Make a new 2D unit vector from an angle
+   *
+   * @param target the target vector (if null, a new vector will be created)
+   * @return the PVector
+   */
+  static public PVector fromAngle(float angle, PVector target) {
+    if (target == null) {
+      target = new PVector((float)Math.cos(angle),(float)Math.sin(angle),0);
+    } else {
+      target.set((float)Math.cos(angle),(float)Math.sin(angle),0);
+    }
+    return target;
+  }
+```
+
+#### Wat deugt niet?
+De berekening van de `float x` en `float y` met middel van een `float angle` wordt exact herhaald. Het gaat dan om 
+de herhaalde stukken code: `(float)Math.cos(angle)` en `(float)Math.cos(angle)`.
+
+#### Waarom deugt het niet?
+In dit geval is het erg _error prone_. Elke keer dat je deze berekening opnieuw doet is er een goede kans dat je
+het dit keer verkeerd uittypt. Daarnaast doordat je het niet geextraheerd hebt naar zijn eigen methode zal het
+ook moeilijker unittestbaar zijn. 
+
+Los daarvan is het ook gewoon verspilde tijd om telkens dezelfde code opnieuw te schrijven.
+
+#### Oplossing
+```java
+  static public float calculateXFromAngle(float angle) {
+    return (float)Math.cos(angle);
+  }
+
+  static public float calculateYFromAngle(float angle) {
+    return (float)Math.sin(angle);
+  }
+
+  /**
+   * Make a new 2D unit vector from an angle
+   *
+   * @param target the target vector (if null, a new vector will be created)
+   * @return the PVector
+   */
+  static public PVector fromAngle(float angle, PVector target) {
+    float x = this.calculateXFromAngle(angle);
+    float y = this.calculateYFromAngle(angle);
+
+    if (target == null) {
+      target = new PVector(x, y, 0);
+    } else {
+      target.set(x, y, 0);
+    }
+
+    return target;
+  }
+```
+
+De berekeningen van zowel `x` en `y` zijn nu gescheiden in een eigen methode. Verder is de code, hoewel die niet perfect is,
+behouden hoe die eerder was.
+
+De duplicatie is zo afgenomen.
+
