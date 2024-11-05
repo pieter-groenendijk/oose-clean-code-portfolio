@@ -120,8 +120,8 @@ Smell Code: C1 Inappropriate Information
 
 ```java
     // someday these will be settable
-    boolean useDate;
-    int digits = 3;
+boolean useDate;
+int digits = 3;
 ```
 
 _Figuur N: Processing Archiver.java_
@@ -494,7 +494,7 @@ De duplicatie is zo afgenomen.
 ### 9. Processing: Webserver.java
 Locatie: [Webserver.java](https://github.com/processing/processing/blob/master/app/src/processing/app/WebServer.java)  
 Omvang: 17 en 529 t/m 572  
-Smell Code: J2 Don't inherit Constants  
+Smell Code: J2 Don't inherit Constants
 
 ```java
 public class WebServer implements HttpConstants {
@@ -561,5 +561,122 @@ in een _interface_ standaard `public static final` is. Echter moet deze dan niet
 wat geïmplementeerd moet worden.
 
 #### Oplossing
-In dit geval kan de `implements HttpConstants` weggehaald worden. De interface staat al in hetzelfde bestand. Normaliter 
+In dit geval kan de `implements HttpConstants` weggehaald worden. De interface staat al in hetzelfde bestand. Normaliter
 wanneer dit niet het geval is kan een static import gebruikt worden zoals `import static processing.app.HttpConstants.*`.
+
+
+### 10. Processing Webserver.java
+Locatie: [Webserver.java](https://github.com/processing/processing/blob/master/app/src/processing/app/WebServer.java)   
+Omvang: 529 t/m 572  
+Smell Code: J3 Constants versus Enums  
+
+```java
+interface HttpConstants {
+    /** 2XX: generally "OK" */
+    public static final int HTTP_OK = 200;
+    public static final int HTTP_CREATED = 201;
+    public static final int HTTP_ACCEPTED = 202;
+    public static final int HTTP_NOT_AUTHORITATIVE = 203;
+    public static final int HTTP_NO_CONTENT = 204;
+    public static final int HTTP_RESET = 205;
+    public static final int HTTP_PARTIAL = 206;
+
+    /** 3XX: relocation/redirect */
+    public static final int HTTP_MULT_CHOICE = 300;
+    public static final int HTTP_MOVED_PERM = 301;
+    public static final int HTTP_MOVED_TEMP = 302;
+    public static final int HTTP_SEE_OTHER = 303;
+    public static final int HTTP_NOT_MODIFIED = 304;
+    public static final int HTTP_USE_PROXY = 305;
+
+    /** 4XX: client error */
+    public static final int HTTP_BAD_REQUEST = 400;
+    public static final int HTTP_UNAUTHORIZED = 401;
+    public static final int HTTP_PAYMENT_REQUIRED = 402;
+    public static final int HTTP_FORBIDDEN = 403;
+    public static final int HTTP_NOT_FOUND = 404;
+    public static final int HTTP_BAD_METHOD = 405;
+    public static final int HTTP_NOT_ACCEPTABLE = 406;
+    public static final int HTTP_PROXY_AUTH = 407;
+    public static final int HTTP_CLIENT_TIMEOUT = 408;
+    public static final int HTTP_CONFLICT = 409;
+    public static final int HTTP_GONE = 410;
+    public static final int HTTP_LENGTH_REQUIRED = 411;
+    public static final int HTTP_PRECON_FAILED = 412;
+    public static final int HTTP_ENTITY_TOO_LARGE = 413;
+    public static final int HTTP_REQ_TOO_LONG = 414;
+    public static final int HTTP_UNSUPPORTED_TYPE = 415;
+
+    /** 5XX: server error */
+    public static final int HTTP_SERVER_ERROR = 500;
+    public static final int HTTP_INTERNAL_ERROR = 501;
+    public static final int HTTP_BAD_GATEWAY = 502;
+    public static final int HTTP_UNAVAILABLE = 503;
+    public static final int HTTP_GATEWAY_TIMEOUT = 504;
+    public static final int HTTP_VERSION = 505;
+}
+```
+
+_Figuur N: Processing Webserver.java_
+
+#### Wat deugt er niet?
+De gehele interface.
+
+#### Waarom deugt het niet?
+Zoals eerder al genoemd, een interface implementeer je. Je implementeert geen constanten, je gebruikt ze. Hier is dus
+geen inheritance voor nodig.
+
+#### Oplossing
+```java
+public enum HTTPStatus {
+    OK(200),
+    CREATED(201),
+    ACCEPTED(202),
+    NOT_AUTHORITATIVE(203),
+    NO_CONTENT(204),
+    RESET(205),
+    PARTIAL(206),
+
+    MULT_CHOICE(300),
+    MOVED_PERM(301),
+    MOVED_TEMP(302),
+    SEE_OTHER(303),
+    NOT_MODIFIED(304),
+    USE_PROXY(305),
+
+    BAD_REQUEST(400),
+    UNAUTHORIZED(401),
+    PAYMENT_REQUIRED(402),
+    FORBIDDEN(403),
+    NOT_FOUND(404),
+    BAD_METHOD(405),
+    NOT_ACCEPTABLE(406),
+    PROXY_AUTH(407),
+    CLIENT_TIMEOUT(408),
+    CONFLICT(409),
+    GONE(410),
+    LENGTH_REQUIRED(411),
+    PRECON_FAILED(412),
+    ENTITY_TOO_LARGE(413),
+    REQ_TOO_LONG(414),
+    UNSUPPORTED_TYPE(415),
+
+    SERVER_ERROR(500),
+    INTERNAL_ERROR(501),
+    BAD_GATEWAY(502),
+    UNAVAILABLE(503),
+    GATEWAY_TIMEOUT(504),
+    VERSION(505);
+
+    private final int code;
+
+    HttpStatus(int code) {
+        this.code = code;
+    }
+
+    public int code() {
+        return this.code;
+    }
+}
+```
+
