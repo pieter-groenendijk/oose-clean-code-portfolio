@@ -58,7 +58,6 @@ Het creëert de volgende problemen:
 De niet deugende code te verwijderen.
 
 
-
 ### 2. Processing: ThinkDifferent
 Locatie: [ThinkDifferent.java](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)
 Omvang: 55 t/m 72
@@ -114,13 +113,37 @@ kunnen worden geabstraheerd naar zijn eigen methode:
 `PApplet.hasNoUncaughtExceptions()`.
 
 
+### 3. Processing: Archiver.java
+Locatie: [Archiver.java](https://github.com/processing/processing/blob/master/app/src/processing/app/tools/Archiver.java)  
+Omvang: 41  
+Smell Code: C1 Inappropriate Information
+
+```java
+    // someday these will be settable
+    boolean useDate;
+    int digits = 3;
+```
+
+_Figuur N: Processing Archiver.java_
+
+#### Wat deugt er niet?
+De comment.
+
+#### Waarom deugt het niet?
+De comment geeft duidelijk aan dat er dus een taak (de velden _settable_ maken) moet worden verricht. Het is veel
+duidelijker en directer om dit rechtstreeks in _issue tracking system_ te zetten.
+
+#### Oplossing
+- Comment verwijderen
+- Taak toevoegen in _issue tracking system_
+
 
 ## 2. Names
 
 ### 3. Processing: ThinkDifferent.Java
 Locatie: [ThinkDifferent.Java](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)  
 Omvang: 1 t/m 69  
-Smell Code: N1 Choose Descriptive Names  
+Smell Code: N1 Choose Descriptive Names
 
 ```java
 public class ThinkDifferent {
@@ -145,7 +168,7 @@ _OS X_ platform.
 ### 4. Processing: PVector.java
 Locatie: [PVector.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PVector.java)  
 Omvang: 343 t/m 356  
-Smell Code: F2 Ouput Arguments  
+Smell Code: F2 Ouput Arguments
 
 ```java
   /**
@@ -196,7 +219,7 @@ Er is nogsteeds sprake van duplicatie. Dit is geisoleerd opgelost in een ander h
 ### 5. Processing: PImage.java
 Locatie: [PImage.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PImage.java)  
 Omvang: 482 t/m 504  
-Smell Code: F1 Too Many Arguments  
+Smell Code: F1 Too Many Arguments
 
 ```java
 public void updatePixels(int x, int y, int w, int h) {  // ignore
@@ -286,12 +309,12 @@ niet in dezelfde plek gebruikt worden als een `Point`.
 ### 6. Processing: PApplet.java
 Locatie: [PApplet.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PApplet.java)  
 Omvang: 2242 t/m 2340  
-Smell Code: Flag Arguments  
+Smell Code: Flag Arguments
 
 ```java
 protected PGraphics makeGraphics(int w, int h,
-                                   String renderer, String path,
-                                   boolean primary) {
+                                 String renderer, String path,
+                                 boolean primary) {
     if (!primary && !g.isGL()) {
         if (renderer.equals(P2D)) {
             throw new RuntimeException("createGraphics() with P2D requires size() to use P2D or P3D");
