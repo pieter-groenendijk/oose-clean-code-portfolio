@@ -1,6 +1,6 @@
 # Analyse smells
 
-## Comments
+## 1. Comments
 
 ### 1. Processing: MouseEvent
 Locatie: [MouseEvent.java](https://github.com/processing/processing/blob/master/core/src/processing/event/MouseEvent.java)  
@@ -23,22 +23,22 @@ protected int count;
 
 
 public MouseEvent(Object nativeObject,
-long millis, int action, int modifiers,
-int x, int y, int button, int count) {  //float amount) {  //int clickCount) {
-super(nativeObject, millis, action, modifiers);
-this.flavor = MOUSE;
-this.x = x;
-this.y = y;
-this.button = button;
-//this.clickCount = clickCount;
-//this.amount = amount;
-this.count = count;
+                  long millis, int action, int modifiers,
+                  int x, int y, int button, int count) {  //float amount) {  //int clickCount) {
+    super(nativeObject, millis, action, modifiers);
+    this.flavor = MOUSE;
+    this.x = x;
+    this.y = y;
+    this.button = button;
+    //this.clickCount = clickCount;
+    //this.amount = amount;
+    this.count = count;
 }
 ```
 
 <div id="figuur-1"></div>
 
-_Figuur 1: Processing MouseEvent.java_ 
+_Figuur 1: Processing MouseEvent.java_
 
 #### Wat deugt niet?
 
@@ -50,7 +50,7 @@ Het creëert de volgende problemen:
 
 - **Wie weet of deze comment nog van waarde is?**  
   Hierdoor zal niemand het verwijderen aangezien het "mogelijk" ooit in
-  de toekomst zal gebruikt worden. Daarnaast hoe langer deze comments zullen 
+  de toekomst zal gebruikt worden. Daarnaast hoe langer deze comments zullen
   blijven bestaan ook hoe irrelevanter deze worden.
 
 #### Oplossing
@@ -59,7 +59,7 @@ De niet deugende code te verwijderen.
 
 
 
-### Processing: ThinkDifferent
+### 2. Processing: ThinkDifferent
 Locatie: [ThinkDifferent.java](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)
 Omvang: 55 t/m 72
 Smell Code: C3 Redundant Comment
@@ -72,17 +72,17 @@ static public void init(final PApplet sketch) {
 
     application.setQuitHandler(new QuitHandler() {
         public void handleQuitRequestWith(QuitEvent event, QuitResponse response) {
-        sketch.exit();
-        if (PApplet.uncaughtThrowable == null &&  // no known crash
-            !attemptedQuit) {  // haven't tried yet
-            response.cancelQuit();  // tell OS X we'll handle this
-            attemptedQuit = true;
-        } else {
-            response.performQuit();  // just force it this time
+            sketch.exit();
+            if (PApplet.uncaughtThrowable == null &&  // no known crash
+                    !attemptedQuit) {  // haven't tried yet
+                response.cancelQuit();  // tell OS X we'll handle this
+                attemptedQuit = true;
+            } else {
+                response.performQuit();  // just force it this time
+            }
         }
-      }
     });
-  }
+}
 ```
 
 _Figuur 2: Processing ThinkDifferent.java_
@@ -95,30 +95,30 @@ Het gaat hier om de comments:
 - `// just force it this time`
 
 #### Waarom deugt het niet?
-Alle comments binnen deze `init` methode zijn redundant of kunnen dat zijn. Daarmee bedoel ik te zeggen dat als deze 
-code goed geschreven was al deze comments weggelaten zouden kunnen worden. De daadwerkelijke code lezen levert betere 
-informatie dan de comments. 
+Alle comments binnen deze `init` methode zijn redundant of kunnen dat zijn. Daarmee bedoel ik te zeggen dat als deze
+code goed geschreven was al deze comments weggelaten zouden kunnen worden. De daadwerkelijke code lezen levert betere
+informatie dan de comments.
 
-Neem de regel `!attemptedQuit) { // haven't tried yet`. De variable `attemptedQuit` geeft al duidelijk aan dat er 
-geprobeerd is om af te sluiten[^1]. De comment `// haven't tried yet` vertelt, in het beste geval, dezelfde 
-informatie. 
+Neem de regel `!attemptedQuit) { // haven't tried yet`. De variable `attemptedQuit` geeft al duidelijk aan dat er
+geprobeerd is om af te sluiten[^1]. De comment `// haven't tried yet` vertelt, in het beste geval, dezelfde
+informatie.
 
 [^1]: `userAttemptedToQuit` zou nog veel duidelijker zijn.
 
 #### Oplossing
-Alle benoemde comments zouden verwijderd moeten worden. 
+Alle benoemde comments zouden verwijderd moeten worden.
 
 De code kan ook leesbaarder gemaakt worden.
-Mogelijk zou het statement `PApplet.uncaughtThrowable == null` 
-kunnen worden geabstraheerd naar zijn eigen methode: 
+Mogelijk zou het statement `PApplet.uncaughtThrowable == null`
+kunnen worden geabstraheerd naar zijn eigen methode:
 `PApplet.hasNoUncaughtExceptions()`.
 
 
 
-## Names
+## 2. Names
 
-### ThinkDifferent
-Locatie: [ThinkDifferent](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)  
+### 3. Processing: ThinkDifferent.Java
+Locatie: [ThinkDifferent.Java](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)  
 Omvang: 1 t/m 69  
 Smell Code: N1 Choose Descriptive Names  
 
@@ -129,63 +129,63 @@ public class ThinkDifferent {
 _Figuur N: Processing ThinkDifferent.java_
 
 #### Wat deugt er niet?
-De naamgeving van de _class_ `ThinkDifferent`. 
+De naamgeving van de _class_ `ThinkDifferent`.
 
 #### Waarom deugt het niet?
-Deze naam is zo vaag als het maar kan. Ik kan enkel een idee vormen, hoewel beperkt, wat de klasse doet door de _JSDoc_ erbij te lezen. 
+Deze naam is zo vaag als het maar kan. Ik kan enkel een idee vormen, hoewel beperkt, wat de klasse doet door de _JSDoc_ erbij te lezen.
 
 #### Oplossing
 De naam zal veranderd moeten worden naar iets wat de daadwerkelijke implementatie representeert. Op basis van de huidige implementatie
-zou men uitkomen op de naam `OSXIntegrationHelper`. De klasse bezit namelijk methodes die helpen met de integratie specifiek voor het 
+zou men uitkomen op de naam `OSXIntegrationHelper`. De klasse bezit namelijk methodes die helpen met de integratie specifiek voor het
 _OS X_ platform.
 
 
-## Functions
+## 3. Functions
 
-### Processing: PVector.java
+### 4. Processing: PVector.java
 Locatie: [PVector.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PVector.java)  
 Omvang: 343 t/m 356  
-Smell Code: F2 Ouput Arguments
+Smell Code: F2 Ouput Arguments  
 
 ```java
   /**
-   * Make a new 2D unit vector from an angle
-   *
-   * @param target the target vector (if null, a new vector will be created)
-   * @return the PVector
-   */
-  static public PVector fromAngle(float angle, PVector target) {
+ * Make a new 2D unit vector from an angle
+ *
+ * @param target the target vector (if null, a new vector will be created)
+ * @return the PVector
+ */
+static public PVector fromAngle(float angle, PVector target) {
     if (target == null) {
-      target = new PVector((float)Math.cos(angle),(float)Math.sin(angle),0);
+        target = new PVector((float)Math.cos(angle),(float)Math.sin(angle),0);
     } else {
-      target.set((float)Math.cos(angle),(float)Math.sin(angle),0);
+        target.set((float)Math.cos(angle),(float)Math.sin(angle),0);
     }
     return target;
-  }
+}
 ```
 
 #### Wat deugt er niet?
-Het gaat hier om het argument `PVector target`. 
+Het gaat hier om het argument `PVector target`.
 
 #### Waarom deugt het niet?
-Het kan verwarrend zijn. Op dit moment is de lijn tussen _input_ en _output_ vaag. Dit kan voor verwarring zorgen. 
+Het kan verwarrend zijn. Op dit moment is de lijn tussen _input_ en _output_ vaag. Dit kan voor verwarring zorgen.
 
 #### Oplossing
 ```java
   static public PVector fromAngle(float angle) {
     return new PVector(
-      (float)Math.cos(angle),
-      (float)Math.sin(angle), 
-      0
+            (float)Math.cos(angle),
+            (float)Math.sin(angle),
+            0
     );
-  }  
+}
 
-  public void fromAngle(float angle) {
+public void fromAngle(float angle) {
     this.set(
-      (float)Math.cos(angle),
-      (float)Math.sin(angle),
-    )
-  }
+            (float)Math.cos(angle),
+            (float)Math.sin(angle),
+            )
+}
 ```
 
 Op deze manier wordt er geen gebruik gemaakt van _output arguments_.
@@ -193,8 +193,8 @@ Op deze manier wordt er geen gebruik gemaakt van _output arguments_.
 Er is nogsteeds sprake van duplicatie. Dit is geisoleerd opgelost in een ander hoofdstuk.
 
 
-### Processing: PImage.java
-Locatie: [PImage.java]()  
+### 5. Processing: PImage.java
+Locatie: [PImage.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PImage.java)  
 Omvang: 482 t/m 504  
 Smell Code: F1 Too Many Arguments  
 
@@ -209,7 +209,6 @@ public void updatePixels(int x, int y, int w, int h) {  // ignore
         my1 = PApplet.max(0, y);
         my2 = PApplet.min(pixelHeight, y2);
         modified = true;
-      
     } else {
         if (x < mx1) mx1 = PApplet.max(0, x);
         if (x > mx2) mx2 = PApplet.min(pixelWidth, x);
@@ -224,10 +223,10 @@ public void updatePixels(int x, int y, int w, int h) {  // ignore
 }
 ```
 
-_Figuur 3: Processing PImage.java_
+_Figuur N: Processing PImage.java_
 
 #### Wat deugt niet?
-Het gaat hier om de arguments in de definitie van deze functie, namelijk: `int x, int y, int w, int h`. Specifieker, 
+Het gaat hier om de arguments in de definitie van deze functie, namelijk: `int x, int y, int w, int h`. Specifieker,
 het aantal arguments.
 
 #### Waarom deugt het niet?
@@ -243,7 +242,7 @@ En in een iets betere wereld misschien:
 image.updatePixels(width, height, x, y);
 ```
 
-Als u goed heeft opgelet erkende u dat ik sommige arguments in het laatste voorbeeld heb omgedraaid. Een hogere 
+Als u goed heeft opgelet erkende u dat ik sommige arguments in het laatste voorbeeld heb omgedraaid. Een hogere
 hoeveelheid arguments kan er gemakkelijk voor zorgen daar arguments worden omgedraaid. In dit geval zou de compiler
 er zelfs niks van zeggen, het zijn allen `int`'s.
 
@@ -276,89 +275,89 @@ of wat realistischer:
 
 ```java
 image.updatePixels(
-    upperLeftCorner,
-    size
-);
+        upperLeftCorner,
+        size
+        );
 ```
 
 In het geval dat de arguments alsnog worden omgedraaid zal de compiler dit tegenhouden. Een `Size` object kan namelijk
 niet in dezelfde plek gebruikt worden als een `Point`.
 
-### Processing: PApplet.java
-Locatie: [PApplet.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PApplet.java)
-Omvang: 2242 t/m 2340
-Smell Code: Flag Arguments
+### 6. Processing: PApplet.java
+Locatie: [PApplet.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PApplet.java)  
+Omvang: 2242 t/m 2340  
+Smell Code: Flag Arguments  
 
 ```java
-  protected PGraphics makeGraphics(int w, int h,
+protected PGraphics makeGraphics(int w, int h,
                                    String renderer, String path,
                                    boolean primary) {
     if (!primary && !g.isGL()) {
-      if (renderer.equals(P2D)) {
-        throw new RuntimeException("createGraphics() with P2D requires size() to use P2D or P3D");
-      } else if (renderer.equals(P3D)) {
-        throw new RuntimeException("createGraphics() with P3D or OPENGL requires size() to use P2D or P3D");
-      }
+        if (renderer.equals(P2D)) {
+            throw new RuntimeException("createGraphics() with P2D requires size() to use P2D or P3D");
+        } else if (renderer.equals(P3D)) {
+            throw new RuntimeException("createGraphics() with P3D or OPENGL requires size() to use P2D or P3D");
+        }
     }
 
     try {
-      Class<?> rendererClass =
-        Thread.currentThread().getContextClassLoader().loadClass(renderer);
+        Class<?> rendererClass =
+                Thread.currentThread().getContextClassLoader().loadClass(renderer);
 
-      Constructor<?> constructor = rendererClass.getConstructor(new Class[] { });
-      PGraphics pg = (PGraphics) constructor.newInstance();
+        Constructor<?> constructor = rendererClass.getConstructor(new Class[] { });
+        PGraphics pg = (PGraphics) constructor.newInstance();
 
-      pg.setParent(this);
-      pg.setPrimary(primary);
-      if (path != null) {
-        pg.setPath(savePath(path));
-      }
-      pg.setSize(w, h);
+        pg.setParent(this);
+        pg.setPrimary(primary);
+        if (path != null) {
+            pg.setPath(savePath(path));
+        }
+        pg.setSize(w, h);
 
-      // everything worked, return it
-      return pg;
+        // everything worked, return it
+        return pg;
 
     } catch (InvocationTargetException ite) {
-      String msg = ite.getTargetException().getMessage();
-      if ((msg != null) &&
-          (msg.indexOf("no jogl in java.library.path") != -1)) {
-        // Is this true anymore, since the JARs contain the native libs?
-        throw new RuntimeException("The jogl library folder needs to be " +
-          "specified with -Djava.library.path=/path/to/jogl");
+        String msg = ite.getTargetException().getMessage();
+        if ((msg != null) &&
+                (msg.indexOf("no jogl in java.library.path") != -1)) {
+            // Is this true anymore, since the JARs contain the native libs?
+            throw new RuntimeException("The jogl library folder needs to be " +
+                    "specified with -Djava.library.path=/path/to/jogl");
 
-      } else {
-        printStackTrace(ite.getTargetException());
-        Throwable target = ite.getTargetException();
-        throw new RuntimeException(target.getMessage());
-      }
+        } else {
+            printStackTrace(ite.getTargetException());
+            Throwable target = ite.getTargetException();
+            throw new RuntimeException(target.getMessage());
+        }
 
     } catch (ClassNotFoundException cnfe) {
-      if (external) {
-        throw new RuntimeException("You need to use \"Import Library\" " +
-                                   "to add " + renderer + " to your sketch.");
-      } else {
-        throw new RuntimeException("The " + renderer +
-                                   " renderer is not in the class path.");
-      }
+        if (external) {
+            throw new RuntimeException("You need to use \"Import Library\" " +
+                    "to add " + renderer + " to your sketch.");
+        } else {
+            throw new RuntimeException("The " + renderer +
+                    " renderer is not in the class path.");
+        }
 
     } catch (Exception e) {
-      if ((e instanceof IllegalArgumentException) ||
-          (e instanceof NoSuchMethodException) ||
-          (e instanceof IllegalAccessException)) {
-        if (e.getMessage().contains("cannot be <= 0")) {
-          throw new RuntimeException(e);
+        if ((e instanceof IllegalArgumentException) ||
+                (e instanceof NoSuchMethodException) ||
+                (e instanceof IllegalAccessException)) {
+            if (e.getMessage().contains("cannot be <= 0")) {
+                throw new RuntimeException(e);
+            } else {
+                printStackTrace(e);
+                String msg = renderer + " needs to be updated " +
+                        "for the current release of Processing.";
+                throw new RuntimeException(msg);
+            }
         } else {
-          printStackTrace(e);
-          String msg = renderer + " needs to be updated " +
-            "for the current release of Processing.";
-          throw new RuntimeException(msg);
+            printStackTrace(e);
+            throw new RuntimeException(e.getMessage());
         }
-      } else {
-        printStackTrace(e);
-        throw new RuntimeException(e.getMessage());
-      }
     }
-  }
+}
 ```
 
 _Figuur N: Processing PApplet.java (Commented code al weggelaten)_
@@ -366,16 +365,17 @@ _Figuur N: Processing PApplet.java (Commented code al weggelaten)_
 ### Wat deugt niet?
 De boolean argument `boolean primary`.
 
-### Waarom deugt het niet? 
+### Waarom deugt het niet?
 Een functie hoort 1 ding te doen. Een flag argument geeft al automatisch aan dat dit in dit geval niet zo is.
 
 Daarnaast maakt het een functie onnodig complex. Het vraagt om vijf argumenten! (Daar gaat het een ander keer over)
 
+### Oplossing
+TODO
 
+## 4. General
 
-## General
-
-### Processing: KeyEvent.java
+### 7. Processing: KeyEvent.java
 Locatie: [KeyEvent.java](https://github.com/processing/processing/blob/master/core/src/processing/event/KeyEvent.java)  
 Omvang: 1 t/m 1  
 Smell Code: G1 Multiple Languages in One Source File
@@ -387,46 +387,46 @@ Smell Code: G1 Multiple Languages in One Source File
 _Figuur N: Processing KeyEvent.java_
 
 #### Wat deugt niet?
-Het gehele snippet. 
+Het gehele snippet.
 
 #### Waarom deugt het niet?
 Dezelfde reden waarom boeken niet geschreven worden in meerdere talen. Het is simpelweg verwarrend om telkens je
-anders moeten instellen om te begrijpen wat er staat. 
+anders moeten instellen om te begrijpen wat er staat.
 
 #### Oplossing
 Weghalen. Volgens ChatGPT zou deze _emacs_ configuratie ook in een extern bestand gezet kunnen worden.
 
 
-### Processing: PVector.java
+### 8. Processing: PVector.java
 Locatie: [PVector.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PVector.java)  
 Omvang: 343 t/m 356  
 Smell Code: G5 Duplication
 
 ```java
   /**
-   * Make a new 2D unit vector from an angle
-   *
-   * @param target the target vector (if null, a new vector will be created)
-   * @return the PVector
-   */
-  static public PVector fromAngle(float angle, PVector target) {
+ * Make a new 2D unit vector from an angle
+ *
+ * @param target the target vector (if null, a new vector will be created)
+ * @return the PVector
+ */
+static public PVector fromAngle(float angle, PVector target) {
     if (target == null) {
-      target = new PVector((float)Math.cos(angle),(float)Math.sin(angle),0);
+        target = new PVector((float)Math.cos(angle),(float)Math.sin(angle),0);
     } else {
-      target.set((float)Math.cos(angle),(float)Math.sin(angle),0);
+        target.set((float)Math.cos(angle),(float)Math.sin(angle),0);
     }
     return target;
-  }
+}
 ```
 
 #### Wat deugt niet?
-De berekening van de `float x` en `float y` met middel van een `float angle` wordt exact herhaald. Het gaat dan om 
+De berekening van de `float x` en `float y` met middel van een `float angle` wordt exact herhaald. Het gaat dan om
 de herhaalde stukken code: `(float)Math.cos(angle)` en `(float)Math.cos(angle)`.
 
 #### Waarom deugt het niet?
 In dit geval is het erg _error prone_. Elke keer dat je deze berekening opnieuw doet is er een goede kans dat je
 het dit keer verkeerd uittypt. Daarnaast doordat je het niet geextraheerd hebt naar zijn eigen methode zal het
-ook moeilijker unittestbaar zijn. 
+ook moeilijker unittestbaar zijn.
 
 Los daarvan is het ook gewoon verspilde tijd om telkens dezelfde code opnieuw te schrijven.
 
@@ -434,30 +434,30 @@ Los daarvan is het ook gewoon verspilde tijd om telkens dezelfde code opnieuw te
 ```java
   static public float calculateXFromAngle(float angle) {
     return (float)Math.cos(angle);
-  }
+}
 
-  static public float calculateYFromAngle(float angle) {
+static public float calculateYFromAngle(float angle) {
     return (float)Math.sin(angle);
-  }
+}
 
-  /**
-   * Make a new 2D unit vector from an angle
-   *
-   * @param target the target vector (if null, a new vector will be created)
-   * @return the PVector
-   */
-  static public PVector fromAngle(float angle, PVector target) {
+/**
+ * Make a new 2D unit vector from an angle
+ *
+ * @param target the target vector (if null, a new vector will be created)
+ * @return the PVector
+ */
+static public PVector fromAngle(float angle, PVector target) {
     float x = this.calculateXFromAngle(angle);
     float y = this.calculateYFromAngle(angle);
 
     if (target == null) {
-      target = new PVector(x, y, 0);
+        target = new PVector(x, y, 0);
     } else {
-      target.set(x, y, 0);
+        target.set(x, y, 0);
     }
 
     return target;
-  }
+}
 ```
 
 De berekeningen van zowel `x` en `y` zijn nu gescheiden in een eigen methode. Verder is de code, hoewel die niet perfect is,
