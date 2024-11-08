@@ -163,6 +163,24 @@ zou men uitkomen op de naam `OSXIntegrationHelper`. De klasse bezit namelijk met
 _OS X_ platform.
 
 
+### 4. Processing: JAppleMenuBar.java
+Locatie: [JAppleMenuBar.java]()  
+Omvang: 66 t/m 68  
+Smell Code: N7 Names Should Describe Side-Effects
+
+#### Wat deugt er niet?
+De naamgeving van de functie `sadness()`.
+
+#### Waarom deugt het niet?
+Het is zeer simpel. Als de functie niet beschrijft wat de functie daadwerkelijke doet weet alleen de maker wat de functie 
+doet, totdat ook hij dat vergeet. Programmeurs zullen alleen weten wat de `sadness()` methode doet, als zij net de functie
+definitie hebben doorgenomen.
+
+#### Oplossing
+Verander de naam van de functie naar `printFullscreenModeDisabledError`. 
+
+
+
 ## 3. Functions
 
 ### 4. Processing: PVector.java
@@ -568,7 +586,7 @@ wanneer dit niet het geval is kan een static import gebruikt worden zoals `impor
 ### 10. Processing Webserver.java
 Locatie: [Webserver.java](https://github.com/processing/processing/blob/master/app/src/processing/app/WebServer.java)   
 Omvang: 529 t/m 572  
-Smell Code: J3 Constants versus Enums  
+Smell Code: J3 Constants versus Enums
 
 ```java
 interface HttpConstants {
