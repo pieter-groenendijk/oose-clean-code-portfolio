@@ -385,15 +385,15 @@ protected PGraphics makeGraphics(int w, int h,
 
 _Figuur N: Processing PApplet.java (Commented code al weggelaten)_
 
-### Wat deugt niet?
+#### Wat deugt niet?
 De boolean argument `boolean primary`.
 
-### Waarom deugt het niet?
+#### Waarom deugt het niet?
 Een functie hoort 1 ding te doen. Een flag argument geeft al automatisch aan dat dit in dit geval niet zo is.
 
 Daarnaast maakt het een functie onnodig complex. Het vraagt om vijf argumenten! (Daar gaat het een ander keer over)
 
-### Oplossing
+#### Oplossing
 TODO
 
 ## 4. General
