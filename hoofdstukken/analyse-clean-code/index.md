@@ -2,14 +2,57 @@
 
 ## Meaningful Names
 
+### Apache Commons: Range.java
+Locatie: [Range.java](https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/Range.java)    
+Omvang:  163 t/m 184  
+Clean Code Regel: Use Intention-Revealing Names  
+
+```java
+/**
+ * Creates a range with the specified minimum and maximum values (both inclusive).
+ *
+ * <p>The range uses the specified {@link Comparator} to determine where
+ * values lie in the range.</p>
+ *
+ * <p>The arguments may be passed in the order (min,max) or (max,min).
+ * The getMinimum and getMaximum methods will return the correct values.</p>
+ *
+ * @param <T> the type of the elements in this range
+ * @param fromInclusive  the first value that defines the edge of the range, inclusive
+ * @param toInclusive  the second value that defines the edge of the range, inclusive
+ * @param comparator  the comparator to be used, null for natural ordering
+ * @return the range object, not null
+ * @throws NullPointerException when fromInclusive is null.
+ * @throws NullPointerException when toInclusive is null.
+ * @throws ClassCastException if using natural ordering and the elements are not {@link Comparable}
+ * @since 3.13.0
+ */
+public static <T> Range<T> of(final T fromInclusive, final T toInclusive, final Comparator<T> comparator) {
+    return new Range<>(fromInclusive, toInclusive, comparator);
+}
+```
+
+#### Wat deugt er?
+Zeer duidelijke naamgeving van de functie, en nog meer van de variabelen.
+
+#### Waarom deugt het?
+##### Functienaam
+De functienaam `of(...)` lijkt misschien op eerste gezicht een onduidelijke functie naam. Echter is dat niet hoe je hem zal aanroepen. Een daadwerkelijke realistische aanroep zal eruit
+zien als `Range.of(2, 10, Integer::compare)`. Het maakt gelijk duidelijk dat je een range aanmaakt. Het leest als een zin: "Een range van" ...
+
+##### Parameternamen
+De parameternamen `fromInclusive` en `toInclusive` maken het zeer duidelijk waar de boundaries liggen van de range die we aanmaken.
+Een versimpeling zou `from` en `to` kunnen zijn. Echter is het met de gekozen namen gelijk duidelijk, er kan moeilijk verwarring 
+plaatsvinden. 
+
 ## Functions
 
 ## Comments
 
 ### Apache Commons: StringUtils.java
 Locatie: [StringUtils.java](https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/StringUtils.java)  
-Omvang: 604 t/m 644
-Clean Code Regel: Javadocs in Public APIs
+Omvang: 604 t/m 644  
+Clean Code Regel: Javadocs in Public APIs  
 
 ```java
 /**
