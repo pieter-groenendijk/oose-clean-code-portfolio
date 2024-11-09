@@ -47,6 +47,116 @@ plaatsvinden.
 
 ## Functions
 
+### Apache Commons: CharUtils.java
+Locatie: [CharUtils.java](https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/CharUtils.java)  
+Omvang: 80 t/m 173  
+Clean Code Regel: Command Query Separation  
+
+```java
+/**
+ * Checks whether the character is ASCII 7 bit.
+ *
+ * <pre>
+ *   CharUtils.isAscii('a')  = true
+ *   CharUtils.isAscii('A')  = true
+ *   CharUtils.isAscii('3')  = true
+ *   CharUtils.isAscii('-')  = true
+ *   CharUtils.isAscii('\n') = true
+ *   CharUtils.isAscii('&copy;') = false
+ * </pre>
+ *
+ * @param ch  the character to check
+ * @return true if less than 128
+ */
+public static boolean isAscii(final char ch) {
+    return ch < 128;
+}
+
+/**
+ * Checks whether the character is ASCII 7 bit alphabetic.
+ *
+ * <pre>
+ *   CharUtils.isAsciiAlpha('a')  = true
+ *   CharUtils.isAsciiAlpha('A')  = true
+ *   CharUtils.isAsciiAlpha('3')  = false
+ *   CharUtils.isAsciiAlpha('-')  = false
+ *   CharUtils.isAsciiAlpha('\n') = false
+ *   CharUtils.isAsciiAlpha('&copy;') = false
+ * </pre>
+ *
+ * @param ch  the character to check
+ * @return true if between 65 and 90 or 97 and 122 inclusive
+ */
+public static boolean isAsciiAlpha(final char ch) {
+    return isAsciiAlphaUpper(ch) || isAsciiAlphaLower(ch);
+}
+
+/**
+ * Checks whether the character is ASCII 7 bit alphabetic lower case.
+ *
+ * <pre>
+ *   CharUtils.isAsciiAlphaLower('a')  = true
+ *   CharUtils.isAsciiAlphaLower('A')  = false
+ *   CharUtils.isAsciiAlphaLower('3')  = false
+ *   CharUtils.isAsciiAlphaLower('-')  = false
+ *   CharUtils.isAsciiAlphaLower('\n') = false
+ *   CharUtils.isAsciiAlphaLower('&copy;') = false
+ * </pre>
+ *
+ * @param ch  the character to check
+ * @return true if between 97 and 122 inclusive
+ */
+public static boolean isAsciiAlphaLower(final char ch) {
+    return ch >= 'a' && ch <= 'z';
+}
+
+/**
+ * Checks whether the character is ASCII 7 bit numeric.
+ *
+ * <pre>
+ *   CharUtils.isAsciiAlphanumeric('a')  = true
+ *   CharUtils.isAsciiAlphanumeric('A')  = true
+ *   CharUtils.isAsciiAlphanumeric('3')  = true
+ *   CharUtils.isAsciiAlphanumeric('-')  = false
+ *   CharUtils.isAsciiAlphanumeric('\n') = false
+ *   CharUtils.isAsciiAlphanumeric('&copy;') = false
+ * </pre>
+ *
+ * @param ch  the character to check
+ * @return true if between 48 and 57 or 65 and 90 or 97 and 122 inclusive
+ */
+public static boolean isAsciiAlphanumeric(final char ch) {
+    return isAsciiAlpha(ch) || isAsciiNumeric(ch);
+}
+
+/**
+ * Checks whether the character is ASCII 7 bit alphabetic upper case.
+ *
+ * <pre>
+ *   CharUtils.isAsciiAlphaUpper('a')  = false
+ *   CharUtils.isAsciiAlphaUpper('A')  = true
+ *   CharUtils.isAsciiAlphaUpper('3')  = false
+ *   CharUtils.isAsciiAlphaUpper('-')  = false
+ *   CharUtils.isAsciiAlphaUpper('\n') = false
+ *   CharUtils.isAsciiAlphaUpper('&copy;') = false
+ * </pre>
+ *
+ * @param ch  the character to check
+ * @return true if between 65 and 90 inclusive
+ */
+public static boolean isAsciiAlphaUpper(final char ch) {
+    return ch >= 'A' && ch <= 'Z';
+}
+```
+
+#### Wat deugt er?
+De functiedefinities
+
+#### Waarom deugt het?
+Al deze functie definities maken het duidelijk dat ze iets beantwoorden, **en dat doen
+ze dan ook**. Functies zijn duidelijk gescheiden in _doe_ en _beantwoord_ functies, ze
+worden niet gemengt. 
+
 ## Comments
 
 ### Apache Commons: StringUtils.java
