@@ -172,12 +172,12 @@ Smell Code: N7 Names Should Describe Side-Effects
 De naamgeving van de functie `sadness()`.
 
 #### Waarom deugt het niet?
-Het is zeer simpel. Als de functie niet beschrijft wat de functie daadwerkelijke doet weet alleen de maker wat de functie 
+Het is zeer simpel. Als de functie niet beschrijft wat de functie daadwerkelijke doet weet alleen de maker wat de functie
 doet, totdat ook hij dat vergeet. Programmeurs zullen alleen weten wat de `sadness()` methode doet, als zij net de functie
 definitie hebben doorgenomen.
 
 #### Oplossing
-Verander de naam van de functie naar `printFullscreenModeDisabledError`. 
+Verander de naam van de functie naar `printFullscreenModeDisabledError`.
 
 
 
@@ -506,6 +506,43 @@ behouden hoe die eerder was.
 
 De duplicatie is zo afgenomen.
 
+
+### N. Processing: PImage.java
+Locatie: [PImage.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PImage.java)
+Omvang: 438 t/m 443
+Smell Code: G28: Encapsulate Conditionals
+
+```java
+public void loadPixels() {  // ignore
+    if (pixels == null || pixels.length != pixelWidth*pixelHeight) {
+        pixels = new int[pixelWidth*pixelHeight];
+    }
+    setLoaded();
+}
+```
+
+#### Wat deugt er niet?
+De conditional `pixels == null || pixels.length != pixelWidth*pixelHeight`.
+
+#### Waarom deugt het niet?
+Boolean logica is moelijk genoeg te begrijpen. Elke keer dat iemand deze functie langsloopt is er sprake van de 
+_mental overhead_ om de conditional te begrijpen.
+
+#### Oplossing
+Extraheer de conditional naar zijn eigen functie, namelijk:
+
+```java
+public void loadPixels() {  // ignore
+    if (!isPixelsArrayInitialized()) {
+        pixels = new int[pixelWidth*pixelHeight];
+    }
+    setLoaded();
+  }
+  
+private boolean isPixelsArrayInitialized() {
+    return pixels == null || pixels.length != pixelWidth*pixelHeight; 
+}
+```
 
 
 ## 5. Java
