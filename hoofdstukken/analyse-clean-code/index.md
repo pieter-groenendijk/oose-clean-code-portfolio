@@ -157,6 +157,35 @@ Al deze functie definities maken het duidelijk dat ze iets beantwoorden, **en da
 ze dan ook**. Functies zijn duidelijk gescheiden in _doe_ en _beantwoord_ functies, ze
 worden niet gemengt. 
 
+### Apache Commons: AnnotationUtils.java
+Locatie: [AnnotationUtils.java]()  
+Omvang: 71 t/m 76  
+Clean Code Regel: Have No Side Effects  
+
+```java
+/**
+ * {@inheritDoc}
+ */
+@Override
+protected void appendDetail(final StringBuffer buffer, final String fieldName, Object value) {
+    if (value instanceof Annotation) {
+        value = AnnotationUtils.toString((Annotation) value);
+    }
+    super.appendDetail(buffer, fieldName, value);
+}
+```
+
+#### Wat deugt er?
+De functie body.
+
+#### Waarom deugt het?
+De functie body zorgt niet voor side-effects. De functie zorgt er alleen voor dat het doel beschreven in de naam, namelijk
+`appendDetail` gedaan wordt, dat is de enige consequentie van het uitvoeren van de functie.
+
+Niet logische consequenties van een functie kunnen voor verwarring zorgen, en verwarring zorgt voor bugs. Daarom is het
+goed dat deze functie alleen zorgt voor één logische consequentie.
+
+
 ## Comments
 
 ### Apache Commons: StringUtils.java
