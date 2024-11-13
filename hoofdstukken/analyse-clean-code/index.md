@@ -105,9 +105,189 @@ Duidelijke Javadoc comment (604 t/m 629).
 De javadoc comment legt duidelijk en accuraat uit wat de functie doet. Dat is super nuttig als je deze package gaat gebruiken in je eigen code. Geen onzekerheden wat de 
 code doet.
 
+
 ## Formatting
 
 ## Objects and Data Structures
+
+### Apache Commons: RandomStringUtils.java
+Locatie: [RandomStringUtils.java]()  
+Omvang: 251 t/m 378
+Clean Code Regel: Law of Demeter
+
+```java
+    /**
+ * Creates a random string based on a variety of options, using supplied source of randomness.
+ *
+ * <p>
+ * If start and end are both {@code 0}, start and end are set to {@code ' '} and {@code 'z'}, the ASCII printable
+ * characters, will be used, unless letters and numbers are both {@code false}, in which case, start and end are set
+ * to {@code 0} and {@link Character#MAX_CODE_POINT}.
+ *
+ * <p>
+ * If set is not {@code null}, characters between start and end are chosen.
+ * </p>
+ *
+ * <p>
+ * This method accepts a user-supplied {@link Random} instance to use as a source of randomness. By seeding a single
+ * {@link Random} instance with a fixed seed and using it for each call, the same random sequence of strings can be
+ * generated repeatedly and predictably.
+ * </p>
+ *
+ * @param count   the length of random string to create
+ * @param start   the position in set of chars to start at (inclusive)
+ * @param end     the position in set of chars to end before (exclusive)
+ * @param letters if {@code true}, generated string may include alphabetic characters
+ * @param numbers if {@code true}, generated string may include numeric characters
+ * @param chars   the set of chars to choose randoms from, must not be empty. If {@code null}, then it will use the
+ *                set of all chars.
+ * @param random  a source of randomness.
+ * @return the random string
+ * @throws ArrayIndexOutOfBoundsException if there are not {@code (end - start) + 1} characters in the set array.
+ * @throws IllegalArgumentException       if {@code count} &lt; 0 or the provided chars array is empty.
+ * @since 2.0
+ */
+public static String random(int count, int start, int end, final boolean letters, final boolean numbers,
+                            final char[] chars, final Random random) {
+    if (count == 0) {
+        return StringUtils.EMPTY;
+    }
+    if (count < 0) {
+        throw new IllegalArgumentException("Requested random string length " + count + " is less than 0.");
+    }
+    if (chars != null && chars.length == 0) {
+        throw new IllegalArgumentException("The chars array must not be empty");
+    }
+
+    if (start == 0 && end == 0) {
+        if (chars != null) {
+            end = chars.length;
+        } else if (!letters && !numbers) {
+            end = Character.MAX_CODE_POINT;
+        } else {
+            end = 'z' + 1;
+            start = ' ';
+        }
+    } else if (end <= start) {
+        throw new IllegalArgumentException(
+                "Parameter end (" + end + ") must be greater than start (" + start + ")");
+    } else if (start < 0 || end < 0) {
+        throw new IllegalArgumentException("Character positions MUST be >= 0");
+    }
+
+    if (end > Character.MAX_CODE_POINT) {
+        // Technically, it should be `Character.MAX_CODE_POINT+1` as `end` is excluded
+        // But the character `Character.MAX_CODE_POINT` is private use, so it would anyway be excluded
+        end = Character.MAX_CODE_POINT;
+    }
+
+    // Optimizations and tests when chars == null and using ASCII characters (end <= 0x7f)
+    if (chars == null && end <= 0x7f) {
+        // Optimize generation of full alphanumerical characters
+        // Normally, we would need to pick a 7-bit integer, since gap = 'z' - '0' + 1 = 75 > 64
+        // In turn, this would make us reject the sampling with probability 1 - 62 / 2^7 > 1 / 2
+        // Instead we can pick directly from the right set of 62 characters, which requires
+        // picking a 6-bit integer and only rejecting with probability 2 / 64 = 1 / 32
+        if (letters && numbers && start <= ASCII_0 && end >= ASCII_z + 1) {
+            return random(count, 0, 0, false, false, ALPHANUMERICAL_CHARS, random);
+        }
+
+        if (numbers && end <= ASCII_0 || letters && end <= ASCII_A) {
+            throw new IllegalArgumentException(
+                    "Parameter end (" + end + ") must be greater then (" + ASCII_0 + ") for generating digits "
+                            + "or greater then (" + ASCII_A + ") for generating letters.");
+        }
+
+        // Optimize start and end when filtering by letters and/or numbers:
+        // The range provided may be too large since we filter anyway afterward.
+        // Note the use of Math.min/max (as opposed to setting start to '0' for example),
+        // since it is possible the range start/end excludes some of the letters/numbers,
+        // e.g., it is possible that start already is '1' when numbers = true, and start
+        // needs to stay equal to '1' in that case.
+        // Note that because of the above test, we will always have start < end
+        // even after this optimization.
+        if (letters && numbers) {
+            start = Math.max(ASCII_0, start);
+            end = Math.min(ASCII_z + 1, end);
+        } else if (numbers) {
+            // just numbers, no letters
+            start = Math.max(ASCII_0, start);
+            end = Math.min(ASCII_9 + 1, end);
+        } else if (letters) {
+            // just letters, no numbers
+            start = Math.max(ASCII_A, start);
+            end = Math.min(ASCII_z + 1, end);
+        }
+    }
+
+    final StringBuilder builder = new StringBuilder(count);
+    final int gap = end - start;
+    final int gapBits = Integer.SIZE - Integer.numberOfLeadingZeros(gap);
+    // The size of the cache we use is an heuristic:
+    // about twice the number of bytes required if no rejection
+    // Ideally the cache size depends on multiple factor, including the cost of generating x bytes
+    // of randomness as well as the probability of rejection. It is however not easy to know
+    // those values programmatically for the general case.
+    final CachedRandomBits arb = new CachedRandomBits((count * gapBits + 3) / 5 + 10, random);
+
+    while (count-- != 0) {
+        // Generate a random value between start (included) and end (excluded)
+        final int randomValue = arb.nextBits(gapBits) + start;
+        // Rejection sampling if value too large
+        if (randomValue >= end) {
+            count++;
+            continue;
+        }
+
+        final int codePoint;
+        if (chars == null) {
+            codePoint = randomValue;
+
+            switch (Character.getType(codePoint)) {
+                case Character.UNASSIGNED:
+                case Character.PRIVATE_USE:
+                case Character.SURROGATE:
+                    count++;
+                    continue;
+            }
+
+        } else {
+            codePoint = chars[randomValue];
+        }
+
+        final int numberOfChars = Character.charCount(codePoint);
+        if (count == 0 && numberOfChars > 1) {
+            count++;
+            continue;
+        }
+
+        if (letters && Character.isLetter(codePoint) || numbers && Character.isDigit(codePoint)
+                || !letters && !numbers) {
+            builder.appendCodePoint(codePoint);
+
+            if (numberOfChars == 2) {
+                count--;
+            }
+
+        } else {
+            count++;
+        }
+    }
+    return builder.toString();
+}
+```
+
+#### Wat deugt er?
+De gehele body van de functie.
+
+#### Waarom deugt het?
+De gehele body van de functie volgt de _law of demeter_. De functie roept alleen maar functies aan van:
+- De klasse zelf
+- Een object gemaakt door de functie
+- Een object doorgegeven als parameter aan de functie
+- Een object opgeslagen (als referentie) in de klasse
+
+
 
 ## Error Handling
 
