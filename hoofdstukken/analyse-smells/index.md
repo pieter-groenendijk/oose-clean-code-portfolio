@@ -414,6 +414,115 @@ Daarnaast maakt het een functie onnodig complex. Het vraagt om vijf argumenten! 
 #### Oplossing
 TODO
 
+
+### N: Processing: PApplet.java
+Locatie [PApplet.jav](https://github.com/processing/processing/blob/master/core/src/processing/core/PApplet.java)  
+Omvang: 1 t/m 13  
+Smell Code: G30 Functions Should Do One Thing  
+
+```java
+public int displayDensity(int display) {
+    if (PApplet.platform == PConstants.MACOSX) {
+        // This should probably be reset each time there's a display change.
+        // A 5-minute search didn't turn up any such event in the Java 7 API.
+        // Also, should we use the Toolkit associated with the editor window?
+        final String javaVendor = System.getProperty("java.vendor");
+        if (javaVendor.contains("Oracle")) {
+            GraphicsDevice device;
+            GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+
+            if (display == -1) {
+                device = env.getDefaultScreenDevice();
+
+            } else if (display == SPAN) {
+                throw new RuntimeException("displayDensity() only works with specific display numbers");
+
+            } else {
+                GraphicsDevice[] devices = env.getScreenDevices();
+                if (display > 0 && display <= devices.length) {
+                device = devices[display - 1];
+                } else {
+                if (devices.length == 1) {
+                    System.err.println("Only one display is currently known, use displayDensity(1).");
+                } else {
+                    System.err.format("Your displays are numbered %d through %d, " +
+                    "pass one of those numbers to displayDensity()%n", 1, devices.length);
+                }
+                throw new RuntimeException("Display " + display + " does not exist.");
+            }
+        }
+
+        try {
+            Field field = device.getClass().getDeclaredField("scale");
+            if (field != null) {
+                field.setAccessible(true);
+                Object scale = field.get(device);
+
+                if (scale instanceof Integer && ((Integer)scale).intValue() == 2) {
+                    return 2;
+                }
+            }
+        } catch (Exception ignore) { }
+        }
+    } else if (PApplet.platform == PConstants.WINDOWS || PApplet.platform == PConstants.LINUX) {
+        if (suggestedDensity == -1) {
+            // TODO: detect and return DPI scaling using JNA; Windows has
+            //   a system-wide value, not sure how it works on Linux
+            return 1;
+        } else if (suggestedDensity == 1 || suggestedDensity == 2) {
+            return suggestedDensity;
+        }
+    }
+    return 1;
+}
+```
+
+#### Wat deugt er niet?
+De functie body
+
+#### Waarom deugt het niet?
+Ik denk dat het erg voor de hand liggend is om te zeggen dat deze functie meer dan een ding doet. De functie kan minimaal 
+opgeslitst worden in de volgende stappen:
+1. Stel vast of MACOSX is.
+2. Als dat zo is, _return_ display density van een scherm binnen een Mac OS X omgeving.
+3. Als dat niet zo was, stel vast of de omgeving WINDOWS of LINUX is.
+4. Als dat zo is, _return_ display density van een scherm binnen een Windows of Linux omgeving.
+5. Als dat niet zo was, ga uit van een _normal-density_ scherm.
+
+#### Oplossing
+```java
+public int displayDensity(int display) {
+    if (this.usingMacOsXPlatform()) {
+        return displayDensityMacOsX(display);
+    } else if (this.usingWindowsPlatform() || this.usingLinuxPlatform()) {
+        return displayDensityWindowsOrLinux(display);
+    } else {
+        return 1;
+    }
+}
+
+private bool usingMacOsXPlatform() {
+    return PApplet.platform == PConstants.MACOSX;
+}
+
+private bool usingWindowsPlatform() {
+    return PApplet.platform == PConstants.WINDOWS;
+}
+
+private bool usingLinuxPlatform() {
+    return PApplet.platform == PConstants.LINUX;
+}
+
+private int displayDensityMacOsX(int display) {
+    ...
+}
+
+private int displayDensityWindowsOrLinux(int display) {
+    ...
+}
+```
+
+
 ## 4. General
 
 ### 7. Processing: KeyEvent.java
