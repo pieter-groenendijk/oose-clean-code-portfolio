@@ -104,7 +104,7 @@ Daarnaast zou het belangrijk zijn om de code zelf leesbaarder en duidelijker te 
 ### 3. Processing: Archiver.java
 Locatie: [Archiver.java](https://github.com/processing/processing/blob/master/app/src/processing/app/tools/Archiver.java)  
 Omvang: 41  
-Smell Code: C1 Inappropriate Information
+Smell Code: C1 Inappropriate Information  
 
 ```java
     // someday these will be settable
@@ -112,18 +112,18 @@ boolean useDate;
 int digits = 3;
 ```
 
-_Figuur N: Processing Archiver.java_
+_Figuur 3: Processing: Archiver.java_
 
 #### Wat deugt er niet?
-De comment.
+De comment `someday these will be settable`.
 
 #### Waarom deugt het niet?
-De comment geeft duidelijk aan dat er dus een taak (de velden _settable_ maken) moet worden verricht. Het is veel
-duidelijker en directer om dit rechtstreeks in _issue tracking system_ te zetten.
+De comment geeft duidelijk aan dat er dus een taak (de velden _settable_ maken) moet worden verricht. 
+Het is veel duidelijker en directer om dit rechtstreeks in een _issue tracking system_ te zetten. 
 
 #### Oplossing
 - Comment verwijderen
-- Taak toevoegen in _issue tracking system_
+- Taak toevoegen in het _issue tracking system_
 
 
 ## 2. Names
