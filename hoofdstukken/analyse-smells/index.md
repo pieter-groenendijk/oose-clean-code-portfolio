@@ -131,23 +131,24 @@ Het is veel duidelijker en directer om dit rechtstreeks in een _issue tracking s
 ### 4. Processing: ThinkDifferent.Java
 Locatie: [ThinkDifferent.Java](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)  
 Omvang: 1 t/m 69  
-Smell Code: N1 Choose Descriptive Names
+Smell Code: N1 Choose Descriptive Names  
 
 ```java
 public class ThinkDifferent {
 ```
 
-_Figuur N: Processing ThinkDifferent.java_
+_Figuur 4: Processing ThinkDifferent.java_
 
 #### Wat deugt er niet?
 De naamgeving van de _class_ `ThinkDifferent`.
 
 #### Waarom deugt het niet?
-Deze naam is zo vaag als het maar kan. Ik kan enkel een idee vormen, hoewel beperkt, wat de klasse doet door de _JSDoc_ erbij te lezen.
+De naam zou niet vager kunnen. Ik kan enkel een idee vormen, hoewel beperkt, wat de klasse doet door de _JSDoc_ erbij te lezen.
 
 #### Oplossing
-De naam zal veranderd moeten worden naar iets wat de daadwerkelijke implementatie representeert. Op basis van de huidige implementatie
-zou men uitkomen op de naam `OSXIntegrationHelper`. De klasse bezit namelijk methodes die helpen met de integratie specifiek voor het
+De naam zal verandert moeten worden naar iets wat de daadwerkelijke implementatie representeert. 
+Op basis van de huidige implementatie zou men uitkomen op een naam zoals `OSXIntegrationHelper`. 
+De klasse bezit namelijk methodes die helpen met de integratie specifiek voor het
 _OS X_ platform.
 
 
