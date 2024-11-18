@@ -247,6 +247,37 @@ code doet.
 
 ## Formatting
 
+### Guava: Booleans.java
+Locatie: [Booleans.java](https://github.com/google/guava/blob/master/guava/src/com/google/common/primitives/Booleans.java)  
+Omvang: 237 t/m 249
+Clean Code Regel: Vertical Distance
+
+```java
+public static boolean[] concat(boolean[]... arrays) {
+    long length = 0;
+    for (boolean[] array : arrays) {
+        length += array.length;
+    }
+    boolean[] result = new boolean[checkNoOverflow(length)];
+    int pos = 0;
+    for (boolean[] array : arrays) {
+        System.arraycopy(array, 0, result, pos, array.length);
+        pos += array.length;
+    }
+    return result;
+}
+```
+
+#### Wat deugt er?
+De verticale afstand tussen de declaratie en gebruik van lokale variabelen binnen de functie.
+
+#### Waarom deugt het? 
+De lokale variabelen `length`, `result` en `pos` worden zo dicht mogelijk bij hun daadwerkelijke 
+gebruik geplaatst. Door dit principe toe te passen blijft de code goed leesbaar. Men kan in 1 beeld 
+de code aflezen.
+
+
+
 ## Objects and Data Structures
 
 ### Apache Commons: RandomStringUtils.java
