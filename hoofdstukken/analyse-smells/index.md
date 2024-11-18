@@ -140,7 +140,7 @@ duidelijker en directer om dit rechtstreeks in _issue tracking system_ te zetten
 
 ## 2. Names
 
-### 3. Processing: ThinkDifferent.Java
+### 4. Processing: ThinkDifferent.Java
 Locatie: [ThinkDifferent.Java](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)  
 Omvang: 1 t/m 69  
 Smell Code: N1 Choose Descriptive Names
@@ -163,7 +163,7 @@ zou men uitkomen op de naam `OSXIntegrationHelper`. De klasse bezit namelijk met
 _OS X_ platform.
 
 
-### 4. Processing: JAppleMenuBar.java
+### 5. Processing: JAppleMenuBar.java
 Locatie: [JAppleMenuBar.java]()  
 Omvang: 66 t/m 68  
 Smell Code: N7 Names Should Describe Side-Effects
@@ -183,7 +183,7 @@ Verander de naam van de functie naar `printFullscreenModeDisabledError`.
 
 ## 3. Functions
 
-### 4. Processing: PVector.java
+### 6. Processing: PVector.java
 Locatie: [PVector.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PVector.java)  
 Omvang: 343 t/m 356  
 Smell Code: F2 Ouput Arguments
@@ -234,7 +234,7 @@ Op deze manier wordt er geen gebruik gemaakt van _output arguments_.
 Er is nogsteeds sprake van duplicatie. Dit is geisoleerd opgelost in een ander hoofdstuk.
 
 
-### 5. Processing: PImage.java
+### 7. Processing: PImage.java
 Locatie: [PImage.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PImage.java)  
 Omvang: 482 t/m 504  
 Smell Code: F1 Too Many Arguments
@@ -324,7 +324,7 @@ image.updatePixels(
 In het geval dat de arguments alsnog worden omgedraaid zal de compiler dit tegenhouden. Een `Size` object kan namelijk
 niet in dezelfde plek gebruikt worden als een `Point`.
 
-### 6. Processing: PApplet.java
+### 8. Processing: PApplet.java
 Locatie: [PApplet.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PApplet.java)  
 Omvang: 2242 t/m 2340  
 Smell Code: Flag Arguments
@@ -415,7 +415,7 @@ Daarnaast maakt het een functie onnodig complex. Het vraagt om vijf argumenten! 
 TODO
 
 
-### N: Processing: PApplet.java
+### 9: Processing: PApplet.java
 Locatie [PApplet.jav](https://github.com/processing/processing/blob/master/core/src/processing/core/PApplet.java)  
 Omvang: 1 t/m 13  
 Smell Code: G30 Functions Should Do One Thing  
@@ -525,7 +525,7 @@ private int displayDensityWindowsOrLinux(int display) {
 
 ## 4. General
 
-### 7. Processing: KeyEvent.java
+### 10. Processing: KeyEvent.java
 Locatie: [KeyEvent.java](https://github.com/processing/processing/blob/master/core/src/processing/event/KeyEvent.java)  
 Omvang: 1 t/m 1  
 Smell Code: G1 Multiple Languages in One Source File
@@ -547,7 +547,7 @@ anders moeten instellen om te begrijpen wat er staat.
 Weghalen. Volgens ChatGPT zou deze _emacs_ configuratie ook in een extern bestand gezet kunnen worden.
 
 
-### 8. Processing: PVector.java
+### 11. Processing: PVector.java
 Locatie: [PVector.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PVector.java)  
 Omvang: 343 t/m 356  
 Smell Code: G5 Duplication
@@ -616,7 +616,7 @@ behouden hoe die eerder was.
 De duplicatie is zo afgenomen.
 
 
-### N. Processing: PImage.java
+### 12. Processing: PImage.java
 Locatie: [PImage.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PImage.java)
 Omvang: 438 t/m 443
 Smell Code: G28: Encapsulate Conditionals
@@ -654,7 +654,7 @@ private boolean isPixelsArrayInitialized() {
 ```
 
 
-### Processing: PApplet.java
+### 13. Processing: PApplet.java
 Locatie: [PApplet.java]()  
 Omvang: 2393 t/m 2517
 Smell Code: G9 Dead Code
@@ -799,7 +799,7 @@ Verwijder de besproken conditional en bijhorende code block.
 
 
 ## 5. Java
-### 9. Processing: Webserver.java
+### 14. Processing: Webserver.java
 Locatie: [Webserver.java](https://github.com/processing/processing/blob/master/app/src/processing/app/WebServer.java)  
 Omvang: 17 en 529 t/m 572  
 Smell Code: J2 Don't inherit Constants
@@ -873,7 +873,7 @@ In dit geval kan de `implements HttpConstants` weggehaald worden. De interface s
 wanneer dit niet het geval is kan een static import gebruikt worden zoals `import static processing.app.HttpConstants.*`.
 
 
-### 10. Processing Webserver.java
+### 15. Processing Webserver.java
 Locatie: [Webserver.java](https://github.com/processing/processing/blob/master/app/src/processing/app/WebServer.java)   
 Omvang: 529 t/m 572  
 Smell Code: J3 Constants versus Enums
