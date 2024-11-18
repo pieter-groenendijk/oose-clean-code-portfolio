@@ -175,7 +175,7 @@ Verander de naam van de functie naar `printFullscreenModeDisabledError`.
 ### 6. Processing: PVector.java
 Locatie: [PVector.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PVector.java)  
 Omvang: 343 t/m 356  
-Smell Code: F2 Ouput Arguments
+Smell Code: F2 Ouput Arguments  
 
 ```java
   /**
@@ -198,23 +198,25 @@ static public PVector fromAngle(float angle, PVector target) {
 Het gaat hier om het argument `PVector target`.
 
 #### Waarom deugt het niet?
-Het kan verwarrend zijn. Op dit moment is de lijn tussen _input_ en _output_ vaag. Dit kan voor verwarring zorgen.
+Op dit moment is de lijn tussen _input_ en _output_ vaag. Dit kan voor verwarring zorgen.
+Het kan gemakkelijk voorkomen worden.
 
 #### Oplossing
 ```java
   static public PVector fromAngle(float angle) {
     return new PVector(
-            (float)Math.cos(angle),
-            (float)Math.sin(angle),
-            0
+        (float)Math.cos(angle),
+        (float)Math.sin(angle),
+        0
     );
 }
 
-public void fromAngle(float angle) {
+public void setFromAngle(float angle) {
     this.set(
-            (float)Math.cos(angle),
-            (float)Math.sin(angle),
-            )
+        (float)Math.cos(angle),
+        (float)Math.sin(angle),
+        0
+    );
 }
 ```
 
