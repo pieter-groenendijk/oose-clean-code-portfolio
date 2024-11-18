@@ -5,7 +5,7 @@
 ### 1. Processing: MouseEvent.java
 Locatie: [MouseEvent.java](https://github.com/processing/processing/blob/master/core/src/processing/event/MouseEvent.java)  
 Omvang: 38 t/m 63  
-Smell Code: C5 Commented-Out Code
+Smell Code: C5 Commented-Out Code  
 
 ```java
 protected int x, y;
@@ -51,10 +51,10 @@ behouden worden hoe irrelevanter worden.
 De niet deugende code te verwijderen.
 
 
-### 2. Processing: ThinkDifferent
-Locatie: [ThinkDifferent.java](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)
-Omvang: 55 t/m 72
-Smell Code: C3 Redundant Comment
+### 2. Processing: ThinkDifferent.java
+Locatie: [ThinkDifferent.java](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)  
+Omvang: 55 t/m 72  
+Smell Code: C3 Redundant Comment  
 
 ```java
 static public void init(final PApplet sketch) {
@@ -77,7 +77,7 @@ static public void init(final PApplet sketch) {
 }
 ```
 
-_Figuur 2: Processing ThinkDifferent.java_
+_Figuur 2: Processing: ThinkDifferent.java_
 
 #### Wat deugt niet?
 Het gaat hier om de comments:
@@ -87,23 +87,18 @@ Het gaat hier om de comments:
 - `// just force it this time`
 
 #### Waarom deugt het niet?
-Alle comments binnen deze `init` methode zijn redundant of kunnen dat zijn. Daarmee bedoel ik te zeggen dat als deze
-code goed geschreven was al deze comments weggelaten zouden kunnen worden. De daadwerkelijke code lezen levert betere
-informatie dan de comments.
+Alle comments binnen deze `init` methode zijn redundant of kunnen dat zijn. De comments kunnen weggehaald worden door de code beter, en dus duidelijker, geschreven worden. 
+De daadwerkelijke code lezen levert betere informatie dan de comments.
 
-Neem de regel `!attemptedQuit) { // haven't tried yet`. De variable `attemptedQuit` geeft al duidelijk aan dat er
-geprobeerd is om af te sluiten[^1]. De comment `// haven't tried yet` vertelt, in het beste geval, dezelfde
-informatie.
+Neem de regel `!attemptedQuit) { // haven't tried yet`. De `attemptedQuit` is al erg duidelijk[^1]. 
+De comment `// haven't tried yet` vertelt, in het beste geval, dezelfde informatie.
 
-[^1]: `userAttemptedToQuit` zou nog veel duidelijker zijn.
+[^1]: `userAttemptedToQuit` zou nog duidelijker zijn.
 
 #### Oplossing
-Alle benoemde comments zouden verwijderd moeten worden.
+Alle benoemde comments in ieder geval verwijderen.
 
-De code kan ook leesbaarder gemaakt worden.
-Mogelijk zou het statement `PApplet.uncaughtThrowable == null`
-kunnen worden geabstraheerd naar zijn eigen methode:
-`PApplet.hasNoUncaughtExceptions()`.
+Daarnaast zou het belangrijk zijn om de code zelf leesbaarder en duidelijker te maken.
 
 
 ### 3. Processing: Archiver.java
