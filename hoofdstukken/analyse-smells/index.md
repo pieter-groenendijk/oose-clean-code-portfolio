@@ -2,7 +2,7 @@
 
 ## 1. Comments
 
-### 1. Processing: MouseEvent
+### 1. Processing: MouseEvent.java
 Locatie: [MouseEvent.java](https://github.com/processing/processing/blob/master/core/src/processing/event/MouseEvent.java)  
 Omvang: 38 t/m 63  
 Smell Code: C5 Commented-Out Code
@@ -36,25 +36,18 @@ public MouseEvent(Object nativeObject,
 }
 ```
 
-<div id="figuur-1"></div>
-
-_Figuur 1: Processing MouseEvent.java_
+_Figuur 1: Processing: MouseEvent.java_
 
 #### Wat deugt niet?
-
-Het gaat hier om de code die uit gecomment is.
+Het gaat hier om de code te vinden in de comments.
 
 #### Waarom deugt het niet?
-
-Het creëert de volgende problemen:
-
-- **Wie weet of deze comment nog van waarde is?**  
-  Hierdoor zal niemand het verwijderen aangezien het "mogelijk" ooit in
-  de toekomst zal gebruikt worden. Daarnaast hoe langer deze comments zullen
-  blijven bestaan ook hoe irrelevanter deze worden.
+Het creëert het probleem dat **niemand meer weet of de comments nog van waarde zijn**.
+Niemand zal deze verwarrende comments verwijderen. Iedereen zal denken dat 
+_mogelijk_ iemand anders het van plan is te gebruiken. Hoe langer deze comments
+behouden worden hoe irrelevanter worden.
 
 #### Oplossing
-
 De niet deugende code te verwijderen.
 
 
