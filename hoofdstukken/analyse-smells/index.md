@@ -153,21 +153,21 @@ _OS X_ platform.
 
 
 ### 5. Processing: JAppleMenuBar.java
-Locatie: [JAppleMenuBar.java]()  
+Locatie: [JAppleMenuBar.java](https://github.com/processing/processing/blob/master/core/src/japplemenubar/JAppleMenuBar.java)  
 Omvang: 66 t/m 68  
-Smell Code: N7 Names Should Describe Side-Effects
+Smell Code: N7 Names Should Describe Side-Effects  
 
 #### Wat deugt er niet?
 De naamgeving van de functie `sadness()`.
 
 #### Waarom deugt het niet?
-Het is zeer simpel. Als de functie niet beschrijft wat de functie daadwerkelijke doet weet alleen de maker wat de functie
-doet, totdat ook hij dat vergeet. Programmeurs zullen alleen weten wat de `sadness()` methode doet, als zij net de functie
-definitie hebben doorgenomen.
+De functienaam beschrijft niet wat de functie daadwerkelijk doet. De functie zal alleen
+begrepen worden door de maker zelf, totdat die het vergeet natuurlijk. Programmeurs zullen 
+de definitie van de functie moeten gaan lezen om hem te gaan gebruiken. Dat levert onnodige 
+_mental overhead_ op.
 
 #### Oplossing
 Verander de naam van de functie naar `printFullscreenModeDisabledError`.
-
 
 
 ## 3. Functions
