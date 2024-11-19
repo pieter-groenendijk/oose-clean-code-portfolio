@@ -185,6 +185,30 @@ De functie body zorgt niet voor side-effects. De functie zorgt er alleen voor da
 Niet logische consequenties van een functie kunnen voor verwarring zorgen, en verwarring zorgt voor bugs. Daarom is het
 goed dat deze functie alleen zorgt voor één logische consequentie.
 
+### Guava: ClassPath.java
+Locatie: [ClassPath.java](https://github.com/google/guava/blob/master/guava/src/com/google/common/reflect/ClassPath.java)  
+Omvang: 377 t/m 384  
+Clean Code Regel: Prefer Exceptions to Returning Error Codes  
+
+```java
+public Class<?> load() {
+    try {
+        return loader.loadClass(className);
+    } catch (ClassNotFoundException e) {
+    // Shouldn't happen, since the class name is read from the class path.
+        throw new IllegalStateException(e);
+    }
+}
+```
+
+#### Wat deugt er?
+Het gebruik van exceptions. 
+
+#### Waarom deugt het?
+Door exceptions te gebruiken is er geen behoefte voor if statements die de code
+minder leesbaarder maken. Het scheidt de _happy path_ duidelijk van _alternative_
+en/of mogelijke _exceptional_ flows.
+
 
 ## Comments
 
