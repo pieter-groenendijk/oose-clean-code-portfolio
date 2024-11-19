@@ -2,10 +2,10 @@
 
 ## 1. Comments
 
-### 1. Processing: MouseEvent
+### 1. Processing: MouseEvent.java
 Locatie: [MouseEvent.java](https://github.com/processing/processing/blob/master/core/src/processing/event/MouseEvent.java)  
 Omvang: 38 t/m 63  
-Smell Code: C5 Commented-Out Code
+Smell Code: C5 Commented-Out Code  
 
 ```java
 protected int x, y;
@@ -36,32 +36,25 @@ public MouseEvent(Object nativeObject,
 }
 ```
 
-<div id="figuur-1"></div>
-
-_Figuur 1: Processing MouseEvent.java_
+_Figuur 1: Processing: MouseEvent.java_
 
 #### Wat deugt niet?
-
-Het gaat hier om de code die uit gecomment is.
+Het gaat hier om de code te vinden in de comments.
 
 #### Waarom deugt het niet?
-
-Het creëert de volgende problemen:
-
-- **Wie weet of deze comment nog van waarde is?**  
-  Hierdoor zal niemand het verwijderen aangezien het "mogelijk" ooit in
-  de toekomst zal gebruikt worden. Daarnaast hoe langer deze comments zullen
-  blijven bestaan ook hoe irrelevanter deze worden.
+Het creëert het probleem dat **niemand meer weet of de comments nog van waarde zijn**.
+Niemand zal deze verwarrende comments verwijderen. Iedereen zal denken dat 
+_mogelijk_ iemand anders het van plan is te gebruiken. Hoe langer deze comments
+behouden worden hoe irrelevanter worden.
 
 #### Oplossing
-
 De niet deugende code te verwijderen.
 
 
-### 2. Processing: ThinkDifferent
-Locatie: [ThinkDifferent.java](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)
-Omvang: 55 t/m 72
-Smell Code: C3 Redundant Comment
+### 2. Processing: ThinkDifferent.java
+Locatie: [ThinkDifferent.java](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)  
+Omvang: 55 t/m 72  
+Smell Code: C3 Redundant Comment  
 
 ```java
 static public void init(final PApplet sketch) {
@@ -84,7 +77,7 @@ static public void init(final PApplet sketch) {
 }
 ```
 
-_Figuur 2: Processing ThinkDifferent.java_
+_Figuur 2: Processing: ThinkDifferent.java_
 
 #### Wat deugt niet?
 Het gaat hier om de comments:
@@ -94,29 +87,24 @@ Het gaat hier om de comments:
 - `// just force it this time`
 
 #### Waarom deugt het niet?
-Alle comments binnen deze `init` methode zijn redundant of kunnen dat zijn. Daarmee bedoel ik te zeggen dat als deze
-code goed geschreven was al deze comments weggelaten zouden kunnen worden. De daadwerkelijke code lezen levert betere
-informatie dan de comments.
+Alle comments binnen deze `init` methode zijn redundant of kunnen dat zijn. De comments kunnen weggehaald worden door de code beter, en dus duidelijker, geschreven worden. 
+De daadwerkelijke code lezen levert betere informatie dan de comments.
 
-Neem de regel `!attemptedQuit) { // haven't tried yet`. De variable `attemptedQuit` geeft al duidelijk aan dat er
-geprobeerd is om af te sluiten[^1]. De comment `// haven't tried yet` vertelt, in het beste geval, dezelfde
-informatie.
+Neem de regel `!attemptedQuit) { // haven't tried yet`. De `attemptedQuit` is al erg duidelijk[^1]. 
+De comment `// haven't tried yet` vertelt, in het beste geval, dezelfde informatie.
 
-[^1]: `userAttemptedToQuit` zou nog veel duidelijker zijn.
+[^1]: `userAttemptedToQuit` zou nog duidelijker zijn.
 
 #### Oplossing
-Alle benoemde comments zouden verwijderd moeten worden.
+Alle benoemde comments in ieder geval verwijderen.
 
-De code kan ook leesbaarder gemaakt worden.
-Mogelijk zou het statement `PApplet.uncaughtThrowable == null`
-kunnen worden geabstraheerd naar zijn eigen methode:
-`PApplet.hasNoUncaughtExceptions()`.
+Daarnaast zou het belangrijk zijn om de code zelf leesbaarder en duidelijker te maken.
 
 
 ### 3. Processing: Archiver.java
 Locatie: [Archiver.java](https://github.com/processing/processing/blob/master/app/src/processing/app/tools/Archiver.java)  
 Omvang: 41  
-Smell Code: C1 Inappropriate Information
+Smell Code: C1 Inappropriate Information  
 
 ```java
     // someday these will be settable
@@ -124,69 +112,70 @@ boolean useDate;
 int digits = 3;
 ```
 
-_Figuur N: Processing Archiver.java_
+_Figuur 3: Processing: Archiver.java_
 
 #### Wat deugt er niet?
-De comment.
+De comment `someday these will be settable`.
 
 #### Waarom deugt het niet?
-De comment geeft duidelijk aan dat er dus een taak (de velden _settable_ maken) moet worden verricht. Het is veel
-duidelijker en directer om dit rechtstreeks in _issue tracking system_ te zetten.
+De comment geeft duidelijk aan dat er dus een taak (de velden _settable_ maken) moet worden verricht. 
+Het is veel duidelijker en directer om dit rechtstreeks in een _issue tracking system_ te zetten. 
 
 #### Oplossing
 - Comment verwijderen
-- Taak toevoegen in _issue tracking system_
+- Taak toevoegen in het _issue tracking system_
 
 
 ## 2. Names
 
-### 3. Processing: ThinkDifferent.Java
+### 4. Processing: ThinkDifferent.Java
 Locatie: [ThinkDifferent.Java](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)  
 Omvang: 1 t/m 69  
-Smell Code: N1 Choose Descriptive Names
+Smell Code: N1 Choose Descriptive Names  
 
 ```java
 public class ThinkDifferent {
 ```
 
-_Figuur N: Processing ThinkDifferent.java_
+_Figuur 4: Processing ThinkDifferent.java_
 
 #### Wat deugt er niet?
 De naamgeving van de _class_ `ThinkDifferent`.
 
 #### Waarom deugt het niet?
-Deze naam is zo vaag als het maar kan. Ik kan enkel een idee vormen, hoewel beperkt, wat de klasse doet door de _JSDoc_ erbij te lezen.
+De naam zou niet vager kunnen. Ik kan enkel een idee vormen, hoewel beperkt, wat de klasse doet door de _JSDoc_ erbij te lezen.
 
 #### Oplossing
-De naam zal veranderd moeten worden naar iets wat de daadwerkelijke implementatie representeert. Op basis van de huidige implementatie
-zou men uitkomen op de naam `OSXIntegrationHelper`. De klasse bezit namelijk methodes die helpen met de integratie specifiek voor het
+De naam zal verandert moeten worden naar iets wat de daadwerkelijke implementatie representeert. 
+Op basis van de huidige implementatie zou men uitkomen op een naam zoals `OSXIntegrationHelper`. 
+De klasse bezit namelijk methodes die helpen met de integratie specifiek voor het
 _OS X_ platform.
 
 
-### 4. Processing: JAppleMenuBar.java
-Locatie: [JAppleMenuBar.java]()  
+### 5. Processing: JAppleMenuBar.java
+Locatie: [JAppleMenuBar.java](https://github.com/processing/processing/blob/master/core/src/japplemenubar/JAppleMenuBar.java)  
 Omvang: 66 t/m 68  
-Smell Code: N7 Names Should Describe Side-Effects
+Smell Code: N7 Names Should Describe Side-Effects  
 
 #### Wat deugt er niet?
 De naamgeving van de functie `sadness()`.
 
 #### Waarom deugt het niet?
-Het is zeer simpel. Als de functie niet beschrijft wat de functie daadwerkelijke doet weet alleen de maker wat de functie
-doet, totdat ook hij dat vergeet. Programmeurs zullen alleen weten wat de `sadness()` methode doet, als zij net de functie
-definitie hebben doorgenomen.
+De functienaam beschrijft niet wat de functie daadwerkelijk doet. De functie zal alleen
+begrepen worden door de maker zelf, totdat die het vergeet natuurlijk. Programmeurs zullen 
+de definitie van de functie moeten gaan lezen om hem te gaan gebruiken. Dat levert onnodige 
+_mental overhead_ op.
 
 #### Oplossing
 Verander de naam van de functie naar `printFullscreenModeDisabledError`.
 
 
-
 ## 3. Functions
 
-### 4. Processing: PVector.java
+### 6. Processing: PVector.java
 Locatie: [PVector.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PVector.java)  
 Omvang: 343 t/m 356  
-Smell Code: F2 Ouput Arguments
+Smell Code: F2 Ouput Arguments  
 
 ```java
   /**
@@ -209,23 +198,25 @@ static public PVector fromAngle(float angle, PVector target) {
 Het gaat hier om het argument `PVector target`.
 
 #### Waarom deugt het niet?
-Het kan verwarrend zijn. Op dit moment is de lijn tussen _input_ en _output_ vaag. Dit kan voor verwarring zorgen.
+Op dit moment is de lijn tussen _input_ en _output_ vaag. Dit kan voor verwarring zorgen.
+Het kan gemakkelijk voorkomen worden.
 
 #### Oplossing
 ```java
   static public PVector fromAngle(float angle) {
     return new PVector(
-            (float)Math.cos(angle),
-            (float)Math.sin(angle),
-            0
+        (float)Math.cos(angle),
+        (float)Math.sin(angle),
+        0
     );
 }
 
-public void fromAngle(float angle) {
+public void setFromAngle(float angle) {
     this.set(
-            (float)Math.cos(angle),
-            (float)Math.sin(angle),
-            )
+        (float)Math.cos(angle),
+        (float)Math.sin(angle),
+        0
+    );
 }
 ```
 
@@ -234,7 +225,7 @@ Op deze manier wordt er geen gebruik gemaakt van _output arguments_.
 Er is nogsteeds sprake van duplicatie. Dit is geisoleerd opgelost in een ander hoofdstuk.
 
 
-### 5. Processing: PImage.java
+### 7. Processing: PImage.java
 Locatie: [PImage.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PImage.java)  
 Omvang: 482 t/m 504  
 Smell Code: F1 Too Many Arguments
@@ -324,7 +315,7 @@ image.updatePixels(
 In het geval dat de arguments alsnog worden omgedraaid zal de compiler dit tegenhouden. Een `Size` object kan namelijk
 niet in dezelfde plek gebruikt worden als een `Point`.
 
-### 6. Processing: PApplet.java
+### 8. Processing: PApplet.java
 Locatie: [PApplet.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PApplet.java)  
 Omvang: 2242 t/m 2340  
 Smell Code: Flag Arguments
@@ -414,9 +405,118 @@ Daarnaast maakt het een functie onnodig complex. Het vraagt om vijf argumenten! 
 #### Oplossing
 TODO
 
+
+### 9: Processing: PApplet.java
+Locatie [PApplet.jav](https://github.com/processing/processing/blob/master/core/src/processing/core/PApplet.java)  
+Omvang: 1 t/m 13  
+Smell Code: G30 Functions Should Do One Thing  
+
+```java
+public int displayDensity(int display) {
+    if (PApplet.platform == PConstants.MACOSX) {
+        // This should probably be reset each time there's a display change.
+        // A 5-minute search didn't turn up any such event in the Java 7 API.
+        // Also, should we use the Toolkit associated with the editor window?
+        final String javaVendor = System.getProperty("java.vendor");
+        if (javaVendor.contains("Oracle")) {
+            GraphicsDevice device;
+            GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+
+            if (display == -1) {
+                device = env.getDefaultScreenDevice();
+
+            } else if (display == SPAN) {
+                throw new RuntimeException("displayDensity() only works with specific display numbers");
+
+            } else {
+                GraphicsDevice[] devices = env.getScreenDevices();
+                if (display > 0 && display <= devices.length) {
+                device = devices[display - 1];
+                } else {
+                if (devices.length == 1) {
+                    System.err.println("Only one display is currently known, use displayDensity(1).");
+                } else {
+                    System.err.format("Your displays are numbered %d through %d, " +
+                    "pass one of those numbers to displayDensity()%n", 1, devices.length);
+                }
+                throw new RuntimeException("Display " + display + " does not exist.");
+            }
+        }
+
+        try {
+            Field field = device.getClass().getDeclaredField("scale");
+            if (field != null) {
+                field.setAccessible(true);
+                Object scale = field.get(device);
+
+                if (scale instanceof Integer && ((Integer)scale).intValue() == 2) {
+                    return 2;
+                }
+            }
+        } catch (Exception ignore) { }
+        }
+    } else if (PApplet.platform == PConstants.WINDOWS || PApplet.platform == PConstants.LINUX) {
+        if (suggestedDensity == -1) {
+            // TODO: detect and return DPI scaling using JNA; Windows has
+            //   a system-wide value, not sure how it works on Linux
+            return 1;
+        } else if (suggestedDensity == 1 || suggestedDensity == 2) {
+            return suggestedDensity;
+        }
+    }
+    return 1;
+}
+```
+
+#### Wat deugt er niet?
+De functie body
+
+#### Waarom deugt het niet?
+Ik denk dat het erg voor de hand liggend is om te zeggen dat deze functie meer dan een ding doet. De functie kan minimaal 
+opgeslitst worden in de volgende stappen:
+1. Stel vast of MACOSX is.
+2. Als dat zo is, _return_ display density van een scherm binnen een Mac OS X omgeving.
+3. Als dat niet zo was, stel vast of de omgeving WINDOWS of LINUX is.
+4. Als dat zo is, _return_ display density van een scherm binnen een Windows of Linux omgeving.
+5. Als dat niet zo was, ga uit van een _normal-density_ scherm.
+
+#### Oplossing
+```java
+public int displayDensity(int display) {
+    if (this.usingMacOsXPlatform()) {
+        return displayDensityMacOsX(display);
+    } else if (this.usingWindowsPlatform() || this.usingLinuxPlatform()) {
+        return displayDensityWindowsOrLinux(display);
+    } else {
+        return 1;
+    }
+}
+
+private bool usingMacOsXPlatform() {
+    return PApplet.platform == PConstants.MACOSX;
+}
+
+private bool usingWindowsPlatform() {
+    return PApplet.platform == PConstants.WINDOWS;
+}
+
+private bool usingLinuxPlatform() {
+    return PApplet.platform == PConstants.LINUX;
+}
+
+private int displayDensityMacOsX(int display) {
+    ...
+}
+
+private int displayDensityWindowsOrLinux(int display) {
+    ...
+}
+```
+
+
 ## 4. General
 
-### 7. Processing: KeyEvent.java
+### 10. Processing: KeyEvent.java
 Locatie: [KeyEvent.java](https://github.com/processing/processing/blob/master/core/src/processing/event/KeyEvent.java)  
 Omvang: 1 t/m 1  
 Smell Code: G1 Multiple Languages in One Source File
@@ -438,7 +538,7 @@ anders moeten instellen om te begrijpen wat er staat.
 Weghalen. Volgens ChatGPT zou deze _emacs_ configuratie ook in een extern bestand gezet kunnen worden.
 
 
-### 8. Processing: PVector.java
+### 11. Processing: PVector.java
 Locatie: [PVector.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PVector.java)  
 Omvang: 343 t/m 356  
 Smell Code: G5 Duplication
@@ -507,7 +607,7 @@ behouden hoe die eerder was.
 De duplicatie is zo afgenomen.
 
 
-### N. Processing: PImage.java
+### 12. Processing: PImage.java
 Locatie: [PImage.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PImage.java)
 Omvang: 438 t/m 443
 Smell Code: G28: Encapsulate Conditionals
@@ -545,7 +645,7 @@ private boolean isPixelsArrayInitialized() {
 ```
 
 
-### Processing: PApplet.java
+### 13. Processing: PApplet.java
 Locatie: [PApplet.java]()  
 Omvang: 2393 t/m 2517
 Smell Code: G9 Dead Code
@@ -690,7 +790,7 @@ Verwijder de besproken conditional en bijhorende code block.
 
 
 ## 5. Java
-### 9. Processing: Webserver.java
+### 14. Processing: Webserver.java
 Locatie: [Webserver.java](https://github.com/processing/processing/blob/master/app/src/processing/app/WebServer.java)  
 Omvang: 17 en 529 t/m 572  
 Smell Code: J2 Don't inherit Constants
@@ -764,7 +864,7 @@ In dit geval kan de `implements HttpConstants` weggehaald worden. De interface s
 wanneer dit niet het geval is kan een static import gebruikt worden zoals `import static processing.app.HttpConstants.*`.
 
 
-### 10. Processing Webserver.java
+### 15. Processing Webserver.java
 Locatie: [Webserver.java](https://github.com/processing/processing/blob/master/app/src/processing/app/WebServer.java)   
 Omvang: 529 t/m 572  
 Smell Code: J3 Constants versus Enums
