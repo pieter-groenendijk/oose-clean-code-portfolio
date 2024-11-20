@@ -268,6 +268,43 @@ Duidelijke Javadoc comment (604 t/m 629).
 De javadoc comment legt duidelijk en accuraat uit wat de functie doet. Dat is super nuttig als je deze package gaat gebruiken in je eigen code. Geen onzekerheden wat de 
 code doet.
 
+### Guava: Files.java
+Locatie: [Files.java]()  
+Omvang: 375 t/m 393
+Clean Code Regel: Good Comments: Explanation of Intent
+
+```java
+public static boolean equal(File file1, File file2) throws IOException {
+    checkNotNull(file1);
+    checkNotNull(file2);
+    if (file1 == file2 || file1.equals(file2)) {
+        return true;
+    }
+
+    /*
+     * Some operating systems may return zero as the length for files denoting system-dependent
+     * entities such as devices or pipes, in which case we must fall back on comparing the bytes
+     * directly.
+     */
+    long len1 = file1.length();
+    long len2 = file2.length();
+    if (len1 != 0 && len2 != 0 && len1 != len2) {
+        return false;
+    }
+    return asByteSource(file1).contentEquals(asByteSource(file2));
+}
+```
+
+#### Wat deugt er?
+De comment.
+
+#### Waarom deugt het?
+Het legt uit waarom ervoor gekozen is om niet altijd van uit de file lengths uit te gaan. Het beschrijft het feit dat 
+wellicht inaccuraat de file lengths beide 0 zouden kunnen zijn. 
+
+De comment zorgt ervoor dat er gemakkelijker begrepen wordt waarom een keuze gemaakt is binnen de code.
+
+
 
 ## Formatting
 
