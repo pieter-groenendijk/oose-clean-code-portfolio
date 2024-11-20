@@ -194,6 +194,8 @@ static public PVector fromAngle(float angle, PVector target) {
 }
 ```
 
+_Figuur 5: Processing: PVector.java_
+
 #### Wat deugt er niet?
 Het gaat hier om het argument `PVector target`.
 
@@ -219,6 +221,8 @@ public void setFromAngle(float angle) {
     );
 }
 ```
+
+_Figuur 6: Oplossing voor Processing PVector.java_
 
 Op deze manier wordt er geen gebruik gemaakt van _output arguments_.
 
@@ -255,7 +259,7 @@ public void updatePixels(int x, int y, int w, int h) {  // ignore
 }
 ```
 
-_Figuur N: Processing PImage.java_
+_Figuur 7: Processing: PImage.java_
 
 #### Wat deugt niet?
 Het gaat hier om de arguments in de definitie van deze functie, namelijk: `int x, int y, int w, int h`. Specifieker,
@@ -264,9 +268,12 @@ het aantal arguments.
 #### Waarom deugt het niet?
 Het is moeilijk om te begrijpen. Men moet goed opletten welke waardes op welke positie moeten geplaatst worden. Zelfs na
 uitgebreid gebruik kan dit nog steeds verwarring veroorzaken. In het slechtste geval ziet een functie call eruit als:
+
 ```java
 image.updatePixels(20, 30, 100, 200);
 ```
+
+_Figuur 8: Mogelijke functie call_
 
 En in een iets betere wereld misschien:
 
@@ -274,11 +281,13 @@ En in een iets betere wereld misschien:
 image.updatePixels(width, height, x, y);
 ```
 
+_Figuur 9: Mogelijke functie call 2_
+
 Als u goed heeft opgelet erkende u dat ik sommige arguments in het laatste voorbeeld heb omgedraaid. Een hogere
 hoeveelheid arguments kan er gemakkelijk voor zorgen daar arguments worden omgedraaid. In dit geval zou de compiler
 er zelfs niks van zeggen, het zijn allen `int`'s.
 
-Dan zijn er de mensen die bij twijfeling de functie definitie zullen raadplegen. Echter is dat ook een probleem.
+Dan zijn er de mensen die bij twijfeling de functie definitie zullen raadplegen. Dat is ook een probleem.
 Dat is aandacht en tijd gestoken in iets triviaals, verspilde tijd dus.
 
 #### Oplossing
@@ -288,7 +297,7 @@ public void updatePixels(Point upperLeftCorner, Size size) {
 }
 ```
 
-_Figuur N: PImage.java updatePixels() verbeterde definitie
+_Figuur 10: PImage.java updatePixels() verbeterde definitie_
 
 Er hoeven maar twee concepten gegeven worden aan de functie. Deze concepten verdienen hun eigen naam! In bovenstaand
 voorbeeld gaat het eigenlijk over:
@@ -303,14 +312,19 @@ image.updatePixels(
 );
 ```
 
+_Figuur 11: Verbeterde mogelijke functie call_
+
+
 of wat realistischer:
 
 ```java
 image.updatePixels(
-        upperLeftCorner,
-        size
-        );
+    upperLeftCorner,
+    size
+);
 ```
+
+_Figuur 12: Verbeterde mogelijke functie call_
 
 In het geval dat de arguments alsnog worden omgedraaid zal de compiler dit tegenhouden. Een `Size` object kan namelijk
 niet in dezelfde plek gebruikt worden als een `Point`.
@@ -318,7 +332,7 @@ niet in dezelfde plek gebruikt worden als een `Point`.
 ### 8. Processing: PApplet.java
 Locatie: [PApplet.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PApplet.java)  
 Omvang: 2242 t/m 2340  
-Smell Code: Flag Arguments
+Smell Code: Flag Arguments  
 
 ```java
 protected PGraphics makeGraphics(int w, int h,
@@ -392,7 +406,7 @@ protected PGraphics makeGraphics(int w, int h,
 }
 ```
 
-_Figuur N: Processing PApplet.java (Commented code al weggelaten)_
+_Figuur 13: Processing PApplet.java (Commented code al weggelaten)_
 
 #### Wat deugt niet?
 De boolean argument `boolean primary`.
@@ -403,7 +417,112 @@ Een functie hoort 1 ding te doen. Een flag argument geeft al automatisch aan dat
 Daarnaast maakt het een functie onnodig complex. Het vraagt om vijf argumenten! (Daar gaat het een ander keer over)
 
 #### Oplossing
-TODO
+
+```java
+protected PGraphics makePrimaryGraphics(int w, int h, String renderer, String path) {
+    PGraphics graphics = makeGraphics(w, h, renderer, path);
+
+    graphics.setPrimary(true);
+
+    return graphics;
+}
+
+protected PGraphics makeSecondaryGraphics(int w, int h, String renderer, String path) {
+    enforceCompatibleRenderingForSecondaryGraphics();
+    PGraphics graphics = makeGraphics(w, h, renderer, path);
+
+    graphics.setPrimary(false);
+
+    return graphics;
+}
+
+private void enforceCompatibleRenderingForSecondaryGraphics(String renderer) {
+    if (g.isGL()) return;
+
+    if (renderer.equals(P2D)) {
+        throw new RuntimeException("createGraphics() with P2D requires size() to use P2D or P3D");
+    } else if (renderer.equals(P3D)) {
+        throw new RuntimeException("createGraphics() with P3D or OPENGL requires size() to use P2D or P3D");
+    }
+}
+
+private PGraphics makeGraphics(int w, int h, String renderer, String path) {
+    try {
+        return attemptToMakeGraphics(w, h, renderer, path);
+    } catch (InvocationTargetException exception) {
+        handleMakeGraphicsInvocationTargetException(exception);
+    } catch (ClassNotFoundException exception) {
+        handleMakeGraphicsClassNotFoundException(exception);
+    } catch (Exception exception) {
+        handleMakeGraphicsGeneralException(exception);
+    }
+}
+
+private handleMakeGraphicsInvocationTargetException(InvocationTargetException exception) {
+    String msg = ite.getTargetException().getMessage();
+    if ((msg != null) &&
+            (msg.indexOf("no jogl in java.library.path") != -1)) {
+        // Is this true anymore, since the JARs contain the native libs?
+        throw new RuntimeException("The jogl library folder needs to be " +
+                "specified with -Djava.library.path=/path/to/jogl");
+
+    } else {
+        printStackTrace(ite.getTargetException());
+        Throwable target = ite.getTargetException();
+        throw new RuntimeException(target.getMessage());
+    }
+}
+
+private handleMakeGraphicsClassNotFoundException(ClassNotFoundException exception) {
+    if (external) {
+        throw new RuntimeException("You need to use \"Import Library\" " +
+                "to add " + renderer + " to your sketch.");
+    } else {
+        throw new RuntimeException("The " + renderer +
+                " renderer is not in the class path.");
+    }
+}
+
+private handleMakeGraphicsGeneralException(Exception exception) {
+    if ((exception instanceof IllegalArgumentException) ||
+        (exception instanceof NoSuchMethodException) ||
+        (exception instanceof IllegalAccessException))
+    {
+        if (exception.getMessage().contains("cannot be <= 0")) {
+            throw new RuntimeException(exception);
+        } else {
+            printStackTrace(exception);
+            String msg = renderer + " needs to be updated " +
+                    "for the current release of Processing.";
+            throw new RuntimeException(msg);
+        }
+    } else {
+        printStackTrace(exception);
+        throw new RuntimeException(exception.getMessage());
+    }
+}
+
+private PGraphics attemptToMakeGraphics(int w, int h, String renderer, String path) {
+    Class<?> rendererClass =
+            Thread.currentThread().getContextClassLoader().loadClass(renderer);
+    Constructor<?> constructor = rendererClass.getConstructor(new Class[] { });
+    PGraphics graphics = (PGraphics) constructor.newInstance();
+
+    graphics.setParent(this);
+
+    if (path != null) {
+        graphics.setPath(savePath(path));
+    }
+
+    graphics.setSize(w, h);
+
+    return graphics;
+}
+```
+
+_Figuur 14: Verbeterde code_
+
+Bovenstaande code is al vele malen beter. 
 
 
 ### 9: Processing: PApplet.java
@@ -468,12 +587,14 @@ public int displayDensity(int display) {
 }
 ```
 
+_Figuur 15: Processing: PApplet.java_
+
 #### Wat deugt er niet?
 De functie body
 
 #### Waarom deugt het niet?
 Ik denk dat het erg voor de hand liggend is om te zeggen dat deze functie meer dan een ding doet. De functie kan minimaal 
-opgeslitst worden in de volgende stappen:
+opgesplitst worden in de volgende stappen:
 1. Stel vast of MACOSX is.
 2. Als dat zo is, _return_ display density van een scherm binnen een Mac OS X omgeving.
 3. Als dat niet zo was, stel vast of de omgeving WINDOWS of LINUX is.
