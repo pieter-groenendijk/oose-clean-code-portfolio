@@ -230,6 +230,50 @@ Naar mijn mening is het een duidelijke conventie om eerst de `from` en daarna de
 zoals `mv` gebruiken bijv. dezelfde volgorde.
 
 
+### Guava: AppendableWriter.java
+Locatie: [AppendableWriter.java]()  
+Omvang: 67 t/m 86  
+Clean Code Regel: Don't Repeat Yourself (DRY Principle)
+
+```java
+  @Override
+  public void write(int c) throws IOException {
+    checkNotClosed();
+    target.append((char) c);
+  }
+
+  @Override
+  public void write(String str) throws IOException {
+    checkNotNull(str);
+    checkNotClosed();
+    target.append(str);
+  }
+
+  @Override
+  public void write(String str, int off, int len) throws IOException {
+    checkNotNull(str);
+    checkNotClosed();
+    // tricky: append takes start, end pair...
+    target.append(str, off, off + len);
+  }
+```
+
+#### Wat deugt er?
+Gemeenschappelijke functionaliteit wordt niet meerdere keren geïmplementeerd.
+
+#### Waarom deugt het?
+Wanneer een verandering aan de gemeenschappelijke functionaliteit moet gebeuren en deze staan allemaal dubbel genoemd,
+dan zal elk van die duplicaten **correct** veranderd moeten worden. Dit zorgt ervoor dat er veel ruimte is voor fouten.
+
+Gelukkig maakt bovenstaande functies gebruik van functies om de gemeenschappelijke functionaliteit uit te voeren, bijv:
+`checkNotNull()` en `checkNotClose()`.
+
+Er kan benoemd worden dat er nog steeds duplicatie plaatsvindt namelijk de gezamenlijke calls naar genoemde functies. 
+Ik ben van mening dat het een goede keuze is om die niet weg te halen. Een abstractie zal naar mijn mening de code
+minder leesbaar en onderhoudbaar maken. Ik zou persoonlijk wachten om te kijken dat toekomstige functionaliteit ook 
+telkens dezelfde combinatie gebruikt.
+
+
 ## Comments
 
 ### Apache Commons: StringUtils.java
