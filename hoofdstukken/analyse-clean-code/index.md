@@ -209,6 +209,26 @@ Door exceptions te gebruiken is er geen behoefte voor if statements die de code
 minder leesbaarder maken. Het scheidt de _happy path_ duidelijk van _alternative_
 en/of mogelijke _exceptional_ flows.
 
+### Guava: Files.java
+Locatie: [Files.java]()  
+Omvang: 495
+Clean Code Regel: Function Arguments (count)
+
+```java
+public static void move(File from, File to) throws IOException 
+```
+
+#### Wat deugt er?
+Het aantal arguments.
+
+#### Waarom deugt het?
+Ideaal gezien is een functie duidelijk wanneer deze zo min mogelijk arguments nodig heeft. Zo worden er minder snel 
+fouten gemaakt zoals bijv. het omdraaien van de arguments in de call.
+
+Iemand zou kunnen benoemen dat bij deze functie definitie dat nog steeds mogelijk. Die persoon zou deels gelijk hebben.
+Naar mijn mening is het een duidelijke conventie om eerst de `from` en daarna de `to` op te geven. Linux commands
+zoals `mv` gebruiken bijv. dezelfde volgorde.
+
 
 ## Comments
 
