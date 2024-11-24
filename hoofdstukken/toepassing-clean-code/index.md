@@ -55,6 +55,39 @@ makkelijker te begrijpen en aan te passen.
 
 
 
+## Objects and Data Structures
+
+### OOSE Library Management System: NotificationTaskScheduler.java
+Locatie: [NotificationTaskScheduler.java]()  
+Omvang: 37 t/m 48  
+Clean Code Regel: Law of Demeter
+
+```java
+private void scheduleFromDatabase() {
+    NotificationTask[] tasks = this.REPOSITORY.retrieve(this.getScheduledUntilDateTime());
+
+    for(NotificationTask task: tasks) {
+        if (isHandledManually(task)) {
+            handledManually.remove(task);
+            continue;
+        }
+
+        scheduleInMemory(task);
+    }
+}
+```
+
+#### Wat deugt er?
+De calls naar andere functies
+
+#### Waarom deugt het?
+Het volgt de Law Of Demeter. De functie roept alleen maar functies aan van:
+- De klasse zelf
+- Een object gemaakt door de functie
+- Een object doorgegeven als parameter aan de functie
+- Een object opgeslagen (als referentie) in de klasse
+
+
 
 ## Boundaries
 
