@@ -634,6 +634,8 @@ private int displayDensityWindowsOrLinux(int display) {
 }
 ```
 
+_Figuur 16: Oplossing_
+
 
 ## 4. General
 
@@ -646,23 +648,25 @@ Smell Code: G1 Multiple Languages in One Source File
 /* -*- mode: java; c-basic-offset: 2; indent-tabs-mode: nil -*- */
 ```
 
-_Figuur N: Processing KeyEvent.java_
+_Figuur 17: Processing: KeyEvent.java_
 
 #### Wat deugt niet?
 Het gehele snippet.
 
 #### Waarom deugt het niet?
-Dezelfde reden waarom boeken niet geschreven worden in meerdere talen. Het is simpelweg verwarrend om telkens je
-anders moeten instellen om te begrijpen wat er staat.
+Dezelfde reden waarom een enkel boek niet geschreven is in vijf verschillende talen. Persoonlijk
+moet ik mijzelf even instellen om een andere taal te gaan spreken en begrijpen. Dit geldt hetzelfde
+voor code. Het creeert onnodige _mental overhead_.
 
 #### Oplossing
-Weghalen. Volgens ChatGPT zou deze _emacs_ configuratie ook in een extern bestand gezet kunnen worden.
+Weghalen. Volgens ChatGPT zou deze _emacs_ configuratie ook in een extern bestand gezet 
+kunnen worden (Echter heb ik daar zelf geen ervaring mee).
 
 
 ### 11. Processing: PVector.java
 Locatie: [PVector.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PVector.java)  
 Omvang: 343 t/m 356  
-Smell Code: G5 Duplication
+Smell Code: G5 Duplication  
 
 ```java
   /**
@@ -681,16 +685,17 @@ static public PVector fromAngle(float angle, PVector target) {
 }
 ```
 
+_Figuur 18: Processing: PVector.java_
+
 #### Wat deugt niet?
-De berekening van de `float x` en `float y` met middel van een `float angle` wordt exact herhaald. Het gaat dan om
-de herhaalde stukken code: `(float)Math.cos(angle)` en `(float)Math.cos(angle)`.
+De berekening van de `float x` en `float y` met middel van een `float angle` wordt herhaald. 
+Het gaat dan om de herhaalde stukken code: `(float)Math.cos(angle)` en 
+`(float)Math.cos(angle)`.
 
 #### Waarom deugt het niet?
 In dit geval is het erg _error prone_. Elke keer dat je deze berekening opnieuw doet is er een goede kans dat je
-het dit keer verkeerd uittypt. Daarnaast doordat je het niet geextraheerd hebt naar zijn eigen methode zal het
-ook moeilijker unittestbaar zijn.
-
-Los daarvan is het ook gewoon verspilde tijd om telkens dezelfde code opnieuw te schrijven.
+het dit keer wel verkeerd implementeert. Daarnaast doordat je het niet geextraheerd hebt naar zijn eigen methode zal het
+ook moeilijker unittestbaar zijn. Los daarvan is het ook gewoon verspilde tijd om telkens dezelfde code opnieuw te schrijven.
 
 #### Oplossing
 ```java
@@ -722,16 +727,18 @@ static public PVector fromAngle(float angle, PVector target) {
 }
 ```
 
+_Figuur 19: Oplossing_
+
 De berekeningen van zowel `x` en `y` zijn nu gescheiden in een eigen methode. Verder is de code, hoewel die niet perfect is,
 behouden hoe die eerder was.
 
-De duplicatie is zo afgenomen.
+De duplicatie is nu afgenomen.
 
 
 ### 12. Processing: PImage.java
-Locatie: [PImage.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PImage.java)
-Omvang: 438 t/m 443
-Smell Code: G28: Encapsulate Conditionals
+Locatie: [PImage.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PImage.java)  
+Omvang: 438 t/m 443  
+Smell Code: G28: Encapsulate Conditionals  
 
 ```java
 public void loadPixels() {  // ignore
@@ -742,8 +749,10 @@ public void loadPixels() {  // ignore
 }
 ```
 
+_Figuur 20: Processing: PImage.java_
+
 #### Wat deugt er niet?
-De conditional `pixels == null || pixels.length != pixelWidth*pixelHeight`.
+De _conditional_ `pixels == null || pixels.length != pixelWidth*pixelHeight`.
 
 #### Waarom deugt het niet?
 Boolean logica is moelijk genoeg te begrijpen. Elke keer dat iemand deze functie langsloopt is er sprake van de
@@ -765,11 +774,12 @@ private boolean isPixelsArrayInitialized() {
 }
 ```
 
+_Figuur 21: Oplossing_
 
 ### 13. Processing: PApplet.java
-Locatie: [PApplet.java]()  
-Omvang: 2393 t/m 2517
-Smell Code: G9 Dead Code
+Locatie: [PApplet.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PApplet.java)  
+Omvang: 2393 t/m 2517  
+Smell Code: G9 Dead Code  
 
 ```java
 public void handleDraw() {
@@ -899,28 +909,31 @@ public void handleDraw() {
 }
 ```
 
+_Figuur 22: Processing: PApplet.java_
+
 #### Wat deugt er niet?
 Het gaat hier om de conditional `if (frameCount != 0)` (regel 2472) en de code daarbinnen.
 
 #### Waarom deugt het niet?
-Het is simpelweg code dat nooit uitgevoerd zal worden. de `if` statement controleert een conditie die niet waar
-kan zijn in de context. Het maakt de code moeilijker te begrijpen.
+De code zal nooit uitgevoert worden. De `if` statement controleert een conditie die nooit waar
+kan zijn in de context. Het is simpelweg nutteloze code. Daarnaast maakt het de nuttige code
+moeilijker te begrijpen.
 
 #### Oplossing
-Verwijder de besproken conditional en bijhorende code block.
+Verwijderen.
 
 
 ## 5. Java
 ### 14. Processing: Webserver.java
 Locatie: [Webserver.java](https://github.com/processing/processing/blob/master/app/src/processing/app/WebServer.java)  
 Omvang: 17 en 529 t/m 572  
-Smell Code: J2 Don't inherit Constants
+Smell Code: J2 Don't inherit Constants  
 
 ```java
 public class WebServer implements HttpConstants {
 ```
 
-_Figuur N: Processing Webserver.java_
+_Figuur 23: Processing Webserver.java_
 
 ```java
 interface HttpConstants {
@@ -969,13 +982,13 @@ interface HttpConstants {
 }
 ```
 
-_Figuur N: Processing Webserver.java_
+_Figuur 24: Processing: Webserver.java_
 
 #### Wat deugt niet?
 De manier hoe _WebServer_ klasse gebruik maakt van de constanten.
 
 #### Waarom deugt het niet?
-De constanten zijn helemaal verstopt bovenin de _inheritance hierarchy_. Zover mogelijk verstopt dus. Je bent niks daadwerkelijk
+De constanten zijn helemaal verstopt bovenin de _inheritance hierarchy_, zover mogelijk eigenlijk. Je bent niks daadwerkelijk
 aan het implementeren. De constanten staan puur in een _interface_ omdat dit eenmaal gemakkelijk is aangezien elk veld
 in een _interface_ standaard `public static final` is. Echter moet deze dan niet daadwerkelijker gebruikt worden als iets
 wat geïmplementeerd moet worden.
@@ -988,7 +1001,7 @@ wanneer dit niet het geval is kan een static import gebruikt worden zoals `impor
 ### 15. Processing Webserver.java
 Locatie: [Webserver.java](https://github.com/processing/processing/blob/master/app/src/processing/app/WebServer.java)   
 Omvang: 529 t/m 572  
-Smell Code: J3 Constants versus Enums
+Smell Code: J3 Constants versus Enums  
 
 ```java
 interface HttpConstants {
@@ -1037,7 +1050,7 @@ interface HttpConstants {
 }
 ```
 
-_Figuur N: Processing Webserver.java_
+_Figuur 25: Processing: Webserver.java_
 
 #### Wat deugt er niet?
 De gehele interface.
@@ -1099,4 +1112,6 @@ public enum HTTPStatus {
     }
 }
 ```
+
+_Figuur 26: Oplossing_
 
