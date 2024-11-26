@@ -40,6 +40,46 @@ geplaatst wordt in de try/catch blocks. Je hoeft niet actief de error afhandelin
 je de onderliggende logica probeert te begrijpen. Door de scheiding van de twee doelen is de code 
 makkelijker te begrijpen en aan te passen.
 
+### OOSE Library Management System: NotificationService.java
+Locatie: [NotificationService.java]()  
+Omvang: 8 t/m 28  
+Clean Code Regel: Functions: Small!!!
+
+```java
+public class NotificationService {
+    private final NotificationTaskFactory TASK_FACTORY;
+    private final NotificationTaskScheduler SCHEDULER;
+
+    public NotificationService(TaskScheduler scheduler) {
+        NotificationTaskRepository repository = new NotificationTaskRepository();
+
+        this.TASK_FACTORY = new NotificationTaskFactory(repository);
+        this.SCHEDULER = new NotificationTaskScheduler(scheduler, repository);
+    }
+
+    public void scheduleNewLendingBundle(AccountBase account, Lending lending) {
+        this.scheduleReturnDateNotification(account, lending);
+    }
+
+    private void scheduleReturnDateNotification(AccountBase account, Lending lending) {
+        this.SCHEDULER.schedule(
+            this.TASK_FACTORY.createReturnDateNotificationTask(account, lending)
+        );
+    }
+}
+```
+
+#### Wat deugt er?
+De grootte van de functies in de klasse.
+
+#### Waarom deugt het?
+De functies zijn klein, enkel een paar regels. Dit maakt de code erg makkelijk te lezen, namelijk:
+1. Meer gebruik van functies i.p.v. rechtstreekse code. Men kan een functie een naam geven en dus op
+die manier goed duidelijk maken wat de code doet.
+2. Duidelijk wat de focus is van de functie. 
+3. Minder behoefte om dingen te onthouden om de rest van de functie te begrijpen.
+
+
 
 ## Comments
 
