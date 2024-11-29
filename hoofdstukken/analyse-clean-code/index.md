@@ -457,6 +457,40 @@ wellicht inaccuraat de file lengths beide 0 zouden kunnen zijn.
 De comment zorgt ervoor dat er gemakkelijker begrepen wordt waarom een keuze gemaakt is binnen de code.
 
 
+### Guava: Doubles.java
+Locatie: [Doubles.java]()  
+Omvang: 776 t/m 788  
+Clean Code Regel: TODO Comments  
+
+```java
+  public static Double tryParse(String string) {
+    if (FLOATING_POINT_PATTERN.matcher(string).matches()) {
+      // TODO(lowasser): could be potentially optimized, but only with
+      // extensive testing
+      try {
+        return Double.parseDouble(string);
+      } catch (NumberFormatException e) {
+        // Double.parseDouble has changed specs several times, so fall through
+        // gracefully
+      }
+    }
+    return null;
+  }
+```
+
+_Figuur N: Guava: Doubles.java_
+
+#### Wat deugt er?
+de TODO comment.
+
+#### Waarom deugt het?
+De programmeur geeft duidelijk een taak aan die hoogwaarschijnlijk in de toekomst 
+uitgevoert zou moeten worden. Het is prima om zulke comments achter te laten, indien 
+er daadwerkelijk een intentie is dit in de toekomst aan te pakken. Het verklaart 
+waarom gekozen is voor de huidige implementatie en wat er verbetert kan worden. Zo
+kan gemakkelijk, wanneer er de tijd ervoor is, met de IDE opgezocht worden welke TODO's
+zijn.
+
 
 ## Formatting
 
