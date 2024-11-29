@@ -107,6 +107,80 @@ de notification task uit te voeren. In het geval van problemen delegeert die het
 error.". Daarnaast is de functie, niet op een nuttige manier te splitsen. Het doet dus 1 ding.
 
 
+### OOSE Library Management System: ChannelNotifier.java
+Locatie: [ChannelNotifier.java]()  
+Omvang: 5 t/m 38  
+Clean Code Regel: Don't Repeat Yourself (DRY)  
+
+```java
+public abstract class ChannelNotifier implements Notifier {
+    private final byte MAXIMUM_AMOUNT_OF_ATTEMPTS;
+
+    public ChannelNotifier(byte maximumAmountOfAttempts) {
+        this.MAXIMUM_AMOUNT_OF_ATTEMPTS = maximumAmountOfAttempts;
+    }
+
+    public ChannelNotifier() {
+        this.MAXIMUM_AMOUNT_OF_ATTEMPTS = 3;
+    }
+
+    @Override
+    public void send(NotificationTask task) {
+        this.send(task, (byte)1);
+    }
+
+    private void send(NotificationTask task, byte amountOfAttempts) {
+        try {
+            this.attempt(task);
+        } catch (Exception e) {
+            this.handleSendingError(task, amountOfAttempts);
+        }
+    }
+
+    protected abstract void attempt(NotificationTask task) throws Exception;
+
+    private void handleSendingError(NotificationTask task, byte amountOfAttempts) {
+        if (amountOfAttempts < this.MAXIMUM_AMOUNT_OF_ATTEMPTS) {
+            ++amountOfAttempts;
+            this.send(task, amountOfAttempts);
+        } else {
+            logFailedSending(task);
+        }
+    }
+
+    private void logFailedSending(NotificationTask task) {
+        System.out.println("Failed to send notification: " + task.toString());
+    }
+}
+```
+
+_Figuur N: OOSE LMS: ChannelNotifier.java_
+
+```java
+public class EmailChannelNotifier extends ChannelNotifier 
+```
+
+```java
+public class AppChannelNotifier extends ChannelNotifier 
+```
+
+```java
+public class SMSChannelNotifier extends ChannelNotifier
+```
+
+#### Wat deugt er?
+Subklassen die gebruik maken van `ChannelNotifier`.
+
+#### Waarom deugt het?
+Door gebruik te maken van inheritance wordt ervoor gezorgt dat er geen sprake is van duplicatie.
+De generieke logica komt hierdoor 1 keer voor. 
+
+Er is 1 bron van waarheid. Dat betekent dat bij een wijziging aan het algoritme maar op 1 plek iets
+verandert hoeft te worden. Hoe minder plekken hoe groter de kans is dat er geen fouten worden 
+gemaakt. 
+
+
+
 ## Comments
 
 
