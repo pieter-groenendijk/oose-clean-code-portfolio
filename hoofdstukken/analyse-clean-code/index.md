@@ -45,6 +45,94 @@ De parameternamen `fromInclusive` en `toInclusive` maken het zeer duidelijk waar
 Een versimpeling zou `from` en `to` kunnen zijn. Echter is het met de gekozen namen gelijk duidelijk, er kan moeilijk verwarring 
 plaatsvinden. 
 
+
+### Guava: Booleans.java, Bytes.java, Chars.java, Doubles.java
+Locatie: Booleans.java, Bytes.java, Chars.java, Doubles.java  
+Omvang: 237 t/m 349, 162 t/m 174, 276 t/m 288, 281 t/m 293  
+Clean Code Regel: Pick One Word Per Concept  
+
+```java
+public static boolean[] concat(boolean[]... arrays) {
+    long length = 0;
+    for (boolean[] array : arrays) {
+        length += array.length;
+    }
+    boolean[] result = new boolean[checkNoOverflow(length)];
+    int pos = 0;
+    for (boolean[] array : arrays) {
+        System.arraycopy(array, 0, result, pos, array.length);
+        pos += array.length;
+    }
+    return result;
+}
+```
+
+_Figuur N: Guava: Booleans.java_
+
+```java
+  public static byte[] concat(byte[]... arrays) {
+    long length = 0;
+    for (byte[] array : arrays) {
+      length += array.length;
+    }
+    byte[] result = new byte[checkNoOverflow(length)];
+    int pos = 0;
+    for (byte[] array : arrays) {
+      System.arraycopy(array, 0, result, pos, array.length);
+      pos += array.length;
+    }
+    return result;
+  }
+```
+
+_Figuur N: Guava: Bytes.java_
+
+
+```java
+  public static char[] concat(char[]... arrays) {
+    long length = 0;
+    for (char[] array : arrays) {
+      length += array.length;
+    }
+    char[] result = new char[checkNoOverflow(length)];
+    int pos = 0;
+    for (char[] array : arrays) {
+      System.arraycopy(array, 0, result, pos, array.length);
+      pos += array.length;
+    }
+    return result;
+  }
+```
+
+_Figuur N: Guava: Chars.java_
+
+```java
+  public static double[] concat(double[]... arrays) {
+    long length = 0;
+    for (double[] array : arrays) {
+      length += array.length;
+    }
+    double[] result = new double[checkNoOverflow(length)];
+    int pos = 0;
+    for (double[] array : arrays) {
+      System.arraycopy(array, 0, result, pos, array.length);
+      pos += array.length;
+    }
+    return result;
+  }
+```
+
+_Figuur N: Guava: Doubles.java_
+
+#### Wat deugt er?
+De naamgeving van bovenstaande functies.
+
+#### Waarom deugt het?
+Hoewel ik persoonlijk `combine()` een duidelijke naam had gevonden, is er duidelijk wel gekozen
+voor 1 benaming voor het concept. Deze naam wordt dus over verschillende packages en klassen gebruikt
+waarbij de betekenis van de actie hetzelfde blijft. Duidelijk en overzichtelijk.
+
+
 ## Functions
 
 ### Apache Commons: CharUtils.java
