@@ -81,6 +81,32 @@ die manier goed duidelijk maken wat de code doet.
 
 
 
+### OOSE Library Management System: ChannelNotifier.java
+Locatie: [ChannelNotifier.java]()  
+Omvang: 21 t/m 27  
+Clean Code Regel: Do One Thing
+
+```java
+private void send(NotificationTask task, byte amountOfAttempts) {
+    try {
+        this.attempt(task);
+    } catch (Exception e) {
+        this.handleSendingError(task, amountOfAttempts);
+    }
+}
+```
+
+_Figuur N: OOSE LMS: ChannelNotifier.java_
+
+#### Wat deugt er?
+De body van de functie.
+
+#### Waarom deugt het?
+De functie doet 1 ding, niet meer. Het is te beschrijven in een korte paragraaf: "Het doet een poging
+de notification task uit te voeren. In het geval van problemen delegeert die het afhandelen van de 
+error.". Daarnaast is de functie, niet op een nuttige manier te splitsen. Het doet dus 1 ding.
+
+
 ## Comments
 
 
