@@ -708,6 +708,47 @@ De gehele body van de functie volgt de _law of demeter_. De functie roept alleen
 
 ## Error Handling
 
+### Guava: ParseRequest.java
+Locatie: [ParseRequest.java](https://github.com/google/guava/blob/master/guava/src/com/google/common/primitives/ParseRequest.java)  
+Omvang: 31 t/m 55  
+Clean Code Regel: Don't Return Null
+
+```java
+static ParseRequest fromString(String stringValue) {
+    if (stringValue.length() == 0) {
+        throw new NumberFormatException("empty string");
+    }
+
+    // Handle radix specifier if present
+    String rawValue;
+    int radix;
+    char firstChar = stringValue.charAt(0);
+    if (stringValue.startsWith("0x") || stringValue.startsWith("0X")) {
+        rawValue = stringValue.substring(2);
+        radix = 16;
+    } else if (firstChar == '#') {
+        rawValue = stringValue.substring(1);
+        radix = 16;
+    } else if (firstChar == '0' && stringValue.length() > 1) {
+        rawValue = stringValue.substring(1);
+        radix = 8;
+    } else {
+        rawValue = stringValue;
+        radix = 10;
+    }
+
+    return new ParseRequest(rawValue, radix);
+}
+```
+
+#### Wat deugt er?
+De regel `throw new NumberFormatException("empty string");`.
+
+#### Waarom deugt het?
+Er is een duidelijke keuze gemaakt om niet null te returnen wanneer de lengte 0 is. Dit zorgt 
+ervoor dat de code voorspelbaarder is, en dus makkelijker mee te werken is.
+
+
 ## Boundaries
 
 ## Unit Tests
