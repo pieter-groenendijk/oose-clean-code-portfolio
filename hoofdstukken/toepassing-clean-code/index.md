@@ -1,6 +1,26 @@
 # Toepassing clean code
 ## Meaningful Names
 
+### OOSE Library Management System: Repositories
+Locatie: []()  
+Omvang: 
+Clean Code Regel: Pick One Word per Concept  
+
+// TODO: Add additional repositories
+
+```java
+public interface INotificationTaskRepository {
+    public List<NotificationTask> retrieve(LocalDateTime scheduledUntil);
+}
+```
+
+#### Wat deugt er?
+Naamgeving van de functie.
+
+#### Waarom deugt het?
+In elke repository binnen de applicatie wordt dezelfde term gebruikt voor hetzelfde concept. `retrieve...()` betekent
+"data ophalen uit de database", en niks anders. De consequenties van het uitvoeren van zo'n functie is voorspelbaar,
+dus duidelijk en transparant.
 
 
 ## Functions
