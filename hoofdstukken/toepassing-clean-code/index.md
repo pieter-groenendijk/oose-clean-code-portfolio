@@ -275,6 +275,43 @@ zal dit het voornamelijk nadeel creëren dat men niet meer weet welk argument op
 verkeerde plekken gezet, en indien er overlap is in de types, zal er niet eens een fout oplopen. Door gebruik te maken
 van een builder pattern, wordt het create patroon _verbose_, maar ook voorspelbaar.
 
+### Command Query Separation
+Locatie: [Onbeschikbaar]  
+Omvang: -  
+Clean Code Regel: Command Query Separation  
+
+```js
+isValid() {
+    this.#validationRules.forEach((validationRule) => {
+        if (validationRule.getValidationErrorFor(this.value())) {
+            return true;
+        }
+    })
+
+    return false;
+}
+
+showErrorToUser(errorMessage) {
+    this.#validationErrorPatcher = new FieldErrorPatcher(
+        this.#inputElement,
+        errorMessage
+    );
+}
+```
+
+#### Wat deugt er?
+Er worden geen _command_ en _query_ functies gemixt.
+
+#### Waarom deugt het?
+Dit houdt de applicatie voorspelbaar. Het is onvoorspelbaar voor de caller dat een methode zoals `isValid()` bijv. ook 
+gelijk de errors zou laten zien aan de gebruiker met de functie `showErrorToUser()`. Net zoals je niet verwacht dat
+`showErrorToUser()` eerst gaat kijken of er überhaupt errors zijn. 
+
+Er is een isolatie van wie de _state_ mag muteren. Er zijn natuurlijk gevallen waar je de _state_ zou willen aanpassen
+en gelijk bij die waarde zou willen komen. Dit zorgt ervoor dat de code onnodig complexer zou worden, daarnaast verliest
+de caller een klein beetje controle. De gecallde functie beslist nu namelijk deels wat er moet gebeuren met de nieuwe 
+_state_, niet de daadwerkelijke die de functie aanroept.
+
 
 ## Comments
 
