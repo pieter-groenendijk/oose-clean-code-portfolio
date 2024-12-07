@@ -199,6 +199,81 @@ Er is 1 bron van waarheid. Dat betekent dat bij een wijziging aan het algoritme 
 verandert hoeft te worden. Hoe minder plekken hoe groter de kans is dat er geen fouten worden 
 gemaakt. 
 
+### OOSE Library Management System: ConfigurationBuilder.java
+Locatie: [ConfigurationBuilder.java]()  
+Omvang: 12 t/m 70
+Clean Code Regel: Function arguments (count)
+
+```java
+public ConfigurationBuilder setQuotingOfIdentifiers(boolean isQuoted) {
+    setProperty(
+        "hibernate.globally_quoted_identifiers",
+        isQuoted
+    );
+
+    return this;
+}
+
+public ConfigurationBuilder addAnnotatedClass(Class annotatedClass) {
+    CONFIGURATION.addAnnotatedClass(annotatedClass);
+
+    return this;
+}
+
+public ConfigurationBuilder setDriver(String driverClass) {
+    setProperty(
+        "hibernate.connection.driver_class",
+        driverClass
+    );
+
+    return this;
+}
+
+public ConfigurationBuilder setDialect(String dialectClass) {
+    setProperty(
+        "hibernate.dialect",
+        dialectClass
+    );
+
+    return this;
+}
+
+public ConfigurationBuilder setSchemaHandlingMethod(String schemaHandlingMethod) {
+    setProperty(
+        "hibernate.hbm2ddl.auto",
+        schemaHandlingMethod
+    );
+
+    return this;
+}
+
+public ConfigurationBuilder setShowingOfSQL(boolean isShown) {
+    setProperty(
+        "hibernate.show_sql",
+        isShown
+    );
+
+    return this;
+}
+
+public ConfigurationBuilder setFormattingOfSQL(boolean isFormatted) {
+    setProperty(
+        "hibernate.format_sql",
+        isFormatted
+    );
+
+    return this;
+}
+```
+
+#### Wat deugt er?
+Het aantal argumenten dat bovenstaande functies om vragen.
+
+#### Waarom deugt het? // TODO: Rewrite
+Er is hier gebruik gemaakt van een builder pattern. Een alternatief zou één super grote constructor maken. In dit geval
+zal dit het voornamelijk nadeel creëren dat men niet meer weet welk argument op welke plek moet. De argumenten worden op
+verkeerde plekken gezet, en indien er overlap is in de types, zal er niet eens een fout oplopen. Door gebruik te maken
+van een builder pattern, wordt het create patroon _verbose_, maar ook voorspelbaar.
 
 
 ## Comments
