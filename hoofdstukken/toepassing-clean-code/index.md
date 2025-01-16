@@ -343,6 +343,34 @@ Iemand wordt gelijk aan het denken gezet wanneer deze langs de comment komt, en 
 slag te gaan met de _todo_ of niet.
 
 
+### OOSE Library Management: 
+Locatie: [Onbeschikbaar] DetachedEventGenerator  
+Omvang: -  
+Clean Code Regel: Explanation of Intent  
+
+```java
+/**
+ * A generic is used to specify what the DetachedEvent will wrap. This generic exists because:
+ * - We want the event types to follow Liskov's substitution principle. We can't make a separate entity that holds a reference to the event
+ * and the association for this reason. A side effect is that we also lose control over the db structure; we can't choose
+ * an inheritance type.
+ * - For that reason we need a subclass that extends Event (generics are removed at runtime, so we need a subclass). To
+ * be able to correctly store this subclass though it needs to be known to the ORM.
+ * - For that reason the generator also needs to know what it will generate. Since it passes the mechanism to store the
+ * generated (wrapped) event.
+ */
+public abstract class DetachedEventGenerator<Association, AssociatedEvent extends Event<Association>> {
+```
+
+#### Wat deugt er?
+De comment
+
+#### Waarom deugt het?
+Hoewel niet perfect geschreven, helpt deze comment met het begrijpen waarom de developer gekozen heeft een bepaalde 
+generic te kiezen. Een andere dappere developer zal hierdoor minder snel proberen de generic uit het systeem te werken,
+omdat die de keuze niet begrijpt. Met deze informatie kan beter een keuze gemaakt worden.
+
+
 ## Formatting
 
 
