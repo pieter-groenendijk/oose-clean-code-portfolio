@@ -315,7 +315,32 @@ _state_, niet de daadwerkelijke die de functie aanroept.
 
 ## Comments
 
+### OOSE Library Management: FineManager.java
+Locatie: [Onbeschikbaar]  
+Omvang: -  
+Clean Code Regel: TODO Comments
 
+```java
+// TODO: Better name?
+public class FineManager {
+```
+
+#### Wat deugt er?
+De _TODO_ comment.
+
+#### Waarom deugt het?
+Het is een taak die de programmeur denkt dat er gedaan moet worden, maar op dit moment niet kan doen. De taak is hier het
+bedenken van een betere naam. 
+
+Het is gemakkelijk om snel een todo toe te voegen, wanneer je in de code bezig bent. Je hebt een openbaring
+over hoe de code beter kan zijn, maar weet dat je momenteel daar niet de tijd voor hebt. Met een comment kan je in 
+veel van zulke situaties met weinig _overhead_ het documenteren.
+
+Langdurige taken, of taken waar niet alleen developers bij betrokken zijn kunnen natuurlijk
+beter gezet worden in een _issue tracking system_.
+
+Iemand wordt gelijk aan het denken gezet wanneer deze langs de comment komt, en kan vervolgens de keuze maken om aan de
+slag te gaan met de _todo_ of niet.
 
 
 ## Formatting
