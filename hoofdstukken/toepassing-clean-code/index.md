@@ -1,11 +1,9 @@
 # Toepassing clean code
 ## Meaningful Names
 ### 1. OOSE Library Management System: Repositories
-Locatie: []()  
-Omvang: 
+Locatie: [INotificationTaskRepository]()  
+Omvang:     
 Clean Code Regel: Pick One Word per Concept  
-
-// TODO: Add additional repositories
 
 ```java
 public interface INotificationTaskRepository {
@@ -25,9 +23,9 @@ dus duidelijk en transparant.
 
 ## Functions
 ### 2. OOSE Library Management System: NotificationSendStrategyRegistry
-Locatie: [Onbeschikbaar]
-Omvang: -
-Clean Code Regel: Switch Statements
+Locatie: [Onbeschikbaar]()  
+Omvang: -  
+Clean Code Regel: Switch Statements  
 
 ```java
 public NotificationSendStrategy fromStrategyType(SendStrategyType type) {
@@ -44,7 +42,7 @@ Hoe een switch statement gebruikt wordt.
 
 #### Waarom deugt het?
 Switch statements doen technisch gezien altijd meer dan één ding, dat is eenmaal zo. Het is realiteit dat we niet de
-`NotificationSendStrategy` goed kunnen opslaan op zichzelf, daarom wordt i.p.v. een enum gebruikt. Dit heeft het
+`NotificationSendStrategy` goed kunnen opslaan op zichzelf, daarom wordt in plaats daarvan een enum gebruikt. Dit heeft het
 effect dat er minimaal één switch statement gebruikt moet worden. Nu is het systeem zo gebouwd dat dit de enige switch
 ook is. Vervolgens kunnen we dan met behulp van polymorfisme het verder gebruiken. 
 
@@ -57,8 +55,8 @@ De switch kunnen we dus niet totaal vermijden, maar wel zoveel mogelijk.
 
 ### 3. OOSE Library Management System: ChannelNotifier.java
 Locatie: [ChannelNotifier.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/notifications/application/src/main/java/com/github/pietergroenendijk/notifications/notifiers/ChannelNotifier.java)  
-Omvang: 21 t/m 38
-Clean Code Regel: Extract Try/Catch Blocks
+Omvang: 21 t/m 38  
+Clean Code Regel: Extract Try/Catch Blocks  
 
 ```java
 private void send(NotificationTask task, byte amountOfAttempts) {
@@ -85,16 +83,16 @@ private void handleSendingError(NotificationTask task, byte amountOfAttempts) {
 De try/catch blocks bevatten enkel calls naar andere functies. De onderliggende logica is geabstraheerd. 
 
 #### Waarom deugt het?
-Errors afhandelen in een doel op zich. Het wordt verwarrend als de onderliggende logica rechtstreeks 
+Errors afhandelen is een doel op zichzelf. Het wordt verwarrend als de onderliggende logica rechtstreeks 
 geplaatst wordt in de try/catch blocks. Je hoeft niet actief de error afhandeling weg te filteren terwijl 
 je de onderliggende logica probeert te begrijpen. Door de scheiding van de twee doelen is de code 
 makkelijker te begrijpen en aan te passen.
 
 
 ### 4. OOSE Library Management System: NotificationService.java
-Locatie: [NotificationService.java]()  
+Locatie: [Onbeschikbaar]()   
 Omvang: 8 t/m 28  
-Clean Code Regel: Functions: Small!!!
+Clean Code Regel: Functions: Small!!!  
 
 ```java
 public class NotificationService {
@@ -134,7 +132,7 @@ die manier goed duidelijk maken wat de code doet.
 ### 5. OOSE Library Management System: ChannelNotifier.java
 Locatie: [ChannelNotifier.java]()  
 Omvang: 21 t/m 27  
-Clean Code Regel: Do One Thing
+Clean Code Regel: Do One Thing  
 
 ```java
 private void send(NotificationTask task, byte amountOfAttempts) {
@@ -145,8 +143,6 @@ private void send(NotificationTask task, byte amountOfAttempts) {
     }
 }
 ```
-
-_Figuur N: OOSE LMS: ChannelNotifier.java_
 
 #### Wat deugt er?
 De body van de functie.
@@ -204,8 +200,6 @@ public abstract class ChannelNotifier implements Notifier {
 }
 ```
 
-_Figuur N: OOSE LMS: ChannelNotifier.java_
-
 ```java
 public class EmailChannelNotifier extends ChannelNotifier 
 ```
@@ -226,14 +220,14 @@ Door gebruik te maken van inheritance wordt ervoor gezorgt dat er geen sprake is
 De generieke logica komt hierdoor 1 keer voor. 
 
 Er is 1 bron van waarheid. Dat betekent dat bij een wijziging aan het algoritme maar op 1 plek iets
-verandert hoeft te worden. Hoe minder plekken hoe groter de kans is dat er geen fouten worden 
+veranderd hoeft te worden. Hoe minder plekken hoe groter de kans is dat er geen fouten worden 
 gemaakt. 
 
 
 ### 7. OOSE Library Management System: ConfigurationBuilder.java
 Locatie: [ConfigurationBuilder.java]()  
-Omvang: 12 t/m 70
-Clean Code Regel: Function arguments (count)
+Omvang: 12 t/m 70  
+Clean Code Regel: Function arguments (count)  
 
 ```java
 public ConfigurationBuilder setQuotingOfIdentifiers(boolean isQuoted) {
@@ -346,13 +340,9 @@ _state_, niet de daadwerkelijke die de functie aanroept.
 
 
 ### 9. Library Management System: DetachedNotificationFactory.java
-Clean Code Regel: One Level Of Abstraction
-
-Locatie: [DetachedNotificationFactory.java]()  
-Omvang: 22 t/m 27  
-
-Locatie: [DetachedNotificationGenerator]()
-Omvang: 23 t/m 28
+Locatie: [DetachedNotificationGenerator.java](), [DetachedNotificationGenerator.java]()  
+Omvang: 22 t/m 27, 23 t/m 28  
+Clean Code Regel: One Level Of Abstraction  
 
 ```java
 public DetachedTask<LoanNotification> createOverdueLoanNotification(Account account, Loan loan) {
@@ -385,7 +375,7 @@ te begrijpen. Men wil focussen op wat de essentiële concepten zijn.
 ### 10. OOSE Library Management System: EventEmitterPool.java
 Locatie: [EventEmitterPool.java]()  
 Omvang: 62 t/m 71  
-Clean Code Regel: Informative Comments
+Clean Code Regel: Informative Comments  
 
 ```java
 /**
@@ -405,14 +395,14 @@ De comment.
 
 #### Waarom deugt het?
 Het maakt het voor andere developers duidelijk van buitenaf wat er gebeurt in een specifieke situatie binnen de functie;
-het leegt een stukje implementatie bloot. Zo komen die developer minder snel tegen problemen aan omdat ze begrijpen wat
-er in die situatie gebeurt. 
+het leegt een stukje implementatie bloot. Zo lopen die developers minder snel tegen problemen aan omdat ze begrijpen wat
+er in die situatie zal gebeuren. 
 
 
 ### 11. OOSE Library Management System: FineManager.java
-Locatie: [Onbeschikbaar]  
-Omvang: -  
-Clean Code Regel: TODO Comments
+Locatie: [Onbeschikbaar]()   
+Omvang: -   
+Clean Code Regel: TODO Comments  
 
 ```java
 // TODO: Better name?
@@ -457,7 +447,7 @@ public abstract class DetachedEventGenerator<Association, AssociatedEvent extend
 ```
 
 #### Wat deugt er?
-De comment
+De comment.
 
 #### Waarom deugt het?
 Hoewel niet perfect geschreven, helpt deze comment met het begrijpen waarom de developer gekozen heeft een bepaalde 
