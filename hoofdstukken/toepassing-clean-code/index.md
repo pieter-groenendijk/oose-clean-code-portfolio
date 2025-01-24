@@ -1,8 +1,8 @@
 # Toepassing clean code
 ## Meaningful Names
 ### 1. OOSE Library Management System: Repositories
-Locatie: [INotificationTaskRepository]()  
-Omvang:     
+Locatie: [INotificationTaskRepository](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/main/java/com/github/pieter_groenendijk/datasource/repositories/notification/INotificationRepository.java)  
+Omvang: 11  
 Clean Code Regel: Pick One Word per Concept  
 
 ```java
@@ -22,9 +22,9 @@ dus duidelijk en transparant.
 
 
 ## Functions
-### 2. OOSE Library Management System: NotificationSendStrategyRegistry
-Locatie: [Onbeschikbaar]()  
-Omvang: -  
+### 2. OOSE Library Management System: NotificationSendStrategyRegistry.java
+Locatie: [NotificationSendStrategyRegistry.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/main/java/com/github/pieter_groenendijk/domain/services/notification/sendstrategies/registry/NotificationSendStrategyRegistry.java)  
+Omvang: 18 t/m 24  
 Clean Code Regel: Switch Statements  
 
 ```java
@@ -54,8 +54,8 @@ De switch kunnen we dus niet totaal vermijden, maar wel zoveel mogelijk.
 
 
 ### 3. OOSE Library Management System: ChannelNotifier.java
-Locatie: [ChannelNotifier.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/notifications/application/src/main/java/com/github/pietergroenendijk/notifications/notifiers/ChannelNotifier.java)  
-Omvang: 21 t/m 38  
+Locatie: [ChannelNotifier.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/main/java/com/github/pieter_groenendijk/domain/services/notification/notifiers/ChannelNotifier.java)  
+Omvang: -  
 Clean Code Regel: Extract Try/Catch Blocks  
 
 ```java
@@ -130,8 +130,8 @@ die manier goed duidelijk maken wat de code doet.
 
 
 ### 5. OOSE Library Management System: ChannelNotifier.java
-Locatie: [ChannelNotifier.java]()  
-Omvang: 21 t/m 27  
+Locatie: [ChannelNotifier.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/main/java/com/github/pieter_groenendijk/domain/services/notification/notifiers/ChannelNotifier.java)  
+Omvang: -  
 Clean Code Regel: Do One Thing  
 
 ```java
@@ -154,8 +154,8 @@ error.". Daarnaast is de functie, niet op een nuttige manier te splitsen. Het do
 
 
 ### 6. OOSE Library Management System: ChannelNotifier.java
-Locatie: [ChannelNotifier.java]()  
-Omvang: 5 t/m 38  
+Locatie: [ChannelNotifier.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/main/java/com/github/pieter_groenendijk/domain/services/notification/notifiers/ChannelNotifier.java)  
+Omvang: -  
 Clean Code Regel: Don't Repeat Yourself (DRY)  
 
 ```java
@@ -216,16 +216,16 @@ public class SMSChannelNotifier extends ChannelNotifier
 Subklassen die gebruik maken van `ChannelNotifier`.
 
 #### Waarom deugt het?
-Door gebruik te maken van inheritance wordt ervoor gezorgt dat er geen sprake is van duplicatie.
+Door gebruik te maken van inheritance wordt ervoor gezorgd dat er geen sprake is van duplicatie.
 De generieke logica komt hierdoor 1 keer voor. 
 
-Er is 1 bron van waarheid. Dat betekent dat bij een wijziging aan het algoritme maar op 1 plek iets
+Er is 1 bron van waarheid. Dat betekent dat bij een wijziging aan het algoritme, maar op 1 plek iets
 veranderd hoeft te worden. Hoe minder plekken hoe groter de kans is dat er geen fouten worden 
 gemaakt. 
 
 
 ### 7. OOSE Library Management System: ConfigurationBuilder.java
-Locatie: [ConfigurationBuilder.java]()  
+Locatie: [ConfigurationBuilder.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/main/java/com/github/pieter_groenendijk/datasource/configuration/ConfigurationBuilder.java)  
 Omvang: 12 t/m 70  
 Clean Code Regel: Function arguments (count)  
 
@@ -302,7 +302,7 @@ van een builder pattern, wordt het create patroon _verbose_, maar ook voorspelba
 
 
 ### 8. Onbekend.js
-Locatie: [Onbeschikbaar]  
+Locatie: [Onbeschikbaar]()  
 Omvang: -  
 Clean Code Regel: Command Query Separation  
 
@@ -340,7 +340,7 @@ _state_, niet de daadwerkelijke die de functie aanroept.
 
 
 ### 9. Library Management System: DetachedNotificationFactory.java
-Locatie: [DetachedNotificationGenerator.java](), [DetachedNotificationGenerator.java]()  
+Locatie: [DetachedNotificationFactory.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/main/java/com/github/pieter_groenendijk/domain/services/notification/orchestration/DetachedNotificationFactory.java), [DetachedNotificationGenerator.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/main/java/com/github/pieter_groenendijk/domain/services/notification/generators/DetachedNotificationGenerator.java)  
 Omvang: 22 t/m 27, 23 t/m 28  
 Clean Code Regel: One Level Of Abstraction  
 
@@ -428,7 +428,7 @@ slag te gaan met de _todo_ of niet.
 
 
 ### 12. OOSE Library Management: DetachedEventGenerator
-Locatie: [Onbeschikbaar] DetachedEventGenerator  
+Locatie: [Onbeschikbaar]()  
 Omvang: -  
 Clean Code Regel: Explanation of Intent  
 
@@ -481,7 +481,7 @@ ervoor dat `NullPointerException`'s praktisch gezien niet kunnen plaatsvinden.
 
 ## Unit Tests
 ### 14. OOSE Library Management System: DetachedEventGeneratorTest.java
-Locatie: [DetachedEventGeneratorTest.java]()  
+Locatie: [DetachedEventGeneratorTest.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/test/java/com/github/pieter_groenendijk/domain/services/event/generator/DetachedEventGeneratorTest.java)  
 Omvang: 55 t/m 138  
 Clean Code Regel: Single Concept per Test  
 
@@ -587,7 +587,7 @@ daarna kan je daadwerkelijk gaan kijken naar de gemiste functionaliteit. Onprakt
 
 ## Objects and Data Structures
 ### 15. OOSE Library Management System: NotificationTaskScheduler.java
-Locatie: [NotificationTaskScheduler.java]()  
+Locatie: [NotificationTaskScheduler.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/main/java/com/github/pieter_groenendijk/domain/services/notification/scheduling/NotificationScheduler.java)  
 Omvang: 37 t/m 48  
 Clean Code Regel: Law of Demeter
 
@@ -620,7 +620,7 @@ Het volgt de Law Of Demeter. De functie roept alleen maar functies aan van:
 
 ## Classes
 ### 16. OOSE Library Management System: ChannelNotifier.java
-Locatie: [ChannelNotifier.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/notifications/application/src/main/java/com/github/pietergroenendijk/notifications/notifiers/ChannelNotifier.java)  
+Locatie: [ChannelNotifier.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/main/java/com/github/pieter_groenendijk/domain/services/notification/notifiers/ChannelNotifier.java)  
 Omvang: 5 t/m 43  
 Clean Code Regel: Classes Should Be Small  
 

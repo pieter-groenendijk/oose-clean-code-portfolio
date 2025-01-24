@@ -234,7 +234,7 @@ ze dan ook**. Functies zijn duidelijk gescheiden in _doe_ en _beantwoord_ functi
 worden niet gemengd. 
 
 ### 4. Apache Commons: AnnotationUtils.java
-Locatie: [AnnotationUtils.java]()  
+Locatie: [AnnotationUtils.java](https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/AnnotationUtils.java)  
 Omvang: 71 t/m 76  
 Clean Code Regel: Have No Side Effects  
 
@@ -286,8 +286,8 @@ minder leesbaarder maken. Het scheidt de _happy path_ duidelijk van _alternative
 en/of mogelijke _exceptional_ flows.
 
 ### 6. Guava: Files.java
-Locatie: [Files.java]()  
-Omvang: 495
+Locatie: [Files.java](https://github.com/google/guava/blob/master/guava/src/com/google/common/io/Files.java)  
+Omvang: 493
 Clean Code Regel: Function Arguments (count)
 
 ```java
@@ -307,7 +307,7 @@ zoals `mv` gebruiken bijv. dezelfde volgorde.
 
 
 ### 7. Guava: AppendableWriter.java
-Locatie: [AppendableWriter.java]()  
+Locatie: [AppendableWriter.java](https://github.com/google/guava/blob/master/guava/src/com/google/common/io/AppendableWriter.java)  
 Omvang: 67 t/m 86  
 Clean Code Regel: Don't Repeat Yourself (DRY Principle)  
 
@@ -408,7 +408,7 @@ De javadoc comment legt duidelijk en accuraat uit wat de functie doet. Dat is su
 code doet.
 
 ### 9. Guava: Files.java
-Locatie: [Files.java]()  
+Locatie: [Files.java](https://github.com/google/guava/blob/master/guava/src/com/google/common/io/Files.java)  
 Omvang: 375 t/m 393
 Clean Code Regel: Good Comments: Explanation of Intent
 
@@ -445,7 +445,7 @@ De comment zorgt ervoor dat er gemakkelijker begrepen wordt waarom een keuze gem
 
 
 ### 10. Guava: Doubles.java
-Locatie: [Doubles.java]()  
+Locatie: [Doubles.java](https://github.com/google/guava/blob/master/guava/src/com/google/common/primitives/Doubles.java)  
 Omvang: 776 t/m 788  
 Clean Code Regel: TODO Comments  
 
@@ -478,7 +478,7 @@ zijn.
 
 
 ### 11. Guava: DoublesTest.java
-Locatie: [DoublesTest.java]()  
+Locatie: [DoublesTest.java](https://github.com/google/guava/blob/master/guava-tests/test/com/google/common/primitives/DoublesTest.java)  
 Omvang: 1 t/m 15
 Clean Code Regel: Good Comments: Legal Comments
 
@@ -544,7 +544,7 @@ de code aflezen.
 
 ## Objects and Data Structures
 ### 13. Apache Commons: RandomStringUtils.java
-Locatie: [RandomStringUtils.java]()  
+Locatie: [RandomStringUtils.java](https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/RandomStringUtils.java)  
 Omvang: 251 t/m 378  
 Clean Code Regel: Law of Demeter  
 
@@ -766,7 +766,7 @@ ervoor dat de code voorspelbaarder is, en dus makkelijker mee te werken is.
 
 ## Unit Tests
 ### 15. OOSE Library Management System: EmailValidatorTest.java
-Locatie: [EmailValidatorTest.java]()  
+Locatie: [EmailValidatorTest.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/test/java/com/github/pieter_groenendijk/domain/shared/validator/EmailValidatorTest.java)  
 Omvang: 11 t/m 40  
 Clean Code Regel: Single Concept per Test  
 
