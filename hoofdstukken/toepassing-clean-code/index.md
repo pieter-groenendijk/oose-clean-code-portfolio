@@ -1,7 +1,6 @@
 # Toepassing clean code
 ## Meaningful Names
-
-### OOSE Library Management System: Repositories
+### 1. OOSE Library Management System: Repositories
 Locatie: []()  
 Omvang: 
 Clean Code Regel: Pick One Word per Concept  
@@ -23,9 +22,9 @@ In elke repository binnen de applicatie wordt dezelfde term gebruikt voor hetzel
 dus duidelijk en transparant.
 
 
-## Functions
 
-### OOSE Library Management System: NotificationSendStrategyRegistry
+## Functions
+### 2. OOSE Library Management System: NotificationSendStrategyRegistry
 Locatie: [Onbeschikbaar]
 Omvang: -
 Clean Code Regel: Switch Statements
@@ -55,7 +54,8 @@ gelijk al een wrak i.v.m. Open/Closed principle.
 
 De switch kunnen we dus niet totaal vermijden, maar wel zoveel mogelijk.
 
-### OOSE Library Management System: ChannelNotifier.java
+
+### 3. OOSE Library Management System: ChannelNotifier.java
 Locatie: [ChannelNotifier.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/notifications/application/src/main/java/com/github/pietergroenendijk/notifications/notifiers/ChannelNotifier.java)  
 Omvang: 21 t/m 38
 Clean Code Regel: Extract Try/Catch Blocks
@@ -90,7 +90,8 @@ geplaatst wordt in de try/catch blocks. Je hoeft niet actief de error afhandelin
 je de onderliggende logica probeert te begrijpen. Door de scheiding van de twee doelen is de code 
 makkelijker te begrijpen en aan te passen.
 
-### OOSE Library Management System: NotificationService.java
+
+### 4. OOSE Library Management System: NotificationService.java
 Locatie: [NotificationService.java]()  
 Omvang: 8 t/m 28  
 Clean Code Regel: Functions: Small!!!
@@ -130,8 +131,7 @@ die manier goed duidelijk maken wat de code doet.
 3. Minder behoefte om dingen te onthouden om de rest van de functie te begrijpen.
 
 
-
-### OOSE Library Management System: ChannelNotifier.java
+### 5. OOSE Library Management System: ChannelNotifier.java
 Locatie: [ChannelNotifier.java]()  
 Omvang: 21 t/m 27  
 Clean Code Regel: Do One Thing
@@ -157,7 +157,7 @@ de notification task uit te voeren. In het geval van problemen delegeert die het
 error.". Daarnaast is de functie, niet op een nuttige manier te splitsen. Het doet dus 1 ding.
 
 
-### OOSE Library Management System: ChannelNotifier.java
+### 6. OOSE Library Management System: ChannelNotifier.java
 Locatie: [ChannelNotifier.java]()  
 Omvang: 5 t/m 38  
 Clean Code Regel: Don't Repeat Yourself (DRY)  
@@ -229,7 +229,8 @@ Er is 1 bron van waarheid. Dat betekent dat bij een wijziging aan het algoritme 
 verandert hoeft te worden. Hoe minder plekken hoe groter de kans is dat er geen fouten worden 
 gemaakt. 
 
-### OOSE Library Management System: ConfigurationBuilder.java
+
+### 7. OOSE Library Management System: ConfigurationBuilder.java
 Locatie: [ConfigurationBuilder.java]()  
 Omvang: 12 t/m 70
 Clean Code Regel: Function arguments (count)
@@ -305,7 +306,8 @@ zal dit het voornamelijk nadeel creëren dat men niet meer weet welk argument op
 verkeerde plekken gezet, en indien er overlap is in de types, zal er niet eens een fout oplopen. Door gebruik te maken
 van een builder pattern, wordt het create patroon _verbose_, maar ook voorspelbaar.
 
-### OOSE Library Management System
+
+### 8. Onbekend.js
 Locatie: [Onbeschikbaar]  
 Omvang: -  
 Clean Code Regel: Command Query Separation  
@@ -342,7 +344,8 @@ en gelijk bij die waarde zou willen komen. Dit zorgt ervoor dat de code onnodig 
 de caller een klein beetje controle. De gecallde functie beslist nu namelijk deels wat er moet gebeuren met de nieuwe 
 _state_, niet de daadwerkelijke die de functie aanroept.
 
-### Library Management System: DetachedNotificationFactory.java
+
+### 9. Library Management System: DetachedNotificationFactory.java
 Clean Code Regel: One Level Of Abstraction
 
 Locatie: [DetachedNotificationFactory.java]()  
@@ -377,9 +380,9 @@ Het laat concreet zien wat er daadwerkelijk gebeurt, zonder dat te verstoppen in
 te begrijpen. Men wil focussen op wat de essentiële concepten zijn.
 
 
-## Comments
 
-### OOSE Library Management System: EventEmitterPool.java
+## Comments
+### 10. OOSE Library Management System: EventEmitterPool.java
 Locatie: [EventEmitterPool.java]()  
 Omvang: 62 t/m 71  
 Clean Code Regel: Informative Comments
@@ -406,7 +409,7 @@ het leegt een stukje implementatie bloot. Zo komen die developer minder snel teg
 er in die situatie gebeurt. 
 
 
-### OOSE Library Management: FineManager.java
+### 11. OOSE Library Management System: FineManager.java
 Locatie: [Onbeschikbaar]  
 Omvang: -  
 Clean Code Regel: TODO Comments
@@ -434,7 +437,7 @@ Iemand wordt gelijk aan het denken gezet wanneer deze langs de comment komt, en 
 slag te gaan met de _todo_ of niet.
 
 
-### OOSE Library Management: DetachedEventGenerator
+### 12. OOSE Library Management: DetachedEventGenerator
 Locatie: [Onbeschikbaar] DetachedEventGenerator  
 Omvang: -  
 Clean Code Regel: Explanation of Intent  
@@ -462,14 +465,13 @@ generic te kiezen. Een andere dappere developer zal hierdoor minder snel probere
 omdat die de keuze niet begrijpt. Met deze informatie kan beter een keuze gemaakt worden.
 
 
+
 ## Formatting
 
 
 
-
 ## Error Handling
-
-### OOSE Library Management System: IFineRepository.java
+### 13. OOSE Library Management System: IFineRepository.java
 Locatie: [IFineRepository.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/main/java/com/github/pieter_groenendijk/datasource/repositories/fine/IFineRepository.java)  
 Omvang: 12 t/m 12  
 Clean Code Regel: Don't Return Null  
@@ -489,7 +491,7 @@ feit te denken dat er null in de `Optional` kan zitten.
 Er kan zo geen `null` waarde door het systeem bewegen om vervolgens het systeem eruit te blazen. Deze techniek zorgt
 ervoor dat `NullPointerException`'s praktisch gezien niet kunnen plaatsvinden.
 
-### OOSE Library Management System: DetachedEventGeneratorTest.java
+### 14. OOSE Library Management System: DetachedEventGeneratorTest.java
 Locatie: [DetachedEventGeneratorTest.java]()  
 Omvang: 55 t/m 138  
 Clean Code Regel: Single Concept per Test  
@@ -593,9 +595,9 @@ _debuggen_ om te kijken waar de fout daadwerkelijk plaatsvindt, vervolgens moet 
 daarna kan je daadwerkelijk gaan kijken naar de gemiste functionaliteit. Onpraktisch dus.
 
 
-## Objects and Data Structures
 
-### OOSE Library Management System: NotificationTaskScheduler.java
+## Objects and Data Structures
+### 15. OOSE Library Management System: NotificationTaskScheduler.java
 Locatie: [NotificationTaskScheduler.java]()  
 Omvang: 37 t/m 48  
 Clean Code Regel: Law of Demeter
@@ -638,8 +640,7 @@ Het volgt de Law Of Demeter. De functie roept alleen maar functies aan van:
 
 
 ## Classes
-
-### OOSE Library Management System: ChannelNotifier.java
+### 16. OOSE Library Management System: ChannelNotifier.java
 Locatie: [ChannelNotifier.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/notifications/application/src/main/java/com/github/pietergroenendijk/notifications/notifiers/ChannelNotifier.java)  
 Omvang: 5 t/m 43  
 Clean Code Regel: Classes Should Be Small  
