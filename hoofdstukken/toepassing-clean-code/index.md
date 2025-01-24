@@ -466,10 +466,6 @@ omdat die de keuze niet begrijpt. Met deze informatie kan beter een keuze gemaak
 
 
 
-## Formatting
-
-
-
 ## Error Handling
 ### 13. OOSE Library Management System: IFineRepository.java
 Locatie: [IFineRepository.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/main/java/com/github/pieter_groenendijk/datasource/repositories/fine/IFineRepository.java)  
@@ -626,16 +622,6 @@ Het volgt de Law Of Demeter. De functie roept alleen maar functies aan van:
 - Een object gemaakt door de functie
 - Een object doorgegeven als parameter aan de functie
 - Een object opgeslagen (als referentie) in de klasse
-
-
-
-## Boundaries
-
-
-
-
-## Unit Tests
-
 
 
 
