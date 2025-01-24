@@ -25,6 +25,36 @@ dus duidelijk en transparant.
 
 ## Functions
 
+### OOSE Library Management System: NotificationSendStrategyRegistry
+Locatie: [Onbeschikbaar]
+Omvang: -
+Clean Code Regel: Switch Statements
+
+```java
+public NotificationSendStrategy fromStrategyType(SendStrategyType type) {
+    return switch (type) {
+        case ALERT -> ALERT_STRATEGY;
+        case WARNING -> WARNING_STRATEGY;
+        case REMINDER -> REMINDER_STRATEGY;
+    };
+}
+```
+
+#### Wat deugt er?
+Hoe een switch statement gebruikt wordt.
+
+#### Waarom deugt het?
+Switch statements doen technisch gezien altijd meer dan één ding, dat is eenmaal zo. Het is realiteit dat we niet de
+`NotificationSendStrategy` goed kunnen opslaan op zichzelf, daarom wordt i.p.v. een enum gebruikt. Dit heeft het
+effect dat er minimaal één switch statement gebruikt moet worden. Nu is het systeem zo gebouwd dat dit de enige switch
+ook is. Vervolgens kunnen we dan met behulp van polymorfisme het verder gebruiken. 
+
+Op deze manier wordt het Open/Closed principle zo weinig mogelijk overtreden. Daarom is deze techniek beter dan het alternatief;
+meerdere switch statements. Je kan natuurlijk ook overal switch statements om dan gedrag te sturen. Hierdoor wordt het
+gelijk al een wrak i.v.m. Open/Closed principle. 
+
+De switch kunnen we dus niet totaal vermijden, maar wel zoveel mogelijk.
+
 ### OOSE Library Management System: ChannelNotifier.java
 Locatie: [ChannelNotifier.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/notifications/application/src/main/java/com/github/pietergroenendijk/notifications/notifiers/ChannelNotifier.java)  
 Omvang: 21 t/m 38
@@ -343,7 +373,7 @@ Iemand wordt gelijk aan het denken gezet wanneer deze langs de comment komt, en 
 slag te gaan met de _todo_ of niet.
 
 
-### OOSE Library Management: 
+### OOSE Library Management: DetachedEventGenerator
 Locatie: [Onbeschikbaar] DetachedEventGenerator  
 Omvang: -  
 Clean Code Regel: Explanation of Intent  
