@@ -1,7 +1,5 @@
 # Analyse smells
-
 ## Comments
-
 ### 1. Processing: MouseEvent.java
 Locatie: [MouseEvent.java](https://github.com/processing/processing/blob/master/core/src/processing/event/MouseEvent.java)  
 Omvang: 38 t/m 63  

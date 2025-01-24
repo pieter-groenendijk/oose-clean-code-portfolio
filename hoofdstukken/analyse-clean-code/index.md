@@ -1,10 +1,8 @@
 # Analyse clean code
-
 ## Meaningful Names
-
 ### 1. Apache Commons: Range.java
 Locatie: [Range.java](https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/Range.java)    
-Omvang:  163 t/m 184  
+Omvang: 163 t/m 184  
 Clean Code Regel: Use Intention-Revealing Names  
 
 ```java
@@ -33,11 +31,11 @@ public static <T> Range<T> of(final T fromInclusive, final T toInclusive, final 
 ```
 
 #### Wat deugt er?
-Zeer duidelijke naamgeving van de functie, en nog meer van de variabelen.
+Zeer duidelijke naamgeving van de functie. De variabelen zijn nog duidelijker.
 
 #### Waarom deugt het?
 ##### Functienaam
-De functienaam `of(...)` lijkt misschien op eerste gezicht een onduidelijke functie naam. Echter is dat niet hoe je hem zal aanroepen. Een daadwerkelijke realistische aanroep zal eruit
+De functienaam `of(...)` lijkt misschien op eerste gezicht als een onduidelijke functie naam. Echter is dat niet hoe je hem zal aanroepen. Een daadwerkelijke realistische aanroep zal eruit
 zien als `Range.of(2, 10, Integer::compare)`. Het maakt gelijk duidelijk dat je een range aanmaakt. Het leest als een zin: "Een range van" ...
 
 ##### Parameternamen
@@ -67,8 +65,6 @@ public static boolean[] concat(boolean[]... arrays) {
 }
 ```
 
-_Figuur N: Guava: Booleans.java_
-
 ```java
   public static byte[] concat(byte[]... arrays) {
     long length = 0;
@@ -84,9 +80,6 @@ _Figuur N: Guava: Booleans.java_
     return result;
   }
 ```
-
-_Figuur N: Guava: Bytes.java_
-
 
 ```java
   public static char[] concat(char[]... arrays) {
@@ -104,8 +97,6 @@ _Figuur N: Guava: Bytes.java_
   }
 ```
 
-_Figuur N: Guava: Chars.java_
-
 ```java
   public static double[] concat(double[]... arrays) {
     long length = 0;
@@ -122,8 +113,6 @@ _Figuur N: Guava: Chars.java_
   }
 ```
 
-_Figuur N: Guava: Doubles.java_
-
 #### Wat deugt er?
 De naamgeving van bovenstaande functies.
 
@@ -134,7 +123,6 @@ waarbij de betekenis van de actie hetzelfde blijft. Duidelijk en overzichtelijk.
 
 
 ## Functions
-
 ### 3. Apache Commons: CharUtils.java
 Locatie: [CharUtils.java](https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/CharUtils.java)  
 Omvang: 80 t/m 173  
@@ -238,12 +226,12 @@ public static boolean isAsciiAlphaUpper(final char ch) {
 ```
 
 #### Wat deugt er?
-De functiedefinities
+De functie-definities
 
 #### Waarom deugt het?
-Al deze functie definities maken het duidelijk dat ze iets beantwoorden, **en dat doen
+Al deze functie-definities maken het duidelijk dat ze iets beantwoorden, **en dat doen
 ze dan ook**. Functies zijn duidelijk gescheiden in _doe_ en _beantwoord_ functies, ze
-worden niet gemengt. 
+worden niet gemengd. 
 
 ### 4. Apache Commons: AnnotationUtils.java
 Locatie: [AnnotationUtils.java]()  
@@ -270,8 +258,8 @@ De functie body.
 De functie body zorgt niet voor side-effects. De functie zorgt er alleen voor dat het doel beschreven in de naam, namelijk
 `appendDetail` gedaan wordt, dat is de enige consequentie van het uitvoeren van de functie.
 
-Niet logische consequenties van een functie kunnen voor verwarring zorgen, en verwarring zorgt voor bugs. Daarom is het
-goed dat deze functie alleen zorgt voor één logische consequentie.
+Niet logische consequenties van een functie kunnen voor verwarring zorgen; verwarring zorgt voor bugs. Daarom is het
+goed dat deze functie zorgt voor één logische consequentie.
 
 ### 5. Guava: ClassPath.java
 Locatie: [ClassPath.java](https://github.com/google/guava/blob/master/guava/src/com/google/common/reflect/ClassPath.java)  
@@ -313,7 +301,7 @@ Het aantal arguments.
 Ideaal gezien is een functie duidelijk wanneer deze zo min mogelijk arguments nodig heeft. Zo worden er minder snel 
 fouten gemaakt zoals bijv. het omdraaien van de arguments in de call.
 
-Iemand zou kunnen benoemen dat bij deze functie definitie dat nog steeds mogelijk. Die persoon zou deels gelijk hebben.
+Iemand zou kunnen benoemen dat bij deze functie definitie dat nog steeds mogelijk is. Die persoon zou deels gelijk hebben.
 Naar mijn mening is het een duidelijke conventie om eerst de `from` en daarna de `to` op te geven. Linux commands
 zoals `mv` gebruiken bijv. dezelfde volgorde.
 
@@ -321,7 +309,7 @@ zoals `mv` gebruiken bijv. dezelfde volgorde.
 ### 7. Guava: AppendableWriter.java
 Locatie: [AppendableWriter.java]()  
 Omvang: 67 t/m 86  
-Clean Code Regel: Don't Repeat Yourself (DRY Principle)
+Clean Code Regel: Don't Repeat Yourself (DRY Principle)  
 
 ```java
   @Override
@@ -347,13 +335,13 @@ Clean Code Regel: Don't Repeat Yourself (DRY Principle)
 ```
 
 #### Wat deugt er?
-Gemeenschappelijke functionaliteit wordt niet meerdere keren geïmplementeerd.
+Geen duplicatie van code.
 
 #### Waarom deugt het?
-Wanneer een verandering aan de gemeenschappelijke functionaliteit moet gebeuren en deze staan allemaal dubbel genoemd,
+Wanneer een verandering aan de gemeenschappelijke functionaliteit moet gebeuren en deze staan dubbel,
 dan zal elk van die duplicaten **correct** veranderd moeten worden. Dit zorgt ervoor dat er veel ruimte is voor fouten.
 
-Gelukkig maakt bovenstaande functies gebruik van functies om de gemeenschappelijke functionaliteit uit te voeren, bijv:
+Gelukkig maken bovenstaande functies gebruik van functies om de gemeenschappelijke functionaliteit uit te voeren, bijv:
 `checkNotNull()` en `checkNotClose()`.
 
 Er kan benoemd worden dat er nog steeds duplicatie plaatsvindt namelijk de gezamenlijke calls naar genoemde functies. 
@@ -363,7 +351,6 @@ telkens dezelfde combinatie gebruikt.
 
 
 ## Comments
-
 ### 8. Apache Commons: StringUtils.java
 Locatie: [StringUtils.java](https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/StringUtils.java)  
 Omvang: 604 t/m 644  
@@ -478,8 +465,6 @@ Clean Code Regel: TODO Comments
   }
 ```
 
-_Figuur N: Guava: Doubles.java_
-
 #### Wat deugt er?
 de TODO comment.
 
@@ -488,7 +473,7 @@ De programmeur geeft duidelijk een taak aan die hoogwaarschijnlijk in de toekoms
 uitgevoert zou moeten worden. Het is prima om zulke comments achter te laten, indien 
 er daadwerkelijk een intentie is dit in de toekomst aan te pakken. Het verklaart 
 waarom gekozen is voor de huidige implementatie en wat er verbetert kan worden. Zo
-kan gemakkelijk, wanneer er de tijd ervoor is, met de IDE opgezocht worden welke TODO's
+kan gemakkelijk, wanneer er tijd voor is, met de IDE opgezocht worden welke TODO's
 zijn.
 
 
@@ -515,10 +500,8 @@ Clean Code Regel: Good Comments: Legal Comments
  */
 ```
 
-_Figuur N: Guava: DoublesTest.java_
-
 #### Wat deugt er?
-De gehele snippet
+De gehele snippet.
 
 #### Waarom deugt het?
 Juridische comments zijn eenmaal nodig. Je hoeft ze niet te verstoppen. Het is dus prima om een 
@@ -527,11 +510,10 @@ bondige comment te plaatsen voor juridische doeleinden.
 
 
 ## Formatting
-
 ### 12. Guava: Booleans.java
 Locatie: [Booleans.java](https://github.com/google/guava/blob/master/guava/src/com/google/common/primitives/Booleans.java)  
-Omvang: 237 t/m 249
-Clean Code Regel: Vertical Distance
+Omvang: 237 t/m 249  
+Clean Code Regel: Vertical Distance  
 
 ```java
 public static boolean[] concat(boolean[]... arrays) {
@@ -550,7 +532,8 @@ public static boolean[] concat(boolean[]... arrays) {
 ```
 
 #### Wat deugt er?
-De verticale afstand tussen de declaratie en gebruik van lokale variabelen binnen de functie.
+- De verticale afstand tussen de declaratie 
+- Gebruik van lokale variabelen binnen de functie.
 
 #### Waarom deugt het? 
 De lokale variabelen `length`, `result` en `pos` worden zo dicht mogelijk bij hun daadwerkelijke 
@@ -560,11 +543,10 @@ de code aflezen.
 
 
 ## Objects and Data Structures
-
 ### 13. Apache Commons: RandomStringUtils.java
 Locatie: [RandomStringUtils.java]()  
-Omvang: 251 t/m 378
-Clean Code Regel: Law of Demeter
+Omvang: 251 t/m 378  
+Clean Code Regel: Law of Demeter  
 
 ```java
     /**
@@ -733,15 +715,14 @@ De gehele body van de functie.
 
 #### Waarom deugt het?
 De gehele body van de functie volgt de _law of demeter_. De functie roept alleen maar functies aan van:
-- De klasse zelf
-- Een object gemaakt door de functie
-- Een object doorgegeven als parameter aan de functie
-- Een object opgeslagen (als referentie) in de klasse
+- De klasse zelf;
+- Een object gemaakt door de functie;
+- Een object doorgegeven als parameter aan de functie;
+- Een object opgeslagen (als referentie) in de klasse;
 
 
 
 ## Error Handling
-
 ### 14. Guava: ParseRequest.java
 Locatie: [ParseRequest.java](https://github.com/google/guava/blob/master/guava/src/com/google/common/primitives/ParseRequest.java)  
 Omvang: 31 t/m 55  
@@ -783,13 +764,11 @@ Er is een duidelijke keuze gemaakt om niet null te returnen wanneer de lengte 0 
 ervoor dat de code voorspelbaarder is, en dus makkelijker mee te werken is.
 
 
-## Boundaries
-
 ## Unit Tests
 ### 15. OOSE Library Management System: EmailValidatorTest.java
 Locatie: [EmailValidatorTest.java]()  
 Omvang: 11 t/m 40  
-Clean Code Regel: Single Concept per Test
+Clean Code Regel: Single Concept per Test  
 
 ```java
 @Test
@@ -828,12 +807,9 @@ void testEmptyEmail() {
 De opsplitsing van tests.
 
 #### Waarom deugt het?
-Doordat er enkel sprake is van één concept per test wordt ervoor gezorgd dat wanneer een test faalt, dat we ook gelijk
+Doordat er enkel sprake is van één concept per test wordt ervoor gezorgd dat wanneer een test faalt, dat we 
 weten wat de gemiste functionaliteit is.
 
 Met één grote testfunctie zou je bij een fout eerst de test moeten
-_debuggen_ om te kijken waar de fout daadwerkelijk plaatsvindt, vervolgens moet je dan bedenken wat de fout is. Enkel
+_debuggen_ om te kijken waar de fout daadwerkelijk plaatsvindt, vervolgens mag je dan bedenken wat de fout is. Enkel
 daarna kan je daadwerkelijk gaan kijken naar de gemiste functionaliteit. Onpraktisch dus.
-
-## Classes
-
