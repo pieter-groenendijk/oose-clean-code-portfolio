@@ -786,6 +786,54 @@ ervoor dat de code voorspelbaarder is, en dus makkelijker mee te werken is.
 ## Boundaries
 
 ## Unit Tests
+### 15. OOSE Library Management System: EmailValidatorTest.java
+Locatie: [EmailValidatorTest.java]()  
+Omvang: 11 t/m 40  
+Clean Code Regel: Single Concept per Test
+
+```java
+@Test
+void testValidEmail() {
+    assertTrue(EmailValidator.isValidEmail("test@example.com"));
+}
+
+@Test
+void testInvalidEmailMissingAtSymbol() {
+    assertFalse(EmailValidator.isValidEmail("testexample.com"));
+}
+
+@Test
+void testInvalidEmailMissingDomain() {
+    assertFalse(EmailValidator.isValidEmail("test@"));
+}
+
+@Test
+void testInvalidEmailWithSpecialChars() {
+    assertFalse(EmailValidator.isValidEmail("test@exam!ple.com"));
+}
+
+@Test
+void testValidEmailWithSubdomain() {
+    assertTrue(EmailValidator.isValidEmail("test@sub.example.com"));
+}
+
+
+@Test
+void testEmptyEmail() {
+    assertFalse(EmailValidator.isValidEmail(""));
+}
+```
+
+#### Wat deugt er?
+De opsplitsing van tests.
+
+#### Waarom deugt het?
+Doordat er enkel sprake is van één concept per test wordt ervoor gezorgd dat wanneer een test faalt, dat we ook gelijk
+weten wat de gemiste functionaliteit is.
+
+Met één grote testfunctie zou je bij een fout eerst de test moeten
+_debuggen_ om te kijken waar de fout daadwerkelijk plaatsvindt, vervolgens moet je dan bedenken wat de fout is. Enkel
+daarna kan je daadwerkelijk gaan kijken naar de gemiste functionaliteit. Onpraktisch dus.
 
 ## Classes
 
