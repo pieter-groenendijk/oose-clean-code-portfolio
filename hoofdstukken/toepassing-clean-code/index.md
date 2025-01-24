@@ -305,7 +305,7 @@ zal dit het voornamelijk nadeel creëren dat men niet meer weet welk argument op
 verkeerde plekken gezet, en indien er overlap is in de types, zal er niet eens een fout oplopen. Door gebruik te maken
 van een builder pattern, wordt het create patroon _verbose_, maar ook voorspelbaar.
 
-### Command Query Separation
+### OOSE Library Management System
 Locatie: [Onbeschikbaar]  
 Omvang: -  
 Clean Code Regel: Command Query Separation  
@@ -378,6 +378,33 @@ te begrijpen. Men wil focussen op wat de essentiële concepten zijn.
 
 
 ## Comments
+
+### OOSE Library Management System: EventEmitterPool.java
+Locatie: [EventEmitterPool.java]()  
+Omvang: 62 t/m 71  
+Clean Code Regel: Informative Comments
+
+```java
+/**
+ * Fails silently if the emitter is not found in the pool.
+ */
+public <T> void emit(@NotNull EventType type, T context) {
+    EventEmitter<T> emitter = this.get(type);
+
+    if (emitter == null) return;
+
+    emitter.emit(context);
+}
+```
+
+#### Wat deugt er?
+De comment.
+
+#### Waarom deugt het?
+Het maakt het voor andere developers duidelijk van buitenaf wat er gebeurt in een specifieke situatie binnen de functie;
+het leegt een stukje implementatie bloot. Zo komen die developer minder snel tegen problemen aan omdat ze begrijpen wat
+er in die situatie gebeurt. 
+
 
 ### OOSE Library Management: FineManager.java
 Locatie: [Onbeschikbaar]  
