@@ -342,6 +342,40 @@ en gelijk bij die waarde zou willen komen. Dit zorgt ervoor dat de code onnodig 
 de caller een klein beetje controle. De gecallde functie beslist nu namelijk deels wat er moet gebeuren met de nieuwe 
 _state_, niet de daadwerkelijke die de functie aanroept.
 
+### Library Management System: DetachedNotificationFactory.java
+Clean Code Regel: One Level Of Abstraction
+
+Locatie: [DetachedNotificationFactory.java]()  
+Omvang: 22 t/m 27  
+
+Locatie: [DetachedNotificationGenerator]()
+Omvang: 23 t/m 28
+
+```java
+public DetachedTask<LoanNotification> createOverdueLoanNotification(Account account, Loan loan) {
+    return OVERDUE_GENERATOR.generate(
+        account,
+        loan
+    );
+}
+```
+
+```java
+public final DetachedTask<K> generate(Account account, T context) {
+    return new DetachedTask<>(
+        this.generateUnderlyingTask(account, context),
+        this.generateStorage(context)
+    );
+}
+```
+
+#### Wat deugt er?
+Consistent niveau van abstractie.
+
+#### Waarom deugt het?
+Het laat concreet zien wat er daadwerkelijk gebeurt, zonder dat te verstoppen in 100 details. De code is sneller en beter
+te begrijpen. Men wil focussen op wat de essentiële concepten zijn.
+
 
 ## Comments
 
@@ -428,6 +462,108 @@ feit te denken dat er null in de `Optional` kan zitten.
 Er kan zo geen `null` waarde door het systeem bewegen om vervolgens het systeem eruit te blazen. Deze techniek zorgt
 ervoor dat `NullPointerException`'s praktisch gezien niet kunnen plaatsvinden.
 
+### OOSE Library Management System: DetachedEventGeneratorTest.java
+Locatie: [DetachedEventGeneratorTest.java]()  
+Omvang: 55 t/m 138  
+Clean Code Regel: Single Concept per Test  
+
+```java
+    @Test
+    void testGenerate() {
+        this.generator = new MockDetachedEventGenerator<Loan, LoanEvent>(EventType.ALMOST_OVERDUE_LOAN) {
+            @Override
+            protected LoanEvent generateEmptyEvent() {
+                return mock(LoanEvent.class);
+            }
+        };
+
+        this.generator.generate(mock(Loan.class));
+    }
+
+    @Test
+    void testGenerate_returnsTask() {
+        this.generator = new MockDetachedEventGenerator<Loan, LoanEvent>(EventType.ALMOST_OVERDUE_LOAN) {
+            @Override
+            protected LoanEvent generateEmptyEvent() {
+                return mock(LoanEvent.class);
+            }
+        };
+
+        DetachedTask<LoanEvent> task = this.generator.generate(mock(Loan.class));
+
+        assertNotNull(task);
+    }
+
+    @Test
+    void testGenerate_correctScheduledDateTime() {
+        LoanEvent returnedLoanEvent = new LoanEvent();
+
+        LocalDateTime returnedScheduledDateTime = LocalDateTime.now();
+
+        this.generator = new MockDetachedEventGenerator<Loan, LoanEvent>(EventType.ALMOST_OVERDUE_LOAN) {
+            @Override
+            protected LoanEvent generateEmptyEvent() {
+                return returnedLoanEvent;
+            }
+
+            @Override
+            protected LocalDateTime determineScheduledDateTime(Loan loan) {
+                return returnedScheduledDateTime;
+            }
+        };
+
+        this.generator.generate(mock(Loan.class));
+
+        assertEquals(returnedScheduledDateTime, returnedLoanEvent.getScheduledAt());
+    }
+
+    @Test
+    void testGenerate_correctEventType() {
+        LoanEvent returnedLoanEvent = new LoanEvent();
+
+        EventType eventType = EventType.ALMOST_OVERDUE_LOAN;
+
+        this.generator = new MockDetachedEventGenerator<Loan, LoanEvent>(eventType) {
+            @Override
+            protected LoanEvent generateEmptyEvent() {
+                return returnedLoanEvent;
+            }
+        };
+
+        this.generator.generate(mock(Loan.class));
+
+        assertEquals(eventType, returnedLoanEvent.getType());
+    }
+
+    @Test
+    void testGenerate_correctAssociation() {
+        LoanEvent returnedLoanEvent = new LoanEvent();
+
+        this.generator = new MockDetachedEventGenerator<Loan, LoanEvent>(EventType.ALMOST_OVERDUE_LOAN) {
+            @Override
+            protected LoanEvent generateEmptyEvent() {
+                return returnedLoanEvent;
+            }
+        };
+
+        Loan association = mock(Loan.class);
+
+        this.generator.generate(association);
+
+        assertEquals(association, returnedLoanEvent.getLoan());
+    }
+```
+
+#### Wat deugt er?
+De opsplitsing van tests.
+
+#### Waarom deugt het?
+Doordat er enkel sprake is van één concept per test wordt ervoor gezorgd dat wanneer een test faalt, dat we ook gelijk
+weten wat de gemiste functionaliteit is. 
+
+Met één grote testfunctie zou je bij een fout eerst de test moeten
+_debuggen_ om te kijken waar de fout daadwerkelijk plaatsvindt, vervolgens moet je dan bedenken wat de fout is. Enkel
+daarna kan je daadwerkelijk gaan kijken naar de gemiste functionaliteit. Onpraktisch dus.
 
 
 ## Objects and Data Structures
