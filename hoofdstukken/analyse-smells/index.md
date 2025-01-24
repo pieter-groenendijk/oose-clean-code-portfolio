@@ -1,6 +1,6 @@
 # Analyse smells
 
-## 1. Comments
+## Comments
 
 ### 1. Processing: MouseEvent.java
 Locatie: [MouseEvent.java](https://github.com/processing/processing/blob/master/core/src/processing/event/MouseEvent.java)  
@@ -35,8 +35,6 @@ public MouseEvent(Object nativeObject,
     this.count = count;
 }
 ```
-
-_Figuur 1: Processing: MouseEvent.java_
 
 #### Wat deugt niet?
 Het gaat hier om de code te vinden in de comments.
@@ -77,8 +75,6 @@ static public void init(final PApplet sketch) {
 }
 ```
 
-_Figuur 2: Processing: ThinkDifferent.java_
-
 #### Wat deugt niet?
 Het gaat hier om de comments:
 - `// no known crash`
@@ -112,8 +108,6 @@ boolean useDate;
 int digits = 3;
 ```
 
-_Figuur 3: Processing: Archiver.java_
-
 #### Wat deugt er niet?
 De comment `someday these will be settable`.
 
@@ -126,8 +120,7 @@ Het is veel duidelijker en directer om dit rechtstreeks in een _issue tracking s
 - Taak toevoegen in het _issue tracking system_
 
 
-## 2. Names
-
+## Names
 ### 4. Processing: ThinkDifferent.Java
 Locatie: [ThinkDifferent.Java](https://github.com/processing/processing/blob/master/core/src/processing/core/ThinkDifferent.java)  
 Omvang: 1 t/m 69  
@@ -136,8 +129,6 @@ Smell Code: N1 Choose Descriptive Names
 ```java
 public class ThinkDifferent {
 ```
-
-_Figuur 4: Processing ThinkDifferent.java_
 
 #### Wat deugt er niet?
 De naamgeving van de _class_ `ThinkDifferent`.
@@ -170,8 +161,7 @@ _mental overhead_ op.
 Verander de naam van de functie naar `printFullscreenModeDisabledError`.
 
 
-## 3. Functions
-
+## Functions
 ### 6. Processing: PVector.java
 Locatie: [PVector.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PVector.java)  
 Omvang: 343 t/m 356  
@@ -193,8 +183,6 @@ static public PVector fromAngle(float angle, PVector target) {
     return target;
 }
 ```
-
-_Figuur 5: Processing: PVector.java_
 
 #### Wat deugt er niet?
 Het gaat hier om het argument `PVector target`.
@@ -221,8 +209,6 @@ public void setFromAngle(float angle) {
     );
 }
 ```
-
-_Figuur 6: Oplossing voor Processing PVector.java_
 
 Op deze manier wordt er geen gebruik gemaakt van _output arguments_.
 
@@ -259,8 +245,6 @@ public void updatePixels(int x, int y, int w, int h) {  // ignore
 }
 ```
 
-_Figuur 7: Processing: PImage.java_
-
 #### Wat deugt niet?
 Het gaat hier om de arguments in de definitie van deze functie, namelijk: `int x, int y, int w, int h`. Specifieker,
 het aantal arguments.
@@ -273,15 +257,11 @@ uitgebreid gebruik kan dit nog steeds verwarring veroorzaken. In het slechtste g
 image.updatePixels(20, 30, 100, 200);
 ```
 
-_Figuur 8: Mogelijke functie call_
-
 En in een iets betere wereld misschien:
 
 ```java
 image.updatePixels(width, height, x, y);
 ```
-
-_Figuur 9: Mogelijke functie call 2_
 
 Als u goed heeft opgelet erkende u dat ik sommige arguments in het laatste voorbeeld heb omgedraaid. Een hogere
 hoeveelheid arguments kan er gemakkelijk voor zorgen daar arguments worden omgedraaid. In dit geval zou de compiler
@@ -297,8 +277,6 @@ public void updatePixels(Point upperLeftCorner, Size size) {
 }
 ```
 
-_Figuur 10: PImage.java updatePixels() verbeterde definitie_
-
 Er hoeven maar twee concepten gegeven worden aan de functie. Deze concepten verdienen hun eigen naam! In bovenstaand
 voorbeeld gaat het eigenlijk over:
 - `Point`: de `upperLeftCorner` die bestaat uit een `x` en `y`.
@@ -312,9 +290,6 @@ image.updatePixels(
 );
 ```
 
-_Figuur 11: Verbeterde mogelijke functie call_
-
-
 of wat realistischer:
 
 ```java
@@ -323,8 +298,6 @@ image.updatePixels(
     size
 );
 ```
-
-_Figuur 12: Verbeterde mogelijke functie call_
 
 In het geval dat de arguments alsnog worden omgedraaid zal de compiler dit tegenhouden. Een `Size` object kan namelijk
 niet in dezelfde plek gebruikt worden als een `Point`.
@@ -405,8 +378,6 @@ protected PGraphics makeGraphics(int w, int h,
     }
 }
 ```
-
-_Figuur 13: Processing PApplet.java (Commented code al weggelaten)_
 
 #### Wat deugt niet?
 De boolean argument `boolean primary`.
@@ -520,8 +491,6 @@ private PGraphics attemptToMakeGraphics(int w, int h, String renderer, String pa
 }
 ```
 
-_Figuur 14: Verbeterde code_
-
 Bovenstaande code is al vele malen beter. 
 
 
@@ -587,8 +556,6 @@ public int displayDensity(int display) {
 }
 ```
 
-_Figuur 15: Processing: PApplet.java_
-
 #### Wat deugt er niet?
 De functie body
 
@@ -634,11 +601,8 @@ private int displayDensityWindowsOrLinux(int display) {
 }
 ```
 
-_Figuur 16: Oplossing_
 
-
-## 4. General
-
+## General
 ### 10. Processing: KeyEvent.java
 Locatie: [KeyEvent.java](https://github.com/processing/processing/blob/master/core/src/processing/event/KeyEvent.java)  
 Omvang: 1 t/m 1  
@@ -647,8 +611,6 @@ Smell Code: G1 Multiple Languages in One Source File
 ```java
 /* -*- mode: java; c-basic-offset: 2; indent-tabs-mode: nil -*- */
 ```
-
-_Figuur 17: Processing: KeyEvent.java_
 
 #### Wat deugt niet?
 Het gehele snippet.
@@ -684,8 +646,6 @@ static public PVector fromAngle(float angle, PVector target) {
     return target;
 }
 ```
-
-_Figuur 18: Processing: PVector.java_
 
 #### Wat deugt niet?
 De berekening van de `float x` en `float y` met middel van een `float angle` wordt herhaald. 
@@ -727,8 +687,6 @@ static public PVector fromAngle(float angle, PVector target) {
 }
 ```
 
-_Figuur 19: Oplossing_
-
 De berekeningen van zowel `x` en `y` zijn nu gescheiden in een eigen methode. Verder is de code, hoewel die niet perfect is,
 behouden hoe die eerder was.
 
@@ -748,8 +706,6 @@ public void loadPixels() {  // ignore
     setLoaded();
 }
 ```
-
-_Figuur 20: Processing: PImage.java_
 
 #### Wat deugt er niet?
 De _conditional_ `pixels == null || pixels.length != pixelWidth*pixelHeight`.
@@ -773,8 +729,6 @@ private boolean isPixelsArrayInitialized() {
     return pixels == null || pixels.length != pixelWidth*pixelHeight;
 }
 ```
-
-_Figuur 21: Oplossing_
 
 ### 13. Processing: PApplet.java
 Locatie: [PApplet.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PApplet.java)  
@@ -909,8 +863,6 @@ public void handleDraw() {
 }
 ```
 
-_Figuur 22: Processing: PApplet.java_
-
 #### Wat deugt er niet?
 Het gaat hier om de conditional `if (frameCount != 0)` (regel 2472) en de code daarbinnen.
 
@@ -923,7 +875,7 @@ moeilijker te begrijpen.
 Verwijderen.
 
 
-## 5. Java
+## Java
 ### 14. Processing: Webserver.java
 Locatie: [Webserver.java](https://github.com/processing/processing/blob/master/app/src/processing/app/WebServer.java)  
 Omvang: 17 en 529 t/m 572  
@@ -932,8 +884,6 @@ Smell Code: J2 Don't inherit Constants
 ```java
 public class WebServer implements HttpConstants {
 ```
-
-_Figuur 23: Processing Webserver.java_
 
 ```java
 interface HttpConstants {
@@ -981,8 +931,6 @@ interface HttpConstants {
     public static final int HTTP_VERSION = 505;
 }
 ```
-
-_Figuur 24: Processing: Webserver.java_
 
 #### Wat deugt niet?
 De manier hoe _WebServer_ klasse gebruik maakt van de constanten.
@@ -1050,8 +998,6 @@ interface HttpConstants {
 }
 ```
 
-_Figuur 25: Processing: Webserver.java_
-
 #### Wat deugt er niet?
 De gehele interface.
 
@@ -1112,6 +1058,4 @@ public enum HTTPStatus {
     }
 }
 ```
-
-_Figuur 26: Oplossing_
 
