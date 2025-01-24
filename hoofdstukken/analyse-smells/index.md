@@ -40,8 +40,8 @@ Het gaat hier om de code te vinden in de comments.
 #### Waarom deugt het niet?
 Het creëert het probleem dat **niemand meer weet of de comments nog van waarde zijn**.
 Niemand zal deze verwarrende comments verwijderen. Iedereen zal denken dat 
-_mogelijk_ iemand anders het van plan is te gebruiken. Hoe langer deze comments
-behouden worden hoe irrelevanter worden.
+iemand anders _mogelijk_ van plan is het weer te gebruiken. Hoe langer deze comments
+behouden worden hoe irrelevanter ze worden.
 
 #### Oplossing
 De niet deugende code te verwijderen.
@@ -81,8 +81,8 @@ Het gaat hier om de comments:
 - `// just force it this time`
 
 #### Waarom deugt het niet?
-Alle comments binnen deze `init` methode zijn redundant of kunnen dat zijn. De comments kunnen weggehaald worden door de code beter, en dus duidelijker, geschreven worden. 
-De daadwerkelijke code lezen levert betere informatie dan de comments.
+Alle comments binnen deze `init` methode zijn redundant of kunnen dat zijn. De comments kunnen weggehaald worden door de code beter, 
+en dus duidelijker, te schrijven. De daadwerkelijke code lezen levert betere informatie dan de comments.
 
 Neem de regel `!attemptedQuit) { // haven't tried yet`. De `attemptedQuit` is al erg duidelijk[^1]. 
 De comment `// haven't tried yet` vertelt, in het beste geval, dezelfde informatie.
@@ -111,11 +111,11 @@ De comment `someday these will be settable`.
 
 #### Waarom deugt het niet?
 De comment geeft duidelijk aan dat er dus een taak (de velden _settable_ maken) moet worden verricht. 
-Het is veel duidelijker en directer om dit rechtstreeks in een _issue tracking system_ te zetten. 
+Het is veel duidelijker en directer om dit rechtstreeks in een _issue tracking system_ te zetten. Desnoods een _TODO_ comment.
 
 #### Oplossing
-- Comment verwijderen
-- Taak toevoegen in het _issue tracking system_
+- Comment verwijderen;
+- Taak toevoegen in het _issue tracking system_;
 
 
 ## Names
@@ -135,7 +135,7 @@ De naamgeving van de _class_ `ThinkDifferent`.
 De naam zou niet vager kunnen. Ik kan enkel een idee vormen, hoewel beperkt, wat de klasse doet door de _JSDoc_ erbij te lezen.
 
 #### Oplossing
-De naam zal verandert moeten worden naar iets wat de daadwerkelijke implementatie representeert. 
+De naam zal veranderd moeten worden naar iets wat de daadwerkelijke implementatie representeert. 
 Op basis van de huidige implementatie zou men uitkomen op een naam zoals `OSXIntegrationHelper`. 
 De klasse bezit namelijk methodes die helpen met de integratie specifiek voor het
 _OS X_ platform.
@@ -210,13 +210,13 @@ public void setFromAngle(float angle) {
 
 Op deze manier wordt er geen gebruik gemaakt van _output arguments_.
 
-Er is nogsteeds sprake van duplicatie. Dit is geisoleerd opgelost in een ander hoofdstuk.
+Er is nog steeds sprake van duplicatie. Dit is geisoleerd opgelost in een ander hoofdstuk.
 
 
 ### 7. Processing: PImage.java
 Locatie: [PImage.java](https://github.com/processing/processing/blob/master/core/src/processing/core/PImage.java)  
 Omvang: 482 t/m 504  
-Smell Code: F1 Too Many Arguments
+Smell Code: F1 Too Many Arguments  
 
 ```java
 public void updatePixels(int x, int y, int w, int h) {  // ignore
@@ -555,7 +555,7 @@ public int displayDensity(int display) {
 ```
 
 #### Wat deugt er niet?
-De functie body
+De functie body.
 
 #### Waarom deugt het niet?
 Ik denk dat het erg voor de hand liggend is om te zeggen dat deze functie meer dan een ding doet. De functie kan minimaal 
@@ -615,7 +615,7 @@ Het gehele snippet.
 
 #### Waarom deugt het niet?
 Dezelfde reden waarom een enkel boek niet geschreven is in vijf verschillende talen. Persoonlijk
-moet ik mijzelf even instellen om een andere taal te gaan spreken en begrijpen. Dit geldt hetzelfde
+moet ik mijzelf even voorbereiden om een andere taal te gaan spreken en begrijpen. Dit geldt hetzelfde
 voor code. Het creeert onnodige _mental overhead_.
 
 #### Oplossing
@@ -647,12 +647,12 @@ static public PVector fromAngle(float angle, PVector target) {
 
 #### Wat deugt niet?
 De berekening van de `float x` en `float y` met middel van een `float angle` wordt herhaald. 
-Het gaat dan om de herhaalde stukken code: `(float)Math.cos(angle)` en 
+Het gaat dan om de stukken code: `(float)Math.cos(angle)` en 
 `(float)Math.cos(angle)`.
 
 #### Waarom deugt het niet?
 In dit geval is het erg _error prone_. Elke keer dat je deze berekening opnieuw doet is er een goede kans dat je
-het dit keer wel verkeerd implementeert. Daarnaast doordat je het niet geextraheerd hebt naar zijn eigen methode zal het
+het dit keer verkeerd implementeert. Daarnaast doordat je het niet geextraheerd hebt naar zijn eigen methode zal het
 ook moeilijker unittestbaar zijn. Los daarvan is het ook gewoon verspilde tijd om telkens dezelfde code opnieuw te schrijven.
 
 #### Oplossing
@@ -709,7 +709,7 @@ public void loadPixels() {  // ignore
 De _conditional_ `pixels == null || pixels.length != pixelWidth*pixelHeight`.
 
 #### Waarom deugt het niet?
-Boolean logica is moelijk genoeg te begrijpen. Elke keer dat iemand deze functie langsloopt is er sprake van de
+Boolean logica is moelijk genoeg om te begrijpen. Elke keer dat iemand deze functie langsloopt is er sprake van de
 _mental overhead_ om de conditional te begrijpen.
 
 #### Oplossing
@@ -865,7 +865,7 @@ public void handleDraw() {
 Het gaat hier om de conditional `if (frameCount != 0)` (regel 2472) en de code daarbinnen.
 
 #### Waarom deugt het niet?
-De code zal nooit uitgevoert worden. De `if` statement controleert een conditie die nooit waar
+De code zal nooit uitgevoerd worden. De `if` statement controleert een conditie die nooit waar
 kan zijn in de context. Het is simpelweg nutteloze code. Daarnaast maakt het de nuttige code
 moeilijker te begrijpen.
 
