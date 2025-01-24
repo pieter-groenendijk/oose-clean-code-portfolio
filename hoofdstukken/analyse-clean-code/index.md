@@ -2,7 +2,7 @@
 
 ## Meaningful Names
 
-### Apache Commons: Range.java
+### 1. Apache Commons: Range.java
 Locatie: [Range.java](https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/Range.java)    
 Omvang:  163 t/m 184  
 Clean Code Regel: Use Intention-Revealing Names  
@@ -46,7 +46,7 @@ Een versimpeling zou `from` en `to` kunnen zijn. Echter is het met de gekozen na
 plaatsvinden. 
 
 
-### Guava: Booleans.java, Bytes.java, Chars.java, Doubles.java
+### 2. Guava: Booleans.java, Bytes.java, Chars.java, Doubles.java
 Locatie: Booleans.java, Bytes.java, Chars.java, Doubles.java  
 Omvang: 237 t/m 349, 162 t/m 174, 276 t/m 288, 281 t/m 293  
 Clean Code Regel: Pick One Word Per Concept  
@@ -135,7 +135,7 @@ waarbij de betekenis van de actie hetzelfde blijft. Duidelijk en overzichtelijk.
 
 ## Functions
 
-### Apache Commons: CharUtils.java
+### 3. Apache Commons: CharUtils.java
 Locatie: [CharUtils.java](https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/CharUtils.java)  
 Omvang: 80 t/m 173  
 Clean Code Regel: Command Query Separation  
@@ -245,7 +245,7 @@ Al deze functie definities maken het duidelijk dat ze iets beantwoorden, **en da
 ze dan ook**. Functies zijn duidelijk gescheiden in _doe_ en _beantwoord_ functies, ze
 worden niet gemengt. 
 
-### Apache Commons: AnnotationUtils.java
+### 4. Apache Commons: AnnotationUtils.java
 Locatie: [AnnotationUtils.java]()  
 Omvang: 71 t/m 76  
 Clean Code Regel: Have No Side Effects  
@@ -273,7 +273,7 @@ De functie body zorgt niet voor side-effects. De functie zorgt er alleen voor da
 Niet logische consequenties van een functie kunnen voor verwarring zorgen, en verwarring zorgt voor bugs. Daarom is het
 goed dat deze functie alleen zorgt voor één logische consequentie.
 
-### Guava: ClassPath.java
+### 5. Guava: ClassPath.java
 Locatie: [ClassPath.java](https://github.com/google/guava/blob/master/guava/src/com/google/common/reflect/ClassPath.java)  
 Omvang: 377 t/m 384  
 Clean Code Regel: Prefer Exceptions to Returning Error Codes  
@@ -297,7 +297,7 @@ Door exceptions te gebruiken is er geen behoefte voor if statements die de code
 minder leesbaarder maken. Het scheidt de _happy path_ duidelijk van _alternative_
 en/of mogelijke _exceptional_ flows.
 
-### Guava: Files.java
+### 6. Guava: Files.java
 Locatie: [Files.java]()  
 Omvang: 495
 Clean Code Regel: Function Arguments (count)
@@ -318,7 +318,7 @@ Naar mijn mening is het een duidelijke conventie om eerst de `from` en daarna de
 zoals `mv` gebruiken bijv. dezelfde volgorde.
 
 
-### Guava: AppendableWriter.java
+### 7. Guava: AppendableWriter.java
 Locatie: [AppendableWriter.java]()  
 Omvang: 67 t/m 86  
 Clean Code Regel: Don't Repeat Yourself (DRY Principle)
@@ -364,7 +364,7 @@ telkens dezelfde combinatie gebruikt.
 
 ## Comments
 
-### Apache Commons: StringUtils.java
+### 8. Apache Commons: StringUtils.java
 Locatie: [StringUtils.java](https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/StringUtils.java)  
 Omvang: 604 t/m 644  
 Clean Code Regel: Javadocs in Public APIs  
@@ -420,7 +420,7 @@ Duidelijke Javadoc comment (604 t/m 629).
 De javadoc comment legt duidelijk en accuraat uit wat de functie doet. Dat is super nuttig als je deze package gaat gebruiken in je eigen code. Geen onzekerheden wat de 
 code doet.
 
-### Guava: Files.java
+### 9. Guava: Files.java
 Locatie: [Files.java]()  
 Omvang: 375 t/m 393
 Clean Code Regel: Good Comments: Explanation of Intent
@@ -457,7 +457,7 @@ wellicht inaccuraat de file lengths beide 0 zouden kunnen zijn.
 De comment zorgt ervoor dat er gemakkelijker begrepen wordt waarom een keuze gemaakt is binnen de code.
 
 
-### Guava: Doubles.java
+### 10. Guava: Doubles.java
 Locatie: [Doubles.java]()  
 Omvang: 776 t/m 788  
 Clean Code Regel: TODO Comments  
@@ -492,7 +492,7 @@ kan gemakkelijk, wanneer er de tijd ervoor is, met de IDE opgezocht worden welke
 zijn.
 
 
-### Guava: DoublesTest.java
+### 11. Guava: DoublesTest.java
 Locatie: [DoublesTest.java]()  
 Omvang: 1 t/m 15
 Clean Code Regel: Good Comments: Legal Comments
@@ -528,7 +528,7 @@ bondige comment te plaatsen voor juridische doeleinden.
 
 ## Formatting
 
-### Guava: Booleans.java
+### 12. Guava: Booleans.java
 Locatie: [Booleans.java](https://github.com/google/guava/blob/master/guava/src/com/google/common/primitives/Booleans.java)  
 Omvang: 237 t/m 249
 Clean Code Regel: Vertical Distance
@@ -561,7 +561,7 @@ de code aflezen.
 
 ## Objects and Data Structures
 
-### Apache Commons: RandomStringUtils.java
+### 13. Apache Commons: RandomStringUtils.java
 Locatie: [RandomStringUtils.java]()  
 Omvang: 251 t/m 378
 Clean Code Regel: Law of Demeter
@@ -742,7 +742,7 @@ De gehele body van de functie volgt de _law of demeter_. De functie roept alleen
 
 ## Error Handling
 
-### Guava: ParseRequest.java
+### 14. Guava: ParseRequest.java
 Locatie: [ParseRequest.java](https://github.com/google/guava/blob/master/guava/src/com/google/common/primitives/ParseRequest.java)  
 Omvang: 31 t/m 55  
 Clean Code Regel: Don't Return Null
