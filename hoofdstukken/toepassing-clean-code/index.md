@@ -408,6 +408,26 @@ omdat die de keuze niet begrijpt. Met deze informatie kan beter een keuze gemaak
 
 ## Error Handling
 
+### OOSE Library Management System: IFineRepository.java
+Locatie: [IFineRepository.java](https://github.com/pieter-groenendijk/oose-library-management-system/blob/v0.1.0/application/core/src/main/java/com/github/pieter_groenendijk/datasource/repositories/fine/IFineRepository.java)  
+Omvang: 12 t/m 12  
+Clean Code Regel: Don't Return Null  
+
+```java
+Optional<FineType> retrieveFineType(String title) throws Exception;
+```
+
+#### Wat deugt er?
+Het gebruik van de `Optional<?>`;
+
+#### Waarom deugt het?
+I.p.v. dat de methode `FineType` teruggeeft, geeft deze de ingebouwde klasse `Optional<FineType>` terug. Hierdoor is de
+aanroepende partij gedwongen één van de ingebouwde methodes te gebruiken om waarde te krijgen. Men is gedwongen over het
+feit te denken dat er null in de `Optional` kan zitten. 
+
+Er kan zo geen `null` waarde door het systeem bewegen om vervolgens het systeem eruit te blazen. Deze techniek zorgt
+ervoor dat `NullPointerException`'s praktisch gezien niet kunnen plaatsvinden.
+
 
 
 ## Objects and Data Structures
